@@ -4,7 +4,11 @@
     "noPropertyAccessFromIndexSignature": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
-    "module": "preserve"
+    "module": "ES2022",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "composite": false,
+    "emitDeclarationOnly": false,
+    "declarationMap": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

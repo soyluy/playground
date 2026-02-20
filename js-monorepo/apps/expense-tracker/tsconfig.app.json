@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": []
+    "types": [],
+    "customConditions": ["@js-monorepo/source"]
   },
   "include": ["src/**/*.ts"],
   "exclude": [

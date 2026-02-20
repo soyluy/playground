@@ -20,7 +20,8 @@
             "input": "apps/expense-tracker/public"
           }
         ],
-        "styles": ["apps/expense-tracker/src/styles.css"]
+        "styles": ["apps/expense-tracker/src/styles.scss"],
+        "watch": true
       },
       "configurations": {
         "production": {
@@ -53,7 +54,10 @@
       "continuous": true,
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "port": 4201
+        "buildTarget": "expense-tracker:build",
+        "port": 4201,
+        "liveReload": true,
+        "hmr": true
       },
       "configurations": {
         "production": {

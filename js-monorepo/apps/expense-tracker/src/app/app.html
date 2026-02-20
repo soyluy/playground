@@ -1,2 +1,15 @@
-<expense-tracker-nx-welcome></expense-tracker-nx-welcome>
-<router-outlet></router-outlet>
+<header class="header">
+  <div class="header__inner">
+    <div class="header__brand">
+      <span class="header__logo">◈</span>
+      <span class="header__name">Expense Tracker</span>
+    </div>
+    <!-- TODO: Add theme toggle button here -->
+  </div>
+</header>
+
+<main class="main">
+  <div class="container">
+    <router-outlet />
+  </div>
+</main>

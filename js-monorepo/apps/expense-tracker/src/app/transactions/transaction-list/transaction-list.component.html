@@ -1,0 +1,33 @@
+<div class="list-container">
+  <div class="list-header">
+    <h2 class="list-title">Transactions</h2>
+    <div class="filters" role="tablist">
+      @for (f of filters; track f) {
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter() === f"
+          (click)="setFilter(f)"
+          role="tab"
+          [attr.aria-selected]="activeFilter() === f"
+        >
+          {{ f | titlecase }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="list">
+    @if (filtered().length === 0) {
+      <div class="empty">
+        <span>No transactions yet.</span>
+      </div>
+    } @else {
+      @for (tx of filtered(); track tx.id) {
+        <expense-tracker-transaction-item
+          [transaction]="tx"
+          (deleted)="onDelete($event)"
+        />
+      }
+    }
+  </div>
+</div>

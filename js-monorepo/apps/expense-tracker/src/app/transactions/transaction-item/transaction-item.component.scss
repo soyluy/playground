@@ -1,0 +1,77 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  transition: background 0.15s;
+
+  &:hover {
+    background: var(--bg-hover);
+
+    .item__delete {
+      opacity: 1;
+    }
+  }
+}
+
+.item__indicator {
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  flex-shrink: 0;
+
+  .income & { background: var(--income); }
+  .expense & { background: var(--expense); }
+}
+
+.item__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item__description {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item__meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.item__amount {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  flex-shrink: 0;
+
+  .income & { color: var(--income); }
+  .expense & { color: var(--expense); }
+}
+
+.item__delete {
+  opacity: 0;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--expense);
+    background: var(--expense-dim);
+  }
+}

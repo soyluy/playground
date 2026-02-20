@@ -1,0 +1,77 @@
+<div class="form-wrapper">
+  <button class="add-btn" (click)="toggle()">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    Add Transaction
+  </button>
+
+  @if (isOpen()) {
+    <div class="form-panel">
+      <div class="type-toggle">
+        <button
+          class="type-btn"
+          [class.active-expense]="type === 'expense'"
+          (click)="type = 'expense'; onTypeChange()"
+        >Expense</button>
+        <button
+          class="type-btn"
+          [class.active-income]="type === 'income'"
+          (click)="type = 'income'; onTypeChange()"
+        >Income</button>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <label class="field__label" for="description">Description</label>
+          <input
+            id="description"
+            class="field__input"
+            type="text"
+            placeholder="e.g. Monthly rent"
+            [(ngModel)]="description"
+          />
+        </div>
+
+        <div class="fields-row">
+          <div class="field">
+            <label class="field__label" for="amount">Amount</label>
+            <input
+              id="amount"
+              class="field__input field__input--mono"
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              [(ngModel)]="amount"
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="date">Date</label>
+            <input
+              id="date"
+              class="field__input"
+              type="date"
+              [(ngModel)]="date"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="category">Category</label>
+          <select id="category" class="field__input" [(ngModel)]="category">
+            @for (cat of currentCategories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn--ghost" (click)="toggle()">Cancel</button>
+        <button class="btn btn--primary" (click)="submit()">Save</button>
+      </div>
+    </div>
+  }
+</div>
