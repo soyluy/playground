@@ -1,18 +1,31 @@
 <section class="dashboard">
   <div class="card card--balance">
     <span class="label">Net Balance</span>
-    <span class="amount" [class.positive]="txService.balance() >= 0" [class.negative]="txService.balance() < 0">
-      {{ txService.balance() | currency:'USD':'symbol':'1.2-2' }}
+    <span
+      class="amount"
+      [class.positive]="txService.balance() >= 0"
+      [class.negative]="txService.balance() < 0"
+    >
+      {{
+        txService.balance()
+          | currency: currency : 'symbol' : currencyDecimalPlaces
+      }}
     </span>
   </div>
 
   <div class="card card--income">
     <span class="label">Total Income</span>
-    <span class="amount income">{{ txService.totalIncome() | currency:'USD':'symbol':'1.2-2' }}</span>
+    <span class="amount income">{{
+      txService.totalIncome()
+        | currency: currency : 'symbol' : currencyDecimalPlaces
+    }}</span>
   </div>
 
   <div class="card card--expense">
     <span class="label">Total Expenses</span>
-    <span class="amount expense">{{ txService.totalExpenses() | currency:'USD':'symbol':'1.2-2' }}</span>
+    <span class="amount expense">{{
+      txService.totalExpenses()
+        | currency: currency : 'symbol' : currencyDecimalPlaces
+    }}</span>
   </div>
 </section>

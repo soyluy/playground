@@ -8,7 +8,11 @@
     "lib": ["es2022", "dom", "dom.iterable"],
     "composite": false,
     "emitDeclarationOnly": false,
-    "declarationMap": false
+    "declarationMap": false,
+    "baseUrl": ".",
+    "paths": {
+      "@env": ["src/environments/environment.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
