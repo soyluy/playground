@@ -30,4 +30,8 @@
       }
     }
   </div>
+
+  @if (isDev) {
+    <button class="debug-btn" (click)="onDebug()">Debug</button>
+  }
 </div>

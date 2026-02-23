@@ -59,3 +59,23 @@
   border: 1px dashed var(--border);
   border-radius: var(--radius-lg);
 }
+
+.debug-btn {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  padding: 8px 14px;
+  background: #f59e0b;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.85;
+  z-index: 9999;
+
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -3,6 +3,7 @@ import { TransactionItemComponent } from '../transaction-item/transaction-item.c
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction.model';
 import { CommonModule } from '@angular/common';
+import { environment } from '@env';
 
 type Filter = 'all' | TransactionType;
 
@@ -15,6 +16,7 @@ type Filter = 'all' | TransactionType;
 })
 export class TransactionListComponent {
   protected readonly txService = inject(TransactionService);
+  protected readonly isDev = !environment.production;
   protected readonly filters: Filter[] = ['all', 'income', 'expense'];
   protected readonly activeFilter = signal<Filter>('all');
 
@@ -30,5 +32,9 @@ export class TransactionListComponent {
 
   protected onDelete(id: string): void {
     this.txService.deleteTransaction(id);
+  }
+
+  protected onDebug(): void {
+    console.log('[DEBUG]', this.txService.loadTransactions());
   }
 }

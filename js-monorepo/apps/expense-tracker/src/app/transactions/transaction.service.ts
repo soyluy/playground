@@ -1,34 +1,48 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Transaction } from './transaction.model';
+import { DbWrapperService } from 'src/infra/services/db-wrapper.service';
+import { environment } from '@env';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  // TODO: On init, load transactions from idb instead of starting with empty array
-  // TODO: On each mutation, sync to idb
+  private readonly _db = inject(DbWrapperService);
   private readonly _transactions = signal<Transaction[]>([]);
+  private readonly _storeKey = environment.expensesObjStoreName;
+
+  constructor() {
+    this.loadTransactions();
+  }
 
   readonly transactions = this._transactions.asReadonly();
 
   readonly totalIncome = computed(() =>
     this._transactions()
-      .filter(t => t.type === 'income')
+      .filter((t) => t.type === 'income')
       .reduce((sum, t) => sum + t.amount, 0),
   );
 
   readonly totalExpenses = computed(() =>
     this._transactions()
-      .filter(t => t.type === 'expense')
+      .filter((t) => t.type === 'expense')
       .reduce((sum, t) => sum + t.amount, 0),
   );
 
   readonly balance = computed(() => this.totalIncome() - this.totalExpenses());
 
+  loadTransactions() {
+    this._db.bulkReadFromStore<Transaction>(this._storeKey, (data) => {
+      this._transactions.set(data);
+    });
+  }
+
   addTransaction(transaction: Omit<Transaction, 'id'>): void {
     const entry: Transaction = { ...transaction, id: crypto.randomUUID() };
-    this._transactions.update(txns => [entry, ...txns]);
+    this._transactions.update((txns) => [entry, ...txns]);
+    this._db.writeToStore(this._storeKey, [entry]);
   }
 
   deleteTransaction(id: string): void {
-    this._transactions.update(txns => txns.filter(t => t.id !== id));
+    this._transactions.update((txns) => txns.filter((t) => t.id !== id));
+    this._db.deleteFromStore(this._storeKey, id);
   }
 }
