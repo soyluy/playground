@@ -1,3 +1,4 @@
 {
-	"nxConsole.nxWorkspacePath": "js-monorepo"
+	"nxConsole.nxWorkspacePath": "js-monorepo",
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

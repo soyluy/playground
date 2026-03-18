@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "module": "ES2022",
-    "lib": ["es2022", "dom", "dom.iterable"],
+    "lib": ["es2022", "dom"],
     "composite": false,
     "emitDeclarationOnly": false,
     "declarationMap": false,

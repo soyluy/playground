@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@hub/todo": ["libs/todo/src/index.ts"]
-    }
+    },
+    "sourceMap": true
   }
 }

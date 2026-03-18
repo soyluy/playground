@@ -1,5 +1,20 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TodoItem } from '../../types/todo-item.interface';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+export type TodoModalData = {
+  options: TodoModalOptions;
+};
 
 export type TodoModalOptions = {
   mode: 'edit' | 'create';
@@ -12,5 +27,34 @@ export type TodoModalOptions = {
   templateUrl: './todo-modal.html',
   styleUrls: ['./todo-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule,
+  ],
 })
-export class TodoModal {}
+export class TodoModal {
+  private readonly _data = inject<TodoModalData>(MAT_DIALOG_DATA);
+  private readonly _options = this._data.options;
+
+  protected readonly mode = this._options.mode;
+  protected readonly title =
+    this._options.mode === 'create' ? 'Create Todo' : 'Edit Todo';
+  protected readonly editing = this._options.editing;
+
+  private readonly fields = {
+    title: new FormControl<string>('', Validators.required),
+    description: new FormControl<string>(''),
+    completed: new FormControl<boolean>(false),
+  };
+
+  protected readonly fg: FormGroup = new FormGroup(this.fields);
+
+  protected submitForm() {
+    const values = this.fg.value;
+    console.log('form submit', values);
+  }
+}
