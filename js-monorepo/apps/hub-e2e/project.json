@@ -1,0 +1,9 @@
+{
+  "name": "hub-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/hub-e2e/src",
+  "implicitDependencies": ["hub"],
+  "// targets": "to see all targets run: nx show project hub-e2e --web",
+  "targets": {}
+}
