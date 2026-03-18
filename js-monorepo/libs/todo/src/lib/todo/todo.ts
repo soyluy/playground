@@ -5,6 +5,7 @@ import {
   TodoModalOptions,
 } from './components/todo-modal/todo-modal';
 import { MatDialog } from '@angular/material/dialog';
+import { NewTodoItem, TodoItem } from './types/todo-item.interface';
 
 @Component({
   selector: 'todo-list',
@@ -20,24 +21,28 @@ export class TodoList {
   protected todos = this._crudService.getTodos();
 
   onAddTodoClick(): void {
-    // this._crudService.addTodo({
-    //   id: this.generateTodoId(),
-    //   title: 'New Todo',
-    //   completed: false,
-    //   createdAt: new Date(),
-    //   updatedAt: new Date(),
-    // });
-
     const options: TodoModalOptions = {
       mode: 'create',
     };
-    this._dialog.open(TodoModal, {
+    const dialogRef = this._dialog.open(TodoModal, {
       data: { options },
       panelClass: 'todo-modal',
     });
+
+    dialogRef.afterClosed().subscribe((result: NewTodoItem | undefined) => {
+      if (result) {
+        const newTodo: TodoItem = {
+          id: this.generateTodoId(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          ...result,
+        };
+        this._crudService.addTodo(newTodo);
+      }
+    });
   }
 
-  // private generateTodoId(): string {
-  //   return Date.now().toString();
-  // }
+  private generateTodoId(): string {
+    return Date.now().toString();
+  }
 }

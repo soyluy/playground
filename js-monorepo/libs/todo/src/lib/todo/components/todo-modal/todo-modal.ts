@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { TodoItem } from '../../types/todo-item.interface';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { NewTodoItem, TodoItem } from '../../types/todo-item.interface';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import {
   FormControl,
   FormGroup,
@@ -38,6 +42,7 @@ export type TodoModalOptions = {
 })
 export class TodoModal {
   private readonly _data = inject<TodoModalData>(MAT_DIALOG_DATA);
+  private readonly _dialogRef = inject(MatDialogRef<TodoModal>);
   private readonly _options = this._data.options;
 
   protected readonly mode = this._options.mode;
@@ -54,7 +59,11 @@ export class TodoModal {
   protected readonly fg: FormGroup = new FormGroup(this.fields);
 
   protected submitForm() {
-    const values = this.fg.value;
-    console.log('form submit', values);
+    const values = this.fg.value as NewTodoItem;
+    this._dialogRef.close(values);
+  }
+
+  protected onCancel(): void {
+    this._dialogRef.close();
   }
 }
