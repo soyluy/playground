@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { TodoList } from '@hub/todo';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [RouterModule, TodoList],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
