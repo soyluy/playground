@@ -2,11 +2,7 @@
 <button (click)="onAddTodoClick()">Add Todo</button>
 @for (todo of todos(); track todo.id) {
 <div>
-  <h3>{{ todo.title }}</h3>
-  <p>{{ todo.description }}</p>
-  <p>{{ todo.completed }}</p>
-  <p>{{ todo.createdAt }}</p>
-  <p>{{ todo.updatedAt }}</p>
+  <todo-item [todo]="todo"></todo-item>
 </div>
 } @empty {
 <h2>There are no todos yet</h2>
