@@ -6,6 +6,7 @@ import {
 } from './components/todo-modal/todo-modal';
 import { MatDialog } from '@angular/material/dialog';
 import { NewTodoItem, TodoItem } from './types/todo-item.interface';
+import { TodoPersistenceService } from './services/todo-persistence.service';
 
 @Component({
   selector: 'todo-list',
@@ -13,7 +14,7 @@ import { NewTodoItem, TodoItem } from './types/todo-item.interface';
   templateUrl: './todo.html',
   styleUrls: ['./todo.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TodoService],
+  providers: [TodoService, TodoPersistenceService],
 })
 export class TodoList {
   private readonly _dialog = inject(MatDialog);

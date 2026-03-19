@@ -1,12 +1,19 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TodoItem } from '../types/todo-item.interface';
+import { TodoPersistenceService } from './todo-persistence.service';
 
 @Injectable()
 export class TodoService {
+  private readonly _persistenceService = inject(TodoPersistenceService);
   private readonly _todos = signal<TodoItem[]>([]);
+
+  constructor() {
+    this._todos.set(this._persistenceService.getTodos());
+  }
 
   public addTodo(todo: TodoItem) {
     this._todos.update((todos) => [...todos, todo]);
+    this._persistenceService.saveTodo(todo);
   }
 
   public updateTodo(todo: TodoItem) {
