@@ -81,7 +81,7 @@
 					<configuration>
 						<mainClass>soyluy.nerisa.App</mainClass>
 					</configuration>
-			</plugin>
+				</plugin>
       </plugins>
     </pluginManagement>
   </build>
