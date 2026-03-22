@@ -24,14 +24,7 @@ jobs:
 
       - name: Build app-image
         shell: cmd
-        run: |
-          jpackage --type app-image `
-            --name nerisa `
-            --input nerisa/target `
-            --main-jar nerisa-0.0.1-SNAPSHOT.jar `
-            --main-class soyluy.nerisa.App `
-            --add-modules javafx.controls
-            --dest dist
+        run: jpackage --type app-image --name nerisa --input nerisa/target --main-jar nerisa-0.0.1-SNAPSHOT.jar --main-class soyluy.nerisa.App --add-modules javafx.controls --dest dist
 
       - name: Zip output
         run: Compress-Archive -Path dist/nerisa -DestinationPath nerisa-windows.zip
