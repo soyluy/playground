@@ -24,8 +24,8 @@ jobs:
 
       - name: Download JavaFX SDK
         run: | 
-          curl -L https://download2.gluonhq.com/openjfx/21/openjfx-21_windows-x64_bin-sdk.zip -o javafx.zip unzip 
-          javafx.zip
+          curl -L https://download2.gluonhq.com/openjfx/21/openjfx-21_windows-x64_bin-sdk.zip -o javafx.zip 
+          unzip javafx.zip
 
       - name: Build app-image
         shell: cmd
