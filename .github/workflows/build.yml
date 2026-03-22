@@ -23,6 +23,7 @@ jobs:
         working-directory: nerisa
 
       - name: Build app-image
+        shell: cmd
         run: |
           jpackage --type app-image `
             --name nerisa `
