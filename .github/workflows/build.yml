@@ -1,0 +1,40 @@
+name: Build Windows App
+
+on:
+  push:
+    tags:
+      - 'nerisa-v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build JAR
+        run: mvn package
+        working-directory: nerisa
+
+      - name: Build app-image
+        run: |
+          jpackage --type app-image `
+            --name nerisa `
+            --input nerisa/target `
+            --main-jar nerisa-0.0.1-SNAPSHOT.jar `
+            --main-class soyluy.nerisa.App `
+            --add-modules javafx.controls
+
+      - name: Zip output
+        run: Compress-Archive -Path nerisa -DestinationPath nerisa-windows.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: nerisa-windows.zip
