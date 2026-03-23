@@ -32,6 +32,7 @@ public class MainView {
 	public Scene buildScene(){
 		BorderPane root = buildRoot();
 		Scene s = new Scene(root, 400, 300);
+		s.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 		datePicker.setValue(LocalDate.now());
 		return s;
 	}
