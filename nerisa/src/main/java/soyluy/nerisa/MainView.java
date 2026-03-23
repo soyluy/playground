@@ -1,6 +1,7 @@
 package soyluy.nerisa;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -12,10 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-record DatePreset(String label, Supplier<Week> apply) {}
 
 public class MainView {
+	private record DatePreset(String label, Supplier<Week> apply) {}
 
+	private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM dd");
+	
 	private final List<DatePreset> presets = List.of(
 		new DatePreset("Previous week", WeekService::getPreviousWeek),
 		new DatePreset("This week", WeekService::getThisWeek),
@@ -91,7 +94,7 @@ public class MainView {
 			}
 			Week week = WeekService.getWeek(newVal);
 			weekLabel.setText("Week " + week.number() + ", " + week.year());
-			rangeLabel.setText(week.start() + " - " + week.end());
+			rangeLabel.setText(dtf.format(week.start()) + " - " + dtf.format(week.end()));
 		});
 		return datePicker;
 	}
