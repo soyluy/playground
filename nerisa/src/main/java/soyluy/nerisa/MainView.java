@@ -1,6 +1,8 @@
 package soyluy.nerisa;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.function.Supplier;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +12,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+record DatePreset(String label, Supplier<Week> apply) {}
+
 public class MainView {
+
+	private final List<DatePreset> presets = List.of(
+		new DatePreset("Previous week", WeekService::getPreviousWeek),
+		new DatePreset("This week", WeekService::getThisWeek),
+		new DatePreset("Next week", WeekService::getNextWeek)
+	);
 
 	private final Label weekLabel = new Label();
 	private final Label rangeLabel = new Label();
@@ -29,7 +39,16 @@ public class MainView {
 	}
 
 	private HBox buildPresets(){
-		return new HBox();
+		HBox presetsBox = new HBox(10);
+		for(DatePreset preset : presets){
+			Button btn = new Button(preset.label());
+			btn.setOnAction(val -> {
+				Week week = preset.apply().get();
+				datePicker.setValue(week.start());
+			});
+			presetsBox.getChildren().add(btn);
+		}
+		return presetsBox;
 	}
 
 	private HBox buildNavigation(){
@@ -64,15 +83,13 @@ public class MainView {
 
 	private DatePicker buildDatePicker(){
 		datePicker = new DatePicker();
-		datePicker.setOnAction(val -> {
-			System.out.println("Date picked: " + datePicker.getValue());
-			LocalDate picked = datePicker.getValue();
-			if(picked == null){
+		datePicker.valueProperty().addListener((obs, oldVal, newVal) -> {
+			if(newVal == null){
 				weekLabel.setText("");
 				rangeLabel.setText("");
 				return;
 			}
-			Week week = WeekService.getWeek(picked);
+			Week week = WeekService.getWeek(newVal);
 			weekLabel.setText("Week " + week.number() + ", " + week.year());
 			rangeLabel.setText(week.start() + " - " + week.end());
 		});
