@@ -29,6 +29,10 @@ jobs:
           curl -L https://download2.gluonhq.com/openjfx/21/openjfx-21_windows-x64_bin-sdk.zip -o javafx.zip 
           unzip javafx.zip
 
+      - name: Copy JavaFX natives
+        run: cp javafx-sdk-21/bin/*.dll nerisa/target/
+        shell: bash
+
       - name: Build app-image
         shell: cmd
         run: jpackage --type app-image --name nerisa --input nerisa/target --main-jar nerisa-0.0.1-SNAPSHOT.jar --main-class soyluy.nerisa.App --module-path javafx-sdk-21/lib --add-modules javafx.controls --dest dist
