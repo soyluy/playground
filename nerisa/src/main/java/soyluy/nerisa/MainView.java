@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 
 
 public class MainView {
@@ -44,6 +46,7 @@ public class MainView {
 
 	private HBox buildPresets(){
 		HBox presetsBox = new HBox(10);
+		presetsBox.setAlignment(Pos.CENTER);
 		for(DatePreset preset : presets){
 			Button btn = new Button(preset.label());
 			btn.setOnAction(val -> {
@@ -57,6 +60,7 @@ public class MainView {
 
 	private HBox buildNavigation(){
 		HBox nav = new HBox(20);
+		nav.setAlignment(Pos.CENTER);
 		Button leftNav = buildLeftNavButton();
 		Button rightNav = buildRightNavButton();
 		buildDatePicker();
@@ -101,7 +105,9 @@ public class MainView {
 	}
 
 	private VBox buildContent(){
-		VBox content = new VBox();
+		VBox content = new VBox(10);
+		content.setAlignment(Pos.CENTER);
+		content.setPadding(new Insets(20));
 		content.getChildren().addAll(
 			buildPresets(),
 			buildNavigation(),
