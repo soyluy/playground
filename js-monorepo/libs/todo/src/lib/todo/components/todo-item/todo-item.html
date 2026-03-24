@@ -2,16 +2,16 @@
   <mat-checkbox
     matListItemIcon
     [checked]="todo().completed"
-    disabled
     [attr.aria-label]="
       todo().completed ? 'Task completed' : 'Task not completed'
-    "
+			"
+    (click)="onToggleCompleted()"
   />
 
   <span matListItemTitle>{{ todo().title }}</span>
 
   @if (todo().description) {
-    <span matListItemLine>{{ todo().description }}</span>
+  <span matListItemLine>{{ todo().description }}</span>
   }
 
   <div matListItemMeta class="todo-item__actions">

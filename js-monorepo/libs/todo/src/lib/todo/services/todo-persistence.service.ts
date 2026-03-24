@@ -23,6 +23,31 @@ export class TodoPersistenceService {
     }
   }
 
+  public updateTodo(todo: TodoItem): void {
+    try {
+      const todos = this.getTodos();
+      const index = todos.findIndex((t) => t.id === todo.id);
+      if (index !== -1) {
+        todos[index] = todo;
+      }
+      this.saveTodos(todos);
+    } catch (error) {
+      console.error('Error updating todo:', error);
+    }
+  }
+
+  public deleteTodo(id: string): void {
+    try {
+      const todos = this.getTodos();
+      const index = todos.findIndex((t) => t.id === id);
+      if (index !== -1) {
+        todos.splice(index, 1);
+      }
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+    }
+  }
+
   public getTodos(): TodoItem[] {
     try {
       const todos = localStorage.getItem(this.lsKey);

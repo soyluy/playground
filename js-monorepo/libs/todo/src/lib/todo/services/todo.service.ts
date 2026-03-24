@@ -20,10 +20,12 @@ export class TodoService {
     this._todos.update((todos) =>
       todos.map((t) => (t.id === todo.id ? todo : t)),
     );
+    this._persistenceService.updateTodo(todo);
   }
 
   public deleteTodo(id: string) {
     this._todos.update((todos) => todos.filter((t) => t.id !== id));
+    this._persistenceService.deleteTodo(id);
   }
 
   public getTodo(id: string) {

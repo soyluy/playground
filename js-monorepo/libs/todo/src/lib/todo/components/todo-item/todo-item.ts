@@ -57,4 +57,12 @@ export class TodoItemComponent {
   protected onDelete(): void {
     this._crudService.deleteTodo(this.todo().id);
   }
+
+  protected onToggleCompleted(): void {
+    this._crudService.updateTodo({
+      ...this.todo(),
+      completed: !this.todo().completed,
+      updatedAt: new Date(),
+    });
+  }
 }
