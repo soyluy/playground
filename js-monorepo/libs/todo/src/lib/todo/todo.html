@@ -1,9 +1,28 @@
-<h1>Todo List</h1>
-<button (click)="onAddTodoClick()">Add Todo</button>
-@for (todo of todos(); track todo.id) {
-<div>
-  <todo-item [todo]="todo"></todo-item>
-</div>
-} @empty {
-<h2>There are no todos yet</h2>
-}
+<section class="todo-shell">
+  <header class="todo-shell__header">
+    <h1 class="todo-shell__title">Todo List</h1>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="onAddTodoClick()"
+    >
+      Add Todo
+    </button>
+  </header>
+
+  @if (todos().length === 0) {
+    <p class="todo-empty">There are no todos yet</p>
+  } @else {
+    <mat-card class="todo-list-card" appearance="outlined">
+      <mat-list>
+        @for (todo of todos(); track todo.id; let isLast = $last) {
+          <todo-item [todo]="todo"></todo-item>
+          @if (!isLast) {
+            <mat-divider></mat-divider>
+          }
+        }
+      </mat-list>
+    </mat-card>
+  }
+</section>

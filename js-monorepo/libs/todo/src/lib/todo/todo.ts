@@ -8,10 +8,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewTodoItem, TodoItem } from './types/todo-item.interface';
 import { TodoPersistenceService } from './services/todo-persistence.service';
 import { TodoItemComponent } from './components/todo-item/todo-item';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatList } from '@angular/material/list';
 
 @Component({
   selector: 'todo-list',
-  imports: [TodoItemComponent],
+  imports: [
+    TodoItemComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatList,
+  ],
   templateUrl: './todo.html',
   styleUrls: ['./todo.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

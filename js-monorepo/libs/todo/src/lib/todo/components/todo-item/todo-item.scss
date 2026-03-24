@@ -1,11 +1,9 @@
 .todo-item {
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  transition: background 0.15s;
-
-  &:hover {
-    background: var(--bg-hover);
+  .todo-item__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
   }
 }

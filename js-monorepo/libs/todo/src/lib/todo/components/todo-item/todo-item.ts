@@ -3,10 +3,28 @@ import { NewTodoItem, TodoItem } from '../../types/todo-item.interface';
 import { TodoService } from '../../services/todo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoModal, TodoModalOptions } from '../todo-modal/todo-modal';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  MatListItem,
+  MatListItemIcon,
+  MatListItemLine,
+  MatListItemMeta,
+  MatListItemTitle,
+} from '@angular/material/list';
 
 @Component({
   selector: 'todo-item',
   standalone: true,
+  imports: [
+    MatListItem,
+    MatListItemIcon,
+    MatListItemTitle,
+    MatListItemLine,
+    MatListItemMeta,
+    MatButtonModule,
+    MatCheckboxModule,
+  ],
   templateUrl: './todo-item.html',
   styleUrls: ['./todo-item.scss'],
 })
