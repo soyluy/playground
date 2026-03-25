@@ -1,0 +1,27 @@
+{
+  "name": "api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/todo/api/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/todo/api",
+        "tsConfig": "libs/todo/api/tsconfig.lib.json",
+        "packageJson": "libs/todo/api/package.json",
+        "main": "libs/todo/api/src/index.ts",
+        "assets": ["libs/todo/api/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/todo/api/jest.config.cts"
+      }
+    }
+  }
+}
