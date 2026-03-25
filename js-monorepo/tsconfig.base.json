@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@hub/todo-ui": ["libs/todo/ui/src/index.ts"],
-      "@hub/todo-api": ["libs/todo/api/src/index.ts"]
+      "@hub/todo-api": ["libs/todo/api/src/index.ts"],
+      "@hub/todo-data": ["libs/todo/data/src/index.ts"]
     },
     "sourceMap": true
   }
