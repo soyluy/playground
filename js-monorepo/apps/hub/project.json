@@ -50,7 +50,8 @@
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "options": {
-        "port": 8181
+        "port": 8181,
+        "proxyConfig": "apps/hub/proxy.conf.json"
       },
       "configurations": {
         "production": {
@@ -60,7 +61,8 @@
           "buildTarget": "hub:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "dependsOn": ["hub-api:serve"]
     },
     "lint": {
       "executor": "@nx/eslint:lint"
