@@ -1,7 +1,7 @@
 {
-  "name": "todo",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/todo/src",
+  "name": "todo-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/todo/ui/src",
   "prefix": "todo",
   "projectType": "library",
   "tags": [],
@@ -10,12 +10,12 @@
       "executor": "@nx/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/todo/ng-package.json",
-        "tsConfig": "libs/todo/tsconfig.lib.json"
+        "project": "libs/todo/ui/ng-package.json",
+        "tsConfig": "libs/todo/ui/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/todo/tsconfig.lib.prod.json"
+          "tsConfig": "libs/todo/ui/tsconfig.lib.prod.json"
         },
         "development": {}
       },
@@ -25,8 +25,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/todo/jest.config.cts",
-        "tsConfig": "libs/todo/tsconfig.spec.json"
+        "jestConfig": "libs/todo/ui/jest.config.cts",
+        "tsConfig": "libs/todo/ui/tsconfig.spec.json"
       }
     },
     "lint": {

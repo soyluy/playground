@@ -1,8 +1,8 @@
 module.exports = {
-  displayName: 'todo',
-  preset: '../../jest.preset.js',
+  displayName: 'todo-ui',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/todo',
+  coverageDirectory: '../../../coverage/libs/todo/ui',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
