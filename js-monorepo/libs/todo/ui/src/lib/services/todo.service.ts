@@ -23,12 +23,12 @@ export class TodoService {
     this._persistenceService.updateTodo(todo);
   }
 
-  public deleteTodo(id: string) {
+  public deleteTodo(id: number) {
     this._todos.update((todos) => todos.filter((t) => t.id !== id));
     this._persistenceService.deleteTodo(id);
   }
 
-  public getTodo(id: string) {
+  public getTodo(id: number) {
     return this._todos().find((t) => t.id === id);
   }
 

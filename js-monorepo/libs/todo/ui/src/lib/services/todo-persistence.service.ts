@@ -36,7 +36,7 @@ export class TodoPersistenceService {
     }
   }
 
-  public deleteTodo(id: string): void {
+  public deleteTodo(id: number): void {
     try {
       const todos = this.getTodos();
       const index = todos.findIndex((t) => t.id === id);

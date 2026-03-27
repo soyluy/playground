@@ -44,7 +44,7 @@ export class TodoList {
     dialogRef.afterClosed().subscribe((result: NewTodoItem | undefined) => {
       if (result) {
         const newTodo: TodoItem = {
-          id: this.generateTodoId(),
+          id: Date.now(),
           createdAt: new Date(),
           updatedAt: new Date(),
           ...result,
@@ -52,9 +52,5 @@ export class TodoList {
         this._crudService.addTodo(newTodo);
       }
     });
-  }
-
-  private generateTodoId(): string {
-    return Date.now().toString();
   }
 }
