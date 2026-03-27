@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@hub/prisma';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -36,6 +36,19 @@ export class TodoService {
   async deleteTodo(id: number) {
     return this._prismaService.todo.delete({
       where: { id },
+    });
+  }
+
+  async completeTodo(id: number) {
+    const todo = await this._prismaService.todo.findUnique({
+      where: { id },
+    });
+    if (!todo) {
+      throw new NotFoundException('Todo not found');
+    }
+    return this._prismaService.todo.update({
+      where: { id },
+      data: { completed: !todo.completed },
     });
   }
 }
