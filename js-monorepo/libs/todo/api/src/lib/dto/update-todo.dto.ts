@@ -1,4 +1,4 @@
-import { TodoItem } from '@hub/todo-data';
+import { UpdateTodoDto as IUpdateTodoDto } from '@hub/todo-data';
 import {
   IsBoolean,
   IsNotEmpty,
@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class UpdateTodoDto implements Partial<TodoItem> {
+export class UpdateTodoDto implements IUpdateTodoDto {
   @IsNumber()
   @IsNotEmpty()
   id!: number;

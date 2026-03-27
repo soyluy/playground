@@ -2,6 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@hub/prisma';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { DeleteTodoDto } from '@hub/todo-data';
 
 @Injectable()
 export class TodoService {
@@ -33,9 +34,9 @@ export class TodoService {
     });
   }
 
-  async deleteTodo(id: number) {
+  async deleteTodo(deleteTodoDto: DeleteTodoDto) {
     return this._prismaService.todo.delete({
-      where: { id },
+      where: { id: deleteTodoDto.id },
     });
   }
 

@@ -11,6 +11,11 @@ import {
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { TodoService } from './todo.service';
+import {
+  CreateTodoResponse,
+  UpdateTodoResponse,
+  DeleteTodoResponse,
+} from '@hub/todo-data';
 
 @Controller('todo')
 export class TodoController {
@@ -23,18 +28,23 @@ export class TodoController {
   }
 
   @Post()
-  createTodo(@Body() createTodoDto: CreateTodoDto) {
-    return this._todoService.createTodo(createTodoDto);
+  async createTodo(
+    @Body() createTodoDto: CreateTodoDto,
+  ): Promise<CreateTodoResponse> {
+    return await this._todoService.createTodo(createTodoDto);
   }
 
   @Patch(':id')
-  updateTodo(@Param('id') id: number, @Body() updateTodoDto: UpdateTodoDto) {
-    return this._todoService.updateTodo(id, updateTodoDto);
+  async updateTodo(
+    @Param('id') id: number,
+    @Body() updateTodoDto: UpdateTodoDto,
+  ): Promise<UpdateTodoResponse> {
+    return await this._todoService.updateTodo(id, updateTodoDto);
   }
 
   @Delete(':id')
-  deleteTodo(@Param('id') id: number) {
-    return this._todoService.deleteTodo(id);
+  async deleteTodo(@Param('id') id: number): Promise<DeleteTodoResponse> {
+    return await this._todoService.deleteTodo({ id });
   }
 
   @Get(':id')

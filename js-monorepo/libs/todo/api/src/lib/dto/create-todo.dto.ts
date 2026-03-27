@@ -1,7 +1,7 @@
-import { NewTodoItem } from '@hub/todo-data';
+import { CreateTodoDto as ICreateTodoDto } from '@hub/todo-data';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateTodoDto implements NewTodoItem {
+export class CreateTodoDto implements ICreateTodoDto {
   @IsString()
   @IsNotEmpty()
   title!: string;
