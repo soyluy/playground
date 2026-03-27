@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { TodoItem } from '../types/todo-item.interface';
+import { TodoItem } from '@hub/todo-data';
 import { TodoPersistenceService } from './todo-persistence.service';
 
 @Injectable()

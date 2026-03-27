@@ -6,9 +6,3 @@ export interface TodoItem {
   createdAt: Date;
   updatedAt: Date;
 }
-
-export interface NewTodoItem {
-  title: string;
-  description?: string;
-  completed: boolean;
-}

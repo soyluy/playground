@@ -1,1 +1,1 @@
-export * from './lib/todo-data';
+export * from './lib/todo';
