@@ -5,7 +5,7 @@ import {
   TodoModalOptions,
 } from './components/todo-modal/todo-modal';
 import { MatDialog } from '@angular/material/dialog';
-import { NewTodoItem, TodoItem } from './types/todo-item.interface';
+import { NewTodoItem, TodoItem } from '@hub/todo-data';
 import { TodoPersistenceService } from './services/todo-persistence.service';
 import { TodoItemComponent } from './components/todo-item/todo-item';
 import { MatButtonModule } from '@angular/material/button';

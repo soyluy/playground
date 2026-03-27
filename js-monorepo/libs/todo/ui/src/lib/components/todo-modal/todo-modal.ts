@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { NewTodoItem, TodoItem } from '../../types/todo-item.interface';
+import { NewTodoItem, TodoItem } from '@hub/todo-data';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,

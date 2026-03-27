@@ -12,6 +12,7 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
+    "esModuleInterop": true,
     "target": "es2022",
     "baseUrl": ".",
     "paths": {

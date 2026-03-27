@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { NewTodoItem, TodoItem } from '../../types/todo-item.interface';
+import { NewTodoItem, TodoItem } from '@hub/todo-data';
 import { TodoService } from '../../services/todo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoModal, TodoModalOptions } from '../todo-modal/todo-modal';
