@@ -44,3 +44,11 @@ Thumbs.db
 # JAVA
 target/
 dependency-reduced-pom.xml
+
+# Environment variables
+*.env*
+
+# Prisma
+dev.db
+prisma/migrations
+prisma/generated
