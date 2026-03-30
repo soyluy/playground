@@ -48,7 +48,6 @@ export class TodoItemComponent {
         this._crudService.updateTodo({
           ...this.todo(),
           ...result,
-          updatedAt: new Date(),
         });
       }
     });
@@ -62,7 +61,6 @@ export class TodoItemComponent {
     this._crudService.updateTodo({
       ...this.todo(),
       completed: !this.todo().completed,
-      updatedAt: new Date(),
     });
   }
 }
