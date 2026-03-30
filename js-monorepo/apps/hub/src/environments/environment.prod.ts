@@ -3,5 +3,5 @@ import { HubEnvironment } from '@hub/todo-ui';
 
 export const environment: HubEnvironment = {
   production: true,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'https://hub-api-demb.onrender.com/api',
 };

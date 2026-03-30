@@ -14,7 +14,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3000;
   app.enableCors({
-    origin: '*', // TODO: Change to the actual origin during deployment
+    origin: 'https://hub-sct.pages.dev',
   });
   app.useGlobalPipes(
     new ValidationPipe({
