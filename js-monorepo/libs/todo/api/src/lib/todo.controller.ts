@@ -5,6 +5,7 @@ import {
   Get,
   Inject,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -36,19 +37,21 @@ export class TodoController {
 
   @Patch(':id')
   async updateTodo(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateTodoDto: UpdateTodoDto,
   ): Promise<UpdateTodoResponse> {
     return await this._todoService.updateTodo(id, updateTodoDto);
   }
 
   @Delete(':id')
-  async deleteTodo(@Param('id') id: number): Promise<DeleteTodoResponse> {
+  async deleteTodo(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<DeleteTodoResponse> {
     return await this._todoService.deleteTodo({ id });
   }
 
   @Get(':id')
-  getTodo(@Param('id') id: number) {
+  getTodo(@Param('id', ParseIntPipe) id: number) {
     return this._todoService.getTodo(id);
   }
 }

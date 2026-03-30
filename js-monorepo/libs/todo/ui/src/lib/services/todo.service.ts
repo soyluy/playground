@@ -8,7 +8,11 @@ export class TodoService {
   private readonly _todos = signal<TodoItem[]>([]);
 
   constructor() {
-    this._todos.set(this._persistenceService.getTodos());
+    this.loadTodos();
+  }
+
+  private async loadTodos() {
+    this._todos.set(await this._persistenceService.getTodos());
   }
 
   public addTodo(todo: TodoItem) {

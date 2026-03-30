@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatList } from '@angular/material/list';
+import { TodoApiService } from './services/todo-api.service';
 
 @Component({
   selector: 'todo-list',
@@ -25,7 +26,7 @@ import { MatList } from '@angular/material/list';
   templateUrl: './todo.html',
   styleUrls: ['./todo.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TodoService, TodoPersistenceService],
+  providers: [TodoService, TodoPersistenceService, TodoApiService],
 })
 export class TodoList {
   private readonly _dialog = inject(MatDialog);

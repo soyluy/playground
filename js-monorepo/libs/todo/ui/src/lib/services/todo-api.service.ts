@@ -10,6 +10,7 @@ import {
   UpdateTodoResponse,
 } from '@hub/todo-data';
 import { Observable } from 'rxjs';
+import { TODO_ROUTES } from '../constants/route.constants';
 
 @Injectable()
 export class TodoApiService {
@@ -18,26 +19,32 @@ export class TodoApiService {
 
   // TODO: Add GetTodosResponse type
   public getTodos(): Observable<TodoItem[]> {
-    return this._http.get<TodoItem[]>(`${this._apiUrl}/todos`);
+    const url = this.urlBuilder(TODO_ROUTES.GET_ALL);
+    return this._http.get<TodoItem[]>(url);
   }
 
   public createTodo(todo: CreateTodoDto): Observable<CreateTodoResponse> {
-    return this._http.post<CreateTodoResponse>(`${this._apiUrl}/todos`, todo);
+    const url = this.urlBuilder(TODO_ROUTES.CREATE_ONE);
+    return this._http.post<CreateTodoResponse>(url, todo);
   }
 
   public updateTodo(todo: UpdateTodoDto): Observable<UpdateTodoResponse> {
-    return this._http.put<UpdateTodoResponse>(
-      `${this._apiUrl}/todos/${todo.id}`,
-      todo,
-    );
+    const url = this.urlBuilder(TODO_ROUTES.UPDATE_ONE(todo.id));
+    return this._http.patch<UpdateTodoResponse>(url, todo);
   }
 
   public deleteTodo(id: number): Observable<DeleteTodoResponse> {
-    return this._http.delete<DeleteTodoResponse>(`${this._apiUrl}/todos/${id}`);
+    const url = this.urlBuilder(TODO_ROUTES.DELETE_ONE(id));
+    return this._http.delete<DeleteTodoResponse>(url);
   }
 
   // TODO: Add GetTodoResponse type
   public getTodo(id: number): Observable<TodoItem> {
-    return this._http.get<TodoItem>(`${this._apiUrl}/todos/${id}`);
+    const url = this.urlBuilder(TODO_ROUTES.GET_ONE(id));
+    return this._http.get<TodoItem>(url);
+  }
+
+  private urlBuilder(path: string): string {
+    return `${this._apiUrl}/${path}`;
   }
 }
