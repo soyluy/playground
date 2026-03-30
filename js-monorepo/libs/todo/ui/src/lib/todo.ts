@@ -5,7 +5,7 @@ import {
   TodoModalOptions,
 } from './components/todo-modal/todo-modal';
 import { MatDialog } from '@angular/material/dialog';
-import { NewTodoItem, TodoItem } from '@hub/todo-data';
+import { NewTodoItem } from '@hub/todo-data';
 import { TodoPersistenceService } from './services/todo-persistence.service';
 import { TodoItemComponent } from './components/todo-item/todo-item';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,13 +44,7 @@ export class TodoList {
 
     dialogRef.afterClosed().subscribe((result: NewTodoItem | undefined) => {
       if (result) {
-        const newTodo: TodoItem = {
-          id: Date.now(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          ...result,
-        };
-        this._crudService.addTodo(newTodo);
+        this._crudService.addTodo(result);
       }
     });
   }
