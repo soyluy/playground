@@ -7,14 +7,17 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import 'dotenv/config';
+import { DEV_CORS_ORIGIN, PROD_CORS_ORIGIN } from './constants/cors.constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3000;
+  const corsOrigin =
+    process.env.ENV === 'development' ? DEV_CORS_ORIGIN : PROD_CORS_ORIGIN;
   app.enableCors({
-    origin: 'https://hub-sct.pages.dev',
+    origin: corsOrigin,
   });
   app.useGlobalPipes(
     new ValidationPipe({
