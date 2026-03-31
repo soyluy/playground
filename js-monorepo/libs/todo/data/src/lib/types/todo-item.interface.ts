@@ -1,3 +1,5 @@
+import { TodoTag } from './todo-tag.interface';
+
 export interface TodoItem {
   id: number;
   title: string;
@@ -5,4 +7,5 @@ export interface TodoItem {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  tags?: TodoTag[];
 }

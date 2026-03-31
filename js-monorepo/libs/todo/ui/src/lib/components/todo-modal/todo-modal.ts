@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { NewTodoItem, TodoItem } from '@hub/todo-data';
+import { NewTodoItem, TodoItem, TodoTag } from '@hub/todo-data';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -54,6 +54,7 @@ export class TodoModal {
     title: new FormControl<string>('', Validators.required),
     description: new FormControl<string>(''),
     completed: new FormControl<boolean>(false),
+    tags: new FormControl<TodoTag[]>([]),
   };
 
   protected readonly fg: FormGroup = new FormGroup(this.fields);

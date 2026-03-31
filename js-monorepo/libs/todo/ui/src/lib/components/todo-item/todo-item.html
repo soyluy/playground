@@ -12,6 +12,8 @@
 
   @if (todo().description) {
   <span matListItemLine>{{ todo().description }}</span>
+  } @for (tag of tags(); track tag.id) {
+  <todo-tag-pill [tag]="tag"></todo-tag-pill>
   }
 
   <div matListItemMeta class="todo-item__actions">

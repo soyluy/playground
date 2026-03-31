@@ -1,5 +1,5 @@
-import { Component, inject, input } from '@angular/core';
-import { NewTodoItem, TodoItem } from '@hub/todo-data';
+import { Component, computed, inject, input, Signal } from '@angular/core';
+import { NewTodoItem, TodoItem, TodoTag } from '@hub/todo-data';
 import { TodoService } from '../../services/todo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoModal, TodoModalOptions } from '../todo-modal/todo-modal';
@@ -12,6 +12,7 @@ import {
   MatListItemMeta,
   MatListItemTitle,
 } from '@angular/material/list';
+import { TagPillComponent } from '../tag-pill/tag-pill';
 
 @Component({
   selector: 'todo-item',
@@ -24,6 +25,7 @@ import {
     MatListItemMeta,
     MatButtonModule,
     MatCheckboxModule,
+    TagPillComponent,
   ],
   templateUrl: './todo-item.html',
   styleUrls: ['./todo-item.scss'],
@@ -32,6 +34,10 @@ export class TodoItemComponent {
   readonly todo = input.required<TodoItem>();
   private readonly _crudService = inject(TodoService);
   private readonly dialog = inject(MatDialog);
+
+  protected readonly tags: Signal<TodoTag[]> = computed(
+    () => this.todo().tags ?? [],
+  );
 
   protected onEdit(): void {
     const options: TodoModalOptions = {
