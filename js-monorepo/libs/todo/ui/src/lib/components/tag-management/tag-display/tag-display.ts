@@ -1,6 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TodoTag } from '@hub/todo-data';
+import { NewTodoTag, TodoTag } from '@hub/todo-data';
+import { TodoTagService } from '../../../services/todo-tag.service';
+import { TodoTagModal } from '../tag-modal/tag-modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'todo-tag-display',
@@ -10,13 +13,20 @@ import { TodoTag } from '@hub/todo-data';
   imports: [MatButtonModule],
 })
 export class TagDisplay {
+  private readonly _todoTagService = inject(TodoTagService);
+  private readonly _dialog = inject(MatDialog);
   readonly tag = input.required<TodoTag>();
 
   protected onDeleteTag(): void {
-    console.log('delete tag');
+    this._todoTagService.deleteTag(this.tag().id);
   }
 
   protected onUpdateTag(): void {
-    console.log('update tag');
+    const dialogRef = this._dialog.open(TodoTagModal);
+    dialogRef.afterClosed().subscribe((result: NewTodoTag | undefined) => {
+      if (result) {
+        this._todoTagService.updateTag(this.tag().id, result);
+      }
+    });
   }
 }

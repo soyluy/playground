@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { TodoTagService } from '../../services/todo-tag.service';
 import { TagDisplay } from './tag-display/tag-display';
+import { TodoTagModal } from './tag-modal/tag-modal';
+import { MatDialog } from '@angular/material/dialog';
+import { NewTodoTag } from '@hub/todo-data';
 
 @Component({
   selector: 'todo-tag-management',
@@ -12,10 +15,16 @@ import { TagDisplay } from './tag-display/tag-display';
 })
 export class TagManagement {
   private readonly _todoTagService = inject(TodoTagService);
+  private readonly _dialog = inject(MatDialog);
 
   protected readonly tags = this._todoTagService.getTags();
 
   protected onAddTag(): void {
-    console.log('add tag');
+    const dialogRef = this._dialog.open(TodoTagModal);
+    dialogRef.afterClosed().subscribe((result: NewTodoTag | undefined) => {
+      if (result) {
+        this._todoTagService.addTag(result);
+      }
+    });
   }
 }

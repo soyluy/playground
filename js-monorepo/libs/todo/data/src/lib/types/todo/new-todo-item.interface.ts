@@ -1,4 +1,4 @@
-import { TodoTag } from './todo-tag.interface';
+import { TodoTag } from '../tag/todo-tag.interface';
 
 export interface NewTodoItem {
   title: string;

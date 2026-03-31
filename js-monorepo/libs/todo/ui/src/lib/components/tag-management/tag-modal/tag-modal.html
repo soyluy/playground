@@ -1,0 +1,25 @@
+<div class="tag-modal">
+  <h2 mat-dialog-title>Add Tag</h2>
+  <mat-dialog-content>
+    <form class="tag-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [formField]="tagForm.name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Color</mat-label>
+        <input matInput type="color" [formField]="tagForm.colorHex" />
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-flat-button
+      (click)="submitForm()"
+      [disabled]="tagForm().invalid()"
+    >
+      Add Tag
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TodoList } from '@hub/todo-ui';
 
 @Component({
-  imports: [RouterModule, TodoList],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
