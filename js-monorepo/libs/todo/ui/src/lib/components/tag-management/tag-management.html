@@ -1,0 +1,9 @@
+<div class="tag-management">
+  <h2>Tag Management</h2>
+  <div class="tag-display-container">
+    @for (tag of tags(); track tag.id) {
+    <todo-tag-display [tag]="tag"></todo-tag-display>
+    }
+  </div>
+  <button mat-button (click)="onAddTag()">Add Tag</button>
+</div>

@@ -6,3 +6,12 @@ export const TODO_ROUTES = {
   UPDATE_ONE: (id: number) => `todo/${id}`,
   DELETE_ONE: (id: number) => `todo/${id}`,
 } as const;
+
+export const TAG_ROUTES = {
+  BASE: 'tag',
+  GET_ALL: `tag`,
+  GET_ONE: (id: number) => `tag/${id}`,
+  CREATE_ONE: `tag`,
+  UPDATE_ONE: (id: number) => `tag/${id}`,
+  DELETE_ONE: (id: number) => `tag/${id}`,
+} as const;

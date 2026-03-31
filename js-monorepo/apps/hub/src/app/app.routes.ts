@@ -1,3 +1,13 @@
 import { Route } from '@angular/router';
+import { TagManagement, TodoList } from '@hub/todo-ui';
 
-export const appRoutes: Route[] = [];
+export const appRoutes: Route[] = [
+  {
+    path: 'tag-management',
+    component: TagManagement,
+  },
+  {
+    path: 'todo',
+    component: TodoList,
+  },
+];
