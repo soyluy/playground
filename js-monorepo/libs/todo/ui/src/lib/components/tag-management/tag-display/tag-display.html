@@ -1,6 +1,15 @@
 <div class="tag-display">
-  <h3>{{ tag().name }}</h3>
-  <p>{{ tag().colorHex }}</p>
-  <button mat-button (click)="onDeleteTag()">Delete Tag</button>
-  <button mat-button (click)="onUpdateTag()">Update Tag</button>
+  <span
+    class="tag-display__swatch"
+    role="img"
+    [attr.aria-label]="'Color ' + swatchColor()"
+    [style.background-color]="swatchColor()"
+  ></span>
+  <div class="tag-display__main">
+    <h3>{{ tag().name }}</h3>
+  </div>
+  <div class="tag-display__actions">
+    <button mat-stroked-button color="warn" type="button" (click)="onDeleteTag()">Delete</button>
+    <button mat-flat-button type="button" (click)="onUpdateTag()">Update</button>
+  </div>
 </div>

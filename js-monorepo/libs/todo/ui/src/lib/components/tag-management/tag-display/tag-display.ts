@@ -17,6 +17,11 @@ export class TagDisplay {
   private readonly _dialog = inject(MatDialog);
   readonly tag = input.required<TodoTag>();
 
+  protected swatchColor(): string {
+    const raw = this.tag().colorHex?.replace(/^#/, '').trim() ?? '';
+    return /^[0-9a-fA-F]{6}$/.test(raw) ? `#${raw}` : '#9e9e9e';
+  }
+
   protected onDeleteTag(): void {
     this._todoTagService.deleteTag(this.tag().id);
   }
