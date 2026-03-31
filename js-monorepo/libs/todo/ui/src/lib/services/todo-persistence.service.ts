@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  CreateTodoDto,
   CreateTodoResponse,
   DeleteTodoResponse,
   NewTodoItem,
@@ -15,7 +16,13 @@ export class TodoPersistenceService {
   private readonly _apiService = inject(TodoApiService);
 
   public saveTodo(todo: NewTodoItem): Observable<TodoItem> {
-    const res$ = this._apiService.createTodo(todo);
+    const dto: CreateTodoDto = {
+      title: todo.title,
+      description: todo.description,
+      completed: todo.completed,
+      tagIds: todo.tags?.map((tag) => tag.id) || [],
+    };
+    const res$ = this._apiService.createTodo(dto);
     res$.pipe(
       tap((res: CreateTodoResponse) => {
         console.log('todo saved');
