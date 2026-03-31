@@ -17,6 +17,15 @@ model Todo {
 	title 			String
 	completed		Boolean		@default(false)
 	description	String		@default("")
+	dueDate			DateTime?	
 	createdAt		DateTime 	@default(now())
 	updatedAt 	DateTime	@updatedAt
+	tags				Tag[]			
+}
+
+model Tag {
+	id					Int 			@id @default(autoincrement())
+	name				String
+	colorHex		String 		@db.Char(6)
+	todos				Todo[]
 }
