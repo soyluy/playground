@@ -1,5 +1,6 @@
 import { UpdateTodoDto as IUpdateTodoDto } from '@hub/todo-data';
 import {
+  IsArray,
   IsBoolean,
   IsNotEmpty,
   IsNumber,
@@ -23,4 +24,9 @@ export class UpdateTodoDto implements IUpdateTodoDto {
   @IsBoolean()
   @IsOptional()
   completed?: boolean;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  tagIds?: number[];
 }

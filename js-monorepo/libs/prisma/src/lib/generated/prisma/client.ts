@@ -44,3 +44,8 @@ export { Prisma }
  * 
  */
 export type Todo = Prisma.TodoModel
+/**
+ * Model Tag
+ * 
+ */
+export type Tag = Prisma.TagModel
