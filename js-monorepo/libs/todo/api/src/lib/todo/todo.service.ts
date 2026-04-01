@@ -14,7 +14,9 @@ export class TodoService {
     const { tagIds, ...data } = createTodoDto;
     return this._prismaService.todo.create({
       data: {
-        ...data,
+        title: data.title,
+        description: data.description ?? undefined,
+        completed: data.completed,
         tags: {
           connect: tagIds.map((id) => ({ id })),
         },
@@ -60,9 +62,11 @@ export class TodoService {
   ): Promise<TodoItem> {
     const { tagIds, ...rest } = updateTodoDto;
     const data: Prisma.TodoUpdateInput = {
-      ...rest,
+      title: rest.title ?? undefined,
+      description: rest.description ?? undefined,
+      completed: rest.completed ?? undefined,
     };
-    if (tagIds) {
+    if (tagIds !== null) {
       data.tags = {
         set: tagIds.map((id) => ({ id })),
       };
@@ -79,6 +83,7 @@ export class TodoService {
   async deleteTodo(deleteTodoDto: DeleteTodoDto) {
     return this._prismaService.todo.delete({
       where: { id: deleteTodoDto.id },
+      include: { tags: true },
     });
   }
 

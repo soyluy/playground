@@ -20,7 +20,7 @@ export class TodoPersistenceService {
       title: todo.title,
       description: todo.description,
       completed: todo.completed,
-      tagIds: todo.tags?.map((tag) => tag.id) || [],
+      tagIds: todo.tags !== null ? todo.tags.map((tag) => tag.id) : [],
     };
     const res$ = this._apiService.createTodo(dto);
     res$.pipe(

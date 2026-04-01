@@ -4,9 +4,9 @@ import { IsHexColor, IsOptional, IsString } from 'class-validator';
 export class UpdateTodoTagDto implements IUpdateTodoTagDto {
   @IsString()
   @IsOptional()
-  name?: string;
+  name: string | null = null;
 
   @IsHexColor()
   @IsOptional()
-  colorHex?: string;
+  colorHex: string | null = null;
 }

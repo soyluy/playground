@@ -36,6 +36,7 @@ export class TodoList {
   onAddTodoClick(): void {
     const options: TodoModalOptions = {
       mode: 'create',
+      editing: null,
     };
     const dialogRef = this._dialog.open(TodoModal, {
       data: { options },

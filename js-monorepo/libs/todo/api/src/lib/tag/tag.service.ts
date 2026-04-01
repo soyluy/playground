@@ -38,7 +38,10 @@ export class TagService {
   ): Promise<UpdateTodoTagResponse> {
     return this._prismaService.tag.update({
       where: { id },
-      data: updateTagDto,
+      data: {
+        name: updateTagDto.name ?? undefined,
+        colorHex: updateTagDto.colorHex ?? undefined,
+      },
     });
   }
 }

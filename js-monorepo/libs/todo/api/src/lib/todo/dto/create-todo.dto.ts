@@ -15,7 +15,7 @@ export class CreateTodoDto implements ICreateTodoDto {
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description: string | null = null;
 
   @IsBoolean()
   @IsNotEmpty()

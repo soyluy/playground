@@ -15,18 +15,18 @@ export class UpdateTodoDto implements IUpdateTodoDto {
 
   @IsString()
   @IsOptional()
-  title?: string;
+  title: string | null = null;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description: string | null = null;
 
   @IsBoolean()
   @IsOptional()
-  completed?: boolean;
+  completed: boolean | null = null;
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  tagIds?: number[];
+  tagIds: number[] | null = null;
 }

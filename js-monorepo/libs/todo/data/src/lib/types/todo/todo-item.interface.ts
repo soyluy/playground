@@ -4,8 +4,8 @@ export interface TodoItem {
   id: number;
   title: string;
   completed: boolean;
-  description?: string;
+  description: string | null;
   createdAt: Date;
   updatedAt: Date;
-  tags?: TodoTag[];
+  tags: TodoTag[] | null;
 }

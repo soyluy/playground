@@ -1,8 +1,8 @@
 import { TodoTag } from '../../types';
 
-export interface UpdateTodoTagDto extends Partial<TodoTag> {
-  name?: string;
-  colorHex?: string;
+export interface UpdateTodoTagDto {
+  name: string | null;
+  colorHex: string | null;
 }
 
 export type UpdateTodoTagResponse = TodoTag;

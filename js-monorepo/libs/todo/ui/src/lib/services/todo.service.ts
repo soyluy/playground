@@ -4,6 +4,7 @@ import {
   DeleteTodoResponse,
   NewTodoItem,
   TodoItem,
+  UpdateTodoDto,
   UpdateTodoResponse,
 } from '@hub/todo-data';
 import { TodoPersistenceService } from './todo-persistence.service';
@@ -32,8 +33,14 @@ export class TodoService {
   }
 
   public updateTodo(todo: TodoItem) {
-    const { createdAt, updatedAt, ...updatedTodo } = todo;
-    const res$ = this._persistenceService.updateTodo(updatedTodo);
+    const dto: UpdateTodoDto = {
+      id: todo.id,
+      title: todo.title,
+      description: todo.description,
+      completed: todo.completed,
+      tagIds: todo.tags !== null ? todo.tags.map((t) => t.id) : null,
+    };
+    const res$ = this._persistenceService.updateTodo(dto);
     res$.subscribe((res: UpdateTodoResponse) => {
       this._todos.update((todos) =>
         todos.map((t) => (t.id === todo.id ? res : t)),

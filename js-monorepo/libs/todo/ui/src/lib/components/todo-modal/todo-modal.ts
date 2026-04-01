@@ -22,7 +22,7 @@ export type TodoModalData = {
 
 export type TodoModalOptions = {
   mode: 'edit' | 'create';
-  editing?: TodoItem;
+  editing: TodoItem | null;
 };
 
 @Component({
