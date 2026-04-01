@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { TodoTagService } from '../../services/todo-tag.service';
 
 export type TodoModalData = {
   options: TodoModalOptions;
@@ -38,17 +40,22 @@ export type TodoModalOptions = {
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatSelectModule,
   ],
+  providers: [TodoTagService],
 })
 export class TodoModal {
   private readonly _data = inject<TodoModalData>(MAT_DIALOG_DATA);
   private readonly _dialogRef = inject(MatDialogRef<TodoModal>);
   private readonly _options = this._data.options;
+  private readonly _tagService = inject(TodoTagService);
 
   protected readonly mode = this._options.mode;
   protected readonly title =
     this._options.mode === 'create' ? 'Create Todo' : 'Edit Todo';
   protected readonly editing = this._options.editing;
+
+  protected readonly tags = this._tagService.getTags();
 
   private readonly fields = {
     title: new FormControl<string>('', Validators.required),
