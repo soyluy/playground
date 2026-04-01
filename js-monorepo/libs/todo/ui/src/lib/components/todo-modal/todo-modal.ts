@@ -27,6 +27,10 @@ export type TodoModalOptions = {
   editing: TodoItem | null;
 };
 
+type FormOutputType = Omit<NewTodoItem, 'tags'> & {
+  tags: number[];
+};
+
 @Component({
   selector: 'todo-modal',
   standalone: true,
@@ -67,11 +71,27 @@ export class TodoModal {
   protected readonly fg: FormGroup = new FormGroup(this.fields);
 
   protected submitForm() {
-    const values = this.fg.value as NewTodoItem;
-    this._dialogRef.close(values);
+    const values = this.fg.value as FormOutputType;
+    const output: NewTodoItem = {
+      title: values.title,
+      description: values.description,
+      completed: values.completed,
+      tags: values.tags.map((tagId) =>
+        this.getTagFromId(tagId as unknown as number),
+      ),
+    };
+    this._dialogRef.close(output);
   }
 
   protected onCancel(): void {
     this._dialogRef.close();
+  }
+
+  private getTagFromId(id: number): TodoTag {
+    const tag = this.tags().find((t) => t.id === id) as TodoTag;
+    if (!tag) {
+      throw new Error(`Tag with id ${id} not found`);
+    }
+    return tag;
   }
 }

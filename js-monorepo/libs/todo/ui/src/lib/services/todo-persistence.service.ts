@@ -16,6 +16,7 @@ export class TodoPersistenceService {
   private readonly _apiService = inject(TodoApiService);
 
   public saveTodo(todo: NewTodoItem): Observable<TodoItem> {
+    console.log('saving todo', todo);
     const dto: CreateTodoDto = {
       title: todo.title,
       description: todo.description,
