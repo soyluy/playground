@@ -1,4 +1,75 @@
 .todo-item {
+  // MDC list items use fixed heights + primary-text offsets that overlap when the
+  // title row is custom flex; allow content to size naturally.
+  &.mdc-list-item--with-one-line,
+  &.mdc-list-item--with-two-lines {
+    height: auto;
+    min-height: var(--mat-list-list-item-one-line-container-height, 48px);
+    align-items: flex-start;
+    padding-block: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  &.mdc-list-item--with-two-lines {
+    min-height: var(--mat-list-list-item-two-line-container-height, 72px);
+  }
+
+  .mdc-list-item__content {
+    justify-content: center;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  &.mdc-list-item--with-two-lines .mdc-list-item__primary-text {
+    margin-bottom: 0;
+    line-height: normal;
+  }
+
+  &.mdc-list-item--with-two-lines .mdc-list-item__primary-text::before,
+  &.mdc-list-item--with-two-lines .mdc-list-item__primary-text::after {
+    display: none;
+  }
+
+  .todo-item__title-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.5rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  // Title only as wide as its text (tags sit right after); long titles shrink + ellipsis.
+  .todo-item__title-text {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .todo-item__tags--inline {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .todo-item__description-line {
+    display: block;
+    margin-top: 0.125rem;
+    font: var(--mat-sys-body-medium, inherit);
+    line-height: 1.5;
+    white-space: normal;
+    word-break: break-word;
+    color: var(--mat-sys-on-surface-variant, inherit);
+    opacity: 1;
+  }
+
   .todo-item__actions {
     display: flex;
     flex-wrap: wrap;

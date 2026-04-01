@@ -8,12 +8,21 @@
     (click)="onToggleCompleted()"
   />
 
-  <span matListItemTitle>{{ todo().title }}</span>
+  <span matListItemTitle class="todo-item__title-row">
+    <span class="todo-item__title-text">{{ todo().title }}</span>
+    @if (tags().length) {
+    <span class="todo-item__tags todo-item__tags--inline">
+      @for (tag of tags(); track tag.id) {
+      <todo-tag-pill [tag]="tag" />
+      }
+    </span>
+    }
+  </span>
 
   @if (todo().description) {
-  <span matListItemLine>{{ todo().description }}</span>
-  } @for (tag of tags(); track tag.id) {
-  <todo-tag-pill [tag]="tag"></todo-tag-pill>
+  <span matListItemLine class="todo-item__description-line">{{
+    todo().description
+  }}</span>
   }
 
   <div matListItemMeta class="todo-item__actions">

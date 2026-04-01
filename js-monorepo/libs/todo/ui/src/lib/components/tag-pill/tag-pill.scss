@@ -2,16 +2,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #fff;
-  width: 100%;
   max-width: 100%;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  font-size: max(12px, 0.8125rem);
+  font-weight: 500;
+  line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .tag-pill__text {

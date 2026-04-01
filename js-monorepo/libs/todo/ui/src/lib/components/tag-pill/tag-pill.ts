@@ -11,8 +11,10 @@ import { TodoTag } from '@hub/todo-data';
 export class TagPillComponent {
   readonly tag = input.required<TodoTag>();
 
-  protected get color(): string {
-    return this.tag().colorHex;
+  /** 6-digit hex with `#` for CSS `background-color` (`colorHex` omits `#`). */
+  protected get backgroundColor(): string {
+    const raw = this.tag().colorHex?.replace(/^#/, '').trim() ?? '';
+    return /^[0-9a-fA-F]{6}$/.test(raw) ? `#${raw}` : '#9e9e9e';
   }
 
   protected get name(): string {
@@ -20,10 +22,13 @@ export class TagPillComponent {
   }
 
   protected get textColor(): string {
-    const color = this.color;
-    const r = parseInt(color.slice(0, 2), 16);
-    const g = parseInt(color.slice(2, 4), 16);
-    const b = parseInt(color.slice(4, 6), 16);
+    const raw = this.tag().colorHex?.replace(/^#/, '').trim() ?? '';
+    if (!/^[0-9a-fA-F]{6}$/.test(raw)) {
+      return '#000';
+    }
+    const r = parseInt(raw.slice(0, 2), 16);
+    const g = parseInt(raw.slice(2, 4), 16);
+    const b = parseInt(raw.slice(4, 6), 16);
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
     return brightness > 128 ? '#000' : '#fff';
   }
