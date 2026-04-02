@@ -13,11 +13,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatList } from '@angular/material/list';
 import { TodoApiService } from './services/todo-api.service';
+import { FilteringUi } from './components/filtering-ui/filtering-ui';
+import { TodoFilter } from '@hub/todo-data';
 
 @Component({
   selector: 'todo-list',
   imports: [
     TodoItemComponent,
+    FilteringUi,
     MatButtonModule,
     MatCardModule,
     MatDividerModule,
@@ -32,6 +35,7 @@ export class TodoList {
   private readonly _dialog = inject(MatDialog);
   private readonly _crudService = inject(TodoService);
   protected todos = this._crudService.getTodos();
+  protected activeFilter = this._crudService.getFilter();
 
   onAddTodoClick(): void {
     const options: TodoModalOptions = {
@@ -48,5 +52,13 @@ export class TodoList {
         this._crudService.addTodo(result);
       }
     });
+  }
+
+  onFilterApply(filter: TodoFilter): void {
+    this._crudService.setFilter(filter);
+  }
+
+  onFilterClear(): void {
+    this._crudService.setFilter({});
   }
 }

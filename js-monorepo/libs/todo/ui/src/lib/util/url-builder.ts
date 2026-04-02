@@ -8,7 +8,9 @@ type Params = {
   path?: PathParams;
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UrlBuilderService {
   private readonly _apiUrl = inject(ENVIRONMENT).apiUrl;
 

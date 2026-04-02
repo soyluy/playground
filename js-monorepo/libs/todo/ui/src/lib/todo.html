@@ -1,14 +1,21 @@
 <section class="todo-shell">
   <header class="todo-shell__header">
     <h1 class="todo-shell__title">Todo List</h1>
-    <button
-      mat-flat-button
-      color="primary"
-      type="button"
-      (click)="onAddTodoClick()"
-    >
-      Add Todo
-    </button>
+    <div class="todo-shell__actions">
+      <todo-filtering-ui
+        [filter]="activeFilter()"
+        (filterApply)="onFilterApply($event)"
+        (filterClear)="onFilterClear()"
+      />
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="onAddTodoClick()"
+      >
+        Add Todo
+      </button>
+    </div>
   </header>
 
   @if (todos().length === 0) {
