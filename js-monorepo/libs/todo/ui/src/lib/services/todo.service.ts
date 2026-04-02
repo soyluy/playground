@@ -41,6 +41,7 @@ export class TodoService {
     const dto: UpdateTodoDto = {
       id: todo.id,
       title: todo.title,
+      dueDate: todo.dueDate,
       description: todo.description,
       completed: todo.completed,
       tagIds: todo.tags !== null ? todo.tags.map((t) => t.id) : null,
@@ -76,8 +77,13 @@ export class TodoService {
     return this._activeFilter.asReadonly();
   }
 
-  private applyFilterAndSort(todos: TodoItem[], filter: TodoFilter): TodoItem[] {
-    const filteredTodos = todos.filter((todo) => this.matchesFilter(todo, filter));
+  private applyFilterAndSort(
+    todos: TodoItem[],
+    filter: TodoFilter,
+  ): TodoItem[] {
+    const filteredTodos = todos.filter((todo) =>
+      this.matchesFilter(todo, filter),
+    );
     return this.sortTodos(filteredTodos, filter);
   }
 

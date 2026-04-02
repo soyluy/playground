@@ -64,17 +64,21 @@ export class TodoModal {
   protected readonly tags = this._tagService.getTags();
 
   private readonly fields = {
-    title: new FormControl<string>('', Validators.required),
-    description: new FormControl<string>(''),
-    completed: new FormControl<boolean>(false),
-    dueDate: new FormControl<Date | null>(null),
-    tags: new FormControl<TodoTag[]>([]),
+    title: new FormControl<string>(
+      this.editing?.title ?? '',
+      Validators.required,
+    ),
+    description: new FormControl<string>(this.editing?.description ?? ''),
+    completed: new FormControl<boolean>(this.editing?.completed ?? false),
+    dueDate: new FormControl<Date | null>(this.editing?.dueDate ?? null),
+    tags: new FormControl<number[]>(this.editing?.tags?.map((t) => t.id) ?? []),
   };
 
   protected readonly fg: FormGroup = new FormGroup(this.fields);
 
   protected submitForm() {
     const values = this.fg.value as FormOutputType;
+    console.log('values', values);
     const output: NewTodoItem = {
       title: values.title,
       description: values.description,
