@@ -31,12 +31,13 @@
     [class.todo-item__description-line--placeholder]="!hasDescription()"
   >
     <span
+      #descriptionTextRef
       class="todo-item__description-text"
       [class.todo-item__description-text--expanded]="isDescriptionExpanded"
     >
       {{ descriptionText() }}
     </span>
-    @if (hasDescription()) {
+    @if (hasDescription() && (isDescriptionExpanded || isDescriptionTruncated())) {
     <button
       mat-button
       type="button"
