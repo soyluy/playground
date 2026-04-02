@@ -13,6 +13,7 @@ import {
   MatListItemTitle,
 } from '@angular/material/list';
 import { TagPillComponent } from '../tag-pill/tag-pill';
+import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indicator';
 
 @Component({
   selector: 'todo-item',
@@ -26,6 +27,7 @@ import { TagPillComponent } from '../tag-pill/tag-pill';
     MatButtonModule,
     MatCheckboxModule,
     TagPillComponent,
+    DueDateIndicatorComponent,
   ],
   templateUrl: './todo-item.html',
   styleUrls: ['./todo-item.scss'],
@@ -34,9 +36,16 @@ export class TodoItemComponent {
   readonly todo = input.required<TodoItem>();
   private readonly _crudService = inject(TodoService);
   private readonly dialog = inject(MatDialog);
+  protected isDescriptionExpanded = false;
 
   protected readonly tags: Signal<TodoTag[]> = computed(
     () => this.todo().tags ?? [],
+  );
+  protected readonly hasDescription: Signal<boolean> = computed(() =>
+    Boolean(this.todo().description?.trim()),
+  );
+  protected readonly descriptionText: Signal<string> = computed(
+    () => this.todo().description?.trim() ?? '\u00A0',
   );
 
   protected onEdit(): void {
@@ -68,5 +77,12 @@ export class TodoItemComponent {
       ...this.todo(),
       completed: !this.todo().completed,
     });
+  }
+
+  protected onDescriptionToggle(): void {
+    if (!this.hasDescription()) {
+      return;
+    }
+    this.isDescriptionExpanded = !this.isDescriptionExpanded;
   }
 }

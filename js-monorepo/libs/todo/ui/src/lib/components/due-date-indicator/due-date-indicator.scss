@@ -1,0 +1,10 @@
+.due-date-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  background: var(--mat-sys-surface-container-high, #eeeeee);
+  color: var(--mat-sys-on-surface, inherit);
+  font: var(--mat-sys-label-medium, 500 0.75rem/1rem Roboto, sans-serif);
+  white-space: nowrap;
+}

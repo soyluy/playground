@@ -17,13 +17,39 @@
       }
     </span>
     }
+    @if (todo().dueDate) {
+    <todo-due-date-indicator
+      class="todo-item__due-date"
+      [dueDate]="todo().dueDate"
+    />
+    }
   </span>
 
-  @if (todo().description) {
-  <span matListItemLine class="todo-item__description-line">{{
-    todo().description
-  }}</span>
-  }
+  <span
+    matListItemLine
+    class="todo-item__description-line"
+    [class.todo-item__description-line--placeholder]="!hasDescription()"
+  >
+    <span
+      class="todo-item__description-text"
+      [class.todo-item__description-text--expanded]="isDescriptionExpanded"
+    >
+      {{ descriptionText() }}
+    </span>
+    @if (hasDescription()) {
+    <button
+      mat-button
+      type="button"
+      class="todo-item__description-toggle"
+      [attr.aria-label]="
+        isDescriptionExpanded ? 'Collapse description' : 'Expand description'
+      "
+      (click)="onDescriptionToggle()"
+    >
+      {{ isDescriptionExpanded ? 'Less' : '...' }}
+    </button>
+    }
+  </span>
 
   <div matListItemMeta class="todo-item__actions">
     <button mat-button type="button" (click)="onEdit()">Edit</button>

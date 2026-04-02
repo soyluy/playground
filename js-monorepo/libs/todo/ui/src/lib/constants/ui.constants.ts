@@ -1,0 +1,1 @@
+export const TODO_DUE_DATE_TOOLTIP_SHOW_DELAY_MS = 200;
