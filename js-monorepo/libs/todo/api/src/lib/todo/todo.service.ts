@@ -2,8 +2,14 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@hub/prisma';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { DeleteTodoDto, TodoItem } from '@hub/todo-data';
+import {
+  DeleteTodoDto,
+  GetTodoQueryParamsDto,
+  PaginationDto,
+  TodoItem,
+} from '@hub/todo-data';
 import { Prisma } from '@hub/prisma';
+import { TodoFilter } from '@hub/todo-data';
 
 @Injectable()
 export class TodoService {
@@ -28,7 +34,13 @@ export class TodoService {
     });
   }
 
-  async getTodos() {
+  async getTodos(query: GetTodoQueryParamsDto) {
+    const pagination = this.buildPagination(query);
+
+    const where: Prisma.TodoWhereInput = this.buildWhere(query);
+    const orderBy: Prisma.TodoOrderByWithRelationInput | undefined =
+      this.buildOrderBy(query);
+
     return this._prismaService.todo.findMany({
       select: {
         id: true,
@@ -46,6 +58,9 @@ export class TodoService {
           },
         },
       },
+      where,
+      orderBy,
+      ...pagination,
     });
   }
 
@@ -101,5 +116,54 @@ export class TodoService {
       where: { id },
       data: { completed: !todo.completed },
     });
+  }
+
+  private buildPagination(
+    query: PaginationDto,
+  ): { skip: number; take: number } | undefined {
+    if (query.page && query.pageSize) {
+      return {
+        skip: (query.page - 1) * query.pageSize,
+        take: query.pageSize,
+      };
+    }
+    return undefined;
+  }
+
+  private buildWhere(
+    query: Omit<TodoFilter, 'sortBy' | 'sortOrder'>,
+  ): Prisma.TodoWhereInput {
+    const where: Prisma.TodoWhereInput = {};
+    if (query.search) {
+      where.title = { contains: query.search, mode: 'insensitive' };
+    }
+    if (query.tags) {
+      where.tags = { some: { id: { in: query.tags } } };
+    }
+    if (query.allIncludeTags) {
+      where.tags = { every: { id: { in: query.allIncludeTags } } };
+    }
+    if (query.allExcludeTags) {
+      where.tags = { none: { id: { in: query.allExcludeTags } } };
+    }
+    if (query.completed) {
+      where.completed = query.completed;
+    }
+    if (query.dueDateBefore) {
+      where.dueDate = { lt: query.dueDateBefore };
+    }
+    if (query.dueDateAfter) {
+      where.dueDate = { gt: query.dueDateAfter };
+    }
+    return where;
+  }
+
+  private buildOrderBy(
+    query: TodoFilter,
+  ): Prisma.TodoOrderByWithRelationInput | undefined {
+    if (query.sortBy) {
+      return { [query.sortBy]: query.sortOrder };
+    }
+    return undefined;
   }
 }

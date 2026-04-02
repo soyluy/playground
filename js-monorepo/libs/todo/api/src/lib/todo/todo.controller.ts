@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -17,6 +18,7 @@ import {
   UpdateTodoResponse,
   DeleteTodoResponse,
 } from '@hub/todo-data';
+import { GetTodoQueryParamsDto } from './dto/get-todo.dto';
 
 @Controller('todo')
 export class TodoController {
@@ -24,8 +26,8 @@ export class TodoController {
   private readonly _todoService!: TodoService;
 
   @Get()
-  getTodos() {
-    return this._todoService.getTodos();
+  getTodos(@Query() query: GetTodoQueryParamsDto) {
+    return this._todoService.getTodos(query);
   }
 
   @Post()
