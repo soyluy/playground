@@ -16,6 +16,7 @@ export class TodoService {
       data: {
         title: data.title,
         description: data.description ?? undefined,
+        dueDate: data.dueDate ?? undefined,
         completed: data.completed,
         tags: {
           connect: tagIds.map((id) => ({ id })),
@@ -33,6 +34,7 @@ export class TodoService {
         id: true,
         title: true,
         completed: true,
+        dueDate: true,
         description: true,
         createdAt: true,
         updatedAt: true,
@@ -65,6 +67,7 @@ export class TodoService {
       title: rest.title ?? undefined,
       description: rest.description ?? undefined,
       completed: rest.completed ?? undefined,
+      dueDate: rest.dueDate ?? undefined,
     };
     if (tagIds !== null) {
       data.tags = {

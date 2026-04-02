@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TodoTagService } from '../../services/todo-tag.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 export type TodoModalData = {
   options: TodoModalOptions;
@@ -45,6 +46,7 @@ type FormOutputType = Omit<NewTodoItem, 'tags'> & {
     MatCheckboxModule,
     MatButtonModule,
     MatSelectModule,
+    MatDatepickerModule,
   ],
   providers: [TodoTagService],
 })
@@ -65,6 +67,7 @@ export class TodoModal {
     title: new FormControl<string>('', Validators.required),
     description: new FormControl<string>(''),
     completed: new FormControl<boolean>(false),
+    dueDate: new FormControl<Date | null>(null),
     tags: new FormControl<TodoTag[]>([]),
   };
 
@@ -75,6 +78,7 @@ export class TodoModal {
     const output: NewTodoItem = {
       title: values.title,
       description: values.description,
+      dueDate: values.dueDate,
       completed: values.completed,
       tags: values.tags.map((tagId) =>
         this.getTagFromId(tagId as unknown as number),

@@ -1,7 +1,9 @@
 import { UpdateTodoDto as IUpdateTodoDto } from '@hub/todo-data';
+import { Transform } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -20,6 +22,11 @@ export class UpdateTodoDto implements IUpdateTodoDto {
   @IsString()
   @IsOptional()
   description: string | null = null;
+
+  @IsDate()
+  @Transform(({ value }) => (value ? new Date(value) : null))
+  @IsOptional()
+  dueDate!: Date | null;
 
   @IsBoolean()
   @IsOptional()

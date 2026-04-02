@@ -14,6 +14,20 @@
 
     <mat-checkbox formControlName="completed">Completed</mat-checkbox>
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Due Date</mat-label>
+      <input
+        matInput
+        formControlName="dueDate"
+        [matDatepicker]="dueDatePicker"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dueDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dueDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Tags</mat-label>
       <mat-select formControlName="tags" multiple>
         @for(tag of tags(); track tag.id) {

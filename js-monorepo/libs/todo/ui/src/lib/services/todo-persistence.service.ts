@@ -20,6 +20,7 @@ export class TodoPersistenceService {
     const dto: CreateTodoDto = {
       title: todo.title,
       description: todo.description,
+      dueDate: todo.dueDate,
       completed: todo.completed,
       tagIds: todo.tags !== null ? todo.tags.map((tag) => tag.id) : [],
     };

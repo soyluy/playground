@@ -5,6 +5,7 @@ export interface CreateTodoDto {
   description: string | null;
   completed: boolean;
   tagIds: number[];
+  dueDate: Date | null;
 }
 
 export type CreateTodoResponse = TodoItem;
