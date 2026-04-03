@@ -137,23 +137,27 @@ export class TodoService {
     if (query.search) {
       where.title = { contains: query.search, mode: 'insensitive' };
     }
+    const tagsAnd: Prisma.TodoWhereInput[] = [];
     if (query.tags) {
-      where.tags = { some: { id: { in: query.tags } } };
+      tagsAnd.push({ tags: { some: { id: { in: query.tags } } } });
     }
     if (query.allIncludeTags) {
-      where.tags = { every: { id: { in: query.allIncludeTags } } };
+      tagsAnd.push({ tags: { every: { id: { in: query.allIncludeTags } } } });
     }
     if (query.allExcludeTags) {
-      where.tags = { none: { id: { in: query.allExcludeTags } } };
+      tagsAnd.push({ tags: { none: { id: { in: query.allExcludeTags } } } });
+    }
+    if (tagsAnd.length > 0) {
+      where.AND = tagsAnd;
     }
     if (query.completed) {
       where.completed = query.completed;
     }
-    if (query.dueDateBefore) {
-      where.dueDate = { lt: query.dueDateBefore };
-    }
-    if (query.dueDateAfter) {
-      where.dueDate = { gt: query.dueDateAfter };
+    if (query.dueDateBefore || query.dueDateAfter) {
+      where.dueDate = {
+        ...(query.dueDateBefore && { lt: query.dueDateBefore }),
+        ...(query.dueDateAfter && { gt: query.dueDateAfter }),
+      };
     }
     return where;
   }
