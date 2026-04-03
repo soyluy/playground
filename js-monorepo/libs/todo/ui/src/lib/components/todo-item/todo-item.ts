@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   OnDestroy,
@@ -43,13 +44,14 @@ import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indica
   ],
   templateUrl: './todo-item.html',
   styleUrls: ['./todo-item.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoItemComponent implements AfterViewInit, OnDestroy {
   readonly todo = input.required<TodoItem>();
   private readonly _crudService = inject(TodoService);
   private readonly dialog = inject(MatDialog);
   private resizeObserver: ResizeObserver | null = null;
-  protected isDescriptionExpanded = false;
+  protected readonly isDescriptionExpanded = signal(false);
   protected readonly isDescriptionTruncated = signal(false);
   @ViewChild('descriptionTextRef')
   private descriptionTextRef?: ElementRef<HTMLElement>;
@@ -116,7 +118,7 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
     if (!this.hasDescription()) {
       return;
     }
-    this.isDescriptionExpanded = !this.isDescriptionExpanded;
+    this.isDescriptionExpanded.set(!this.isDescriptionExpanded());
     this.scheduleTruncationMeasurement();
   }
 
@@ -144,12 +146,17 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
 
   private measureDescriptionTruncation(): void {
     const descriptionElement = this.descriptionTextRef?.nativeElement;
-    if (!descriptionElement || !this.hasDescription() || this.isDescriptionExpanded) {
+    if (
+      !descriptionElement ||
+      !this.hasDescription() ||
+      this.isDescriptionExpanded()
+    ) {
       this.isDescriptionTruncated.set(false);
       return;
     }
 
-    const isTruncated = descriptionElement.scrollWidth > descriptionElement.clientWidth;
+    const isTruncated =
+      descriptionElement.scrollWidth > descriptionElement.clientWidth;
     this.isDescriptionTruncated.set(isTruncated);
   }
 }

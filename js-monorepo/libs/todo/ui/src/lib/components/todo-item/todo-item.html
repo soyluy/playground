@@ -16,8 +16,7 @@
       <todo-tag-pill [tag]="tag" />
       }
     </span>
-    }
-    @if (todo().dueDate) {
+    } @if (todo().dueDate) {
     <todo-due-date-indicator
       class="todo-item__due-date"
       [dueDate]="todo().dueDate"
@@ -33,21 +32,22 @@
     <span
       #descriptionTextRef
       class="todo-item__description-text"
-      [class.todo-item__description-text--expanded]="isDescriptionExpanded"
+      [class.todo-item__description-text--expanded]="isDescriptionExpanded()"
     >
       {{ descriptionText() }}
     </span>
-    @if (hasDescription() && (isDescriptionExpanded || isDescriptionTruncated())) {
+    @if (hasDescription() && (isDescriptionExpanded() ||
+    isDescriptionTruncated())) {
     <button
       mat-button
       type="button"
       class="todo-item__description-toggle"
       [attr.aria-label]="
-        isDescriptionExpanded ? 'Collapse description' : 'Expand description'
+        isDescriptionExpanded() ? 'Collapse description' : 'Expand description'
       "
       (click)="onDescriptionToggle()"
     >
-      {{ isDescriptionExpanded ? 'Less' : '...' }}
+      {{ isDescriptionExpanded() ? 'Less' : '...' }}
     </button>
     }
   </span>
