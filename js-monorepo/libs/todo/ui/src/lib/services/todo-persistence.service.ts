@@ -25,45 +25,42 @@ export class TodoPersistenceService {
       tagIds: todo.tags !== null ? todo.tags.map((tag) => tag.id) : [],
     };
     const res$ = this._apiService.createTodo(dto);
-    res$.pipe(
+    return res$.pipe(
       tap((res: CreateTodoResponse) => {
         console.log('todo saved');
         console.log(res);
       }),
     );
-    return res$;
   }
 
   public updateTodo(todo: UpdateTodoDto): Observable<UpdateTodoResponse> {
     const res$ = this._apiService.updateTodo(todo);
-    res$.pipe(
+
+    return res$.pipe(
       tap((res: UpdateTodoResponse) => {
         console.log('todo updated');
         console.log(res);
       }),
     );
-    return res$;
   }
 
   public deleteTodo(id: number): Observable<DeleteTodoResponse> {
     const res$ = this._apiService.deleteTodo(id);
-    res$.pipe(
+    return res$.pipe(
       tap((res: DeleteTodoResponse) => {
         console.log('todo deleted');
         console.log(res);
       }),
     );
-    return res$;
   }
 
   public getTodos(): Observable<TodoItem[]> {
     const res$ = this._apiService.getTodos();
-    res$.pipe(
+    return res$.pipe(
       tap((res: TodoItem[]) => {
         console.log('todos fetched');
         console.log(res);
       }),
     );
-    return res$;
   }
 }
