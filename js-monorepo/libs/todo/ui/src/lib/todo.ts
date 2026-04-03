@@ -13,14 +13,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatList } from '@angular/material/list';
 import { TodoApiService } from './services/todo-api.service';
-import { FilteringUi } from './components/filtering-ui/filtering-ui';
 import { TodoFilter } from '@hub/todo-data';
 
 @Component({
   selector: 'todo-list',
   imports: [
     TodoItemComponent,
-    FilteringUi,
     MatButtonModule,
     MatCardModule,
     MatDividerModule,

@@ -2,11 +2,6 @@
   <header class="todo-shell__header">
     <h1 class="todo-shell__title">Todo List</h1>
     <div class="todo-shell__actions">
-      <todo-filtering-ui
-        [filter]="activeFilter()"
-        (filterApply)="onFilterApply($event)"
-        (filterClear)="onFilterClear()"
-      />
       <button
         mat-flat-button
         color="primary"
