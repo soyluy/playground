@@ -37,7 +37,6 @@ export class TodoList {
   private readonly _filterService = inject(TodoFilterService);
 
   protected todos = this._crudService.getTodos();
-  protected activeFilter = this._crudService.getFilter();
 
   onAddTodoClick(): void {
     this.openTodoModal();
