@@ -10,7 +10,7 @@ import {
 } from '@hub/todo-data';
 import { TodoPersistenceService } from './todo-persistence.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TodoService {
   private readonly _persistenceService = inject(TodoPersistenceService);
   private readonly _todos = signal<TodoItem[]>([]);

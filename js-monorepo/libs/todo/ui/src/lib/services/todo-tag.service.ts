@@ -15,7 +15,7 @@ import {
 } from '@hub/todo-data';
 import { TagApiService } from './tag-api.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TodoTagService {
   private readonly _tags: WritableSignal<TodoTag[]> = signal<TodoTag[]>([]);
   private readonly _tagApiService = inject(TagApiService);

@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { TODO_ROUTES } from '../constants/route.constants';
 import { UrlBuilderService } from '../util/url-builder';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TodoApiService {
   private readonly _http = inject(HttpClient);
   private readonly _urlBuilder = inject(UrlBuilderService);

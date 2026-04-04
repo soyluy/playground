@@ -11,7 +11,7 @@ import {
 import { TodoApiService } from './todo-api.service';
 import { Observable, tap } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TodoPersistenceService {
   private readonly _apiService = inject(TodoApiService);
 
