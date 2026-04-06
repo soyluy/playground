@@ -1,0 +1,2 @@
+- installed ffmpeg-static from npm and added it to the project
+- ffmpeg-static gives the path to the ffmpeg executable
