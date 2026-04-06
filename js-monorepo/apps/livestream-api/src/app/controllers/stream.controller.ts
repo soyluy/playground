@@ -44,8 +44,8 @@ export class StreamController {
 
 
     // Example watermark — in the real app, this would include the user's identity
-    const watermark = `drawtext=text='CAM ${cameraId}':fontcolor=white:fontsize=24:x=10:y=10`;
-
+		const watermark = `drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text=CAM\\ ${cameraId}:fontcolor=white:fontsize=48:x=10:y=10`;
+		
     const hlsProcess = this.ffmpeg.streamToHls(sourceUrl, outputDir, [watermark]);
 
     this.activeStreams.set(cameraId, hlsProcess);

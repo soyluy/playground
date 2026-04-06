@@ -3,7 +3,6 @@ import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { Readable } from 'stream';
 import { mkdirSync } from 'fs';
 import { join } from 'path';
-import ffmpegPath from 'ffmpeg-static';
 
 export interface FfmpegProcess {
   stream: Readable;
@@ -30,7 +29,7 @@ export class FfmpegService implements OnModuleDestroy {
   run(args: string[]): FfmpegProcess {
     this.logger.debug(`Spawning ffmpeg with args: ${args.join(' ')}`);
 
-    const process = spawn(ffmpegPath as string, args, {
+    const process = spawn('ffmpeg', args, {
       stdio: ['ignore', 'pipe', 'pipe'],
     }) as unknown as ChildProcessWithoutNullStreams;
 
