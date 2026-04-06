@@ -1,10 +1,17 @@
 import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { Readable } from 'stream';
+import { mkdirSync } from 'fs';
+import { join } from 'path';
 import ffmpegPath from 'ffmpeg-static';
 
 export interface FfmpegProcess {
   stream: Readable;
+  kill: () => void;
+}
+
+export interface HlsProcess {
+  playlistPath: string; // absolute path to the .m3u8 file
   kill: () => void;
 }
 
@@ -78,12 +85,64 @@ export class FfmpegService implements OnModuleDestroy {
       '-i', sourceUrl,
       '-vf', `drawtext=text='${escapedText}':fontcolor=white:fontsize=24:x=10:y=10`,
       '-c:v', 'libx264',
-      '-preset', 'ultrafast', // minimize encoding latency
+      '-preset', 'ultrafast',
       '-tune', 'zerolatency',
       '-c:a', 'copy',
       '-f', 'mpegts',
       'pipe:1',
     ]);
+  }
+
+  /**
+   * Stream a source to HLS format, writing segments + playlist to disk.
+   *
+   * @param sourceUrl  - input (local file, RTSP, HTTP)
+   * @param outputDir  - directory where segments and playlist will be written
+   * @param filters    - optional ffmpeg -vf filter strings (e.g. drawtext for watermark)
+   *
+   * Example without watermark:
+   *   this.ffmpeg.streamToHls('video.mp4', '/tmp/streams/cam1')
+   *
+   * Example with watermark (composed by caller):
+   *   const watermark = `drawtext=text='John Doe':fontcolor=white:fontsize=24:x=10:y=10`;
+   *   this.ffmpeg.streamToHls('video.mp4', '/tmp/streams/cam1', [watermark])
+   */
+  streamToHls(sourceUrl: string, outputDir: string, filters?: string[]): HlsProcess {
+    mkdirSync(outputDir, { recursive: true });
+
+    const playlistPath = join(outputDir, 'index.m3u8');
+    const segmentPattern = join(outputDir, 'segment%03d.ts');
+
+    const hasFilters = filters && filters.length > 0;
+
+    const args: string[] = [
+      '-stream_loop', '-1',   // loop input indefinitely (for local files)
+      '-re',
+      '-i', sourceUrl,
+    ];
+
+    if (hasFilters) {
+      args.push('-vf', filters.join(','));
+      args.push('-c:v', 'libx264');
+      args.push('-preset', 'ultrafast');
+      args.push('-tune', 'zerolatency');
+    } else {
+      args.push('-c:v', 'copy');
+    }
+
+    args.push(
+      '-c:a', 'copy',
+      '-f', 'hls',
+      '-hls_time', '4',
+      '-hls_list_size', '5',
+      '-hls_flags', 'delete_segments',
+      '-hls_segment_filename', segmentPattern,
+      playlistPath,
+    );
+
+    const { kill } = this.run(args);
+
+    return { playlistPath, kill };
   }
 
   /**
