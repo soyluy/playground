@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stream Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #111;
+      color: #eee;
+    }
+    h1 { font-size: 1.2rem; margin-bottom: 24px; }
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+    input {
+      background: #222;
+      border: 1px solid #444;
+      color: #eee;
+      padding: 6px 10px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      width: 160px;
+    }
+    button {
+      padding: 6px 14px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+    #btn-start { background: #2a7a2a; color: #fff; }
+    #btn-stop  { background: #7a2a2a; color: #fff; }
+    #btn-play  { background: #2a4a7a; color: #fff; }
+    video {
+      width: 100%;
+      background: #000;
+      display: block;
+      margin-top: 16px;
+    }
+    #log {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: #aaa;
+      height: 120px;
+      overflow-y: auto;
+      border: 1px solid #333;
+      padding: 8px;
+      background: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <h1>HLS Stream Tester</h1>
+
+  <div class="controls">
+    <input id="camera-id" type="text" placeholder="Camera ID" value="cam1" />
+    <button id="btn-start">Start</button>
+    <button id="btn-stop">Stop</button>
+    <button id="btn-play">Play</button>
+  </div>
+
+  <video id="video" controls muted></video>
+  <div id="log"></div>
+
+  <script>
+    const API = 'http://localhost:3000/api/stream';
+    const video = document.getElementById('video');
+    const log   = document.getElementById('log');
+    let hls = null;
+
+    function print(msg) {
+      const line = document.createElement('div');
+      line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      log.appendChild(line);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function getCameraId() {
+      return document.getElementById('camera-id').value.trim();
+    }
+
+    document.getElementById('btn-start').addEventListener('click', async () => {
+      const cameraId = getCameraId();
+      try {
+        const res = await fetch(`${API}/${cameraId}/start`, { method: 'POST' });
+        const data = await res.json();
+        print(res.ok ? data.message : `Error: ${data.message}`);
+      } catch (e) {
+        print(`Request failed: ${e.message}`);
+      }
+    });
+
+    document.getElementById('btn-stop').addEventListener('click', async () => {
+      const cameraId = getCameraId();
+
+      // Destroy hls instance before stopping
+      if (hls) { hls.destroy(); hls = null; }
+
+      try {
+        const res = await fetch(`${API}/${cameraId}/stop`, { method: 'DELETE' });
+        const data = await res.json();
+        print(res.ok ? data.message : `Error: ${data.message}`);
+      } catch (e) {
+        print(`Request failed: ${e.message}`);
+      }
+    });
+
+    document.getElementById('btn-play').addEventListener('click', () => {
+      const cameraId = getCameraId();
+      const url = `${API}/${cameraId}/index.m3u8`;
+
+      if (hls) { hls.destroy(); }
+
+      if (Hls.isSupported()) {
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          print('Manifest loaded — starting playback');
+          video.play();
+        });
+        hls.on(Hls.Events.ERROR, (_, data) => {
+          print(`HLS error: ${data.type} — ${data.details}`);
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS support (Safari)
+        video.src = url;
+        video.play();
+        print('Using native HLS (Safari)');
+      } else {
+        print('HLS not supported in this browser');
+      }
+    });
+  </script>
+</body>
+</html>
