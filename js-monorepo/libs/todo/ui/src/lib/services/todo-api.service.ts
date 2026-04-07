@@ -5,6 +5,7 @@ import {
   CreateTodoResponse,
   DeleteTodoResponse,
   GetTodoQueryParamsDto,
+  GetTodosResponse,
   TodoItem,
   UpdateTodoDto,
   UpdateTodoResponse,
@@ -19,13 +20,13 @@ export class TodoApiService {
   private readonly _urlBuilder = inject(UrlBuilderService);
 
   // TODO: Add GetTodosResponse type
-  public getTodos(query?: GetTodoQueryParamsDto): Observable<TodoItem[]> {
+  public getTodos(query?: GetTodoQueryParamsDto): Observable<GetTodosResponse> {
     const params = {
       query: query as Record<string, unknown>,
     };
     const url = this._urlBuilder.urlBuilder(TODO_ROUTES.GET_ALL, params);
     console.log('building get todos request');
-    return this._http.get<TodoItem[]>(url);
+    return this._http.get<GetTodosResponse>(url);
   }
 
   public createTodo(todo: CreateTodoDto): Observable<CreateTodoResponse> {

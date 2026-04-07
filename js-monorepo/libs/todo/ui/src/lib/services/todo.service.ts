@@ -1,7 +1,17 @@
-import { computed, inject, Injectable, Signal, signal } from '@angular/core';
+import {
+  computed,
+  inject,
+  Injectable,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import {
   CreateTodoResponse,
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
   DeleteTodoResponse,
+  GetTodosResponse,
   NewTodoItem,
   TodoFilter,
   TodoItem,
@@ -11,7 +21,7 @@ import {
 import { TodoPersistenceService } from './todo-persistence.service';
 import { TodoFilterService } from './todo-filter.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, switchMap } from 'rxjs';
+import { debounceTime, map, switchMap, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
@@ -23,9 +33,13 @@ export class TodoService {
   private readonly _refresh = signal(0);
 
   private readonly _todos: Signal<TodoItem[]>;
+  private readonly _total: WritableSignal<number> = signal(0);
+  private readonly _page: WritableSignal<number> = signal(DEFAULT_PAGE);
+  private readonly _pageSize: WritableSignal<number> =
+    signal(DEFAULT_PAGE_SIZE);
 
   constructor() {
-    const todos$ = toObservable(
+    const todosResponse$ = toObservable(
       computed(() => ({
         filter: this._activeFilter(),
         _refresh: this._refresh(),
@@ -35,9 +49,16 @@ export class TodoService {
       switchMap(({ filter }) =>
         this._persistenceService.getTodos(filter ?? undefined),
       ),
+      tap((res: GetTodosResponse) => {
+        console.log('todos fetched', res);
+        this._total.set(res.total);
+        this._page.set(res.page);
+        this._pageSize.set(res.pageSize);
+      }),
+      map((res: GetTodosResponse) => res.data),
     );
 
-    this._todos = toSignal(todos$, { initialValue: [] }) as Signal<TodoItem[]>;
+    this._todos = toSignal(todosResponse$, { initialValue: [] });
   }
 
   public getTodos(): Signal<TodoItem[]> {

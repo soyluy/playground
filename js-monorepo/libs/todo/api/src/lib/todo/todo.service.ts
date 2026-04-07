@@ -3,8 +3,11 @@ import { PrismaService } from '@hub/prisma';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
   DeleteTodoDto,
   GetTodoQueryParamsDto,
+  GetTodosResponse,
   PaginationDto,
   TodoItem,
 } from '@hub/todo-data';
@@ -34,14 +37,14 @@ export class TodoService {
     });
   }
 
-  async getTodos(query: GetTodoQueryParamsDto) {
+  async getTodos(query: GetTodoQueryParamsDto): Promise<GetTodosResponse> {
     const pagination = this.buildPagination(query);
 
     const where: Prisma.TodoWhereInput = this.buildWhere(query);
     const orderBy: Prisma.TodoOrderByWithRelationInput | undefined =
       this.buildOrderBy(query);
 
-    return this._prismaService.todo.findMany({
+    const todos = await this._prismaService.todo.findMany({
       select: {
         id: true,
         title: true,
@@ -62,6 +65,17 @@ export class TodoService {
       orderBy,
       ...pagination,
     });
+
+    const total = await this._prismaService.todo.count({
+      where,
+    });
+
+    return {
+      data: todos,
+      total,
+      page: query.page ?? DEFAULT_PAGE,
+      pageSize: query.pageSize ?? DEFAULT_PAGE_SIZE,
+    };
   }
 
   async getTodo(id: number) {

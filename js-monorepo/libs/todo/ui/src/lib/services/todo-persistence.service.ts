@@ -3,6 +3,7 @@ import {
   CreateTodoDto,
   CreateTodoResponse,
   DeleteTodoResponse,
+  GetTodosResponse,
   NewTodoItem,
   TodoFilter,
   TodoItem,
@@ -58,10 +59,10 @@ export class TodoPersistenceService {
     );
   }
 
-  public getTodos(filter?: TodoFilter): Observable<TodoItem[]> {
+  public getTodos(filter?: TodoFilter): Observable<GetTodosResponse> {
     const res$ = this._apiService.getTodos(filter);
     return res$.pipe(
-      tap((res: TodoItem[]) => {
+      tap((res: GetTodosResponse) => {
         console.log('todos fetched');
         console.log(res);
       }),
