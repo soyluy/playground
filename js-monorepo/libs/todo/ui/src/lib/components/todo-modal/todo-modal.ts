@@ -47,8 +47,7 @@ type FormOutputType = Omit<NewTodoItem, 'tags'> & {
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-  ],
-  providers: [TodoTagService],
+  ]
 })
 export class TodoModal {
   private readonly _data = inject<TodoModalData>(MAT_DIALOG_DATA);

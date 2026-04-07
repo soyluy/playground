@@ -6,13 +6,11 @@ import {
 } from './components/todo-modal/todo-modal';
 import { MatDialog } from '@angular/material/dialog';
 import { NewTodoItem } from '@hub/todo-data';
-import { TodoPersistenceService } from './services/todo-persistence.service';
 import { TodoItemComponent } from './components/todo-item/todo-item';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatList } from '@angular/material/list';
-import { TodoApiService } from './services/todo-api.service';
 import { TodoFilter } from '@hub/todo-data';
 import { FilteringModal } from './components/filtering-modal/filtering-modal';
 import { TodoFilterService } from './services/todo-filter.service';
@@ -28,8 +26,7 @@ import { TodoFilterService } from './services/todo-filter.service';
   ],
   templateUrl: './todo.html',
   styleUrls: ['./todo.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TodoService, TodoPersistenceService, TodoApiService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoList {
   private readonly _dialog = inject(MatDialog);

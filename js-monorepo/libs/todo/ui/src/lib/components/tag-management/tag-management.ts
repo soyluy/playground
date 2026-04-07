@@ -12,7 +12,6 @@ import { TodoTagModal } from './tag-modal/tag-modal';
   templateUrl: './tag-management.html',
   styleUrls: ['./tag-management.scss'],
   imports: [MatButtonModule, TagDisplay],
-  providers: [TodoTagService],
 })
 export class TagManagement {
   private readonly _todoTagService = inject(TodoTagService);
