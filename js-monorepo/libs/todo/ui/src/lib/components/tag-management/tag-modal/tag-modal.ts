@@ -37,10 +37,13 @@ export class TodoTagModal {
       ? 'Add Tag'
       : `Edit Tag: ${this._data.tag?.name}`,
   );
+  protected readonly buttonText = computed(() =>
+    this._data.mode === 'create' ? 'Add Tag' : 'Update Tag',
+  );
 
   protected model = signal<NewTodoTag>({
     name: this._data.tag?.name ?? '',
-    colorHex: this._data.tag?.colorHex ?? '#000000',
+    colorHex: this.normalizeColorHex(this._data.tag?.colorHex),
   });
 
   protected tagForm = form(this.model, (path) => {
@@ -56,5 +59,10 @@ export class TodoTagModal {
 
   protected onCancel() {
     this._dialogRef.close();
+  }
+
+  private normalizeColorHex(color?: string): string {
+    const raw = color?.replace(/^#/, '').trim() ?? '';
+    return /^[0-9a-fA-F]{6}$/.test(raw) ? `#${raw}` : '#000000';
   }
 }

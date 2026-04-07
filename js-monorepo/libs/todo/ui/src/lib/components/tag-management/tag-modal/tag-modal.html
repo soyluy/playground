@@ -1,5 +1,5 @@
 <div class="tag-modal">
-  <h2 mat-dialog-title>Add Tag</h2>
+  <h2 mat-dialog-title>{{ title() }}</h2>
   <mat-dialog-content>
     <form class="tag-form">
       <mat-form-field appearance="outline" class="full-width">
@@ -19,7 +19,7 @@
       (click)="submitForm()"
       [disabled]="tagForm().invalid()"
     >
-      Add Tag
+      {{ buttonText() }}
     </button>
   </mat-dialog-actions>
 </div>

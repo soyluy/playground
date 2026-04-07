@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { NewTodoTag, TodoTag, UpdateTodoTagDto } from '@hub/todo-data';
+import { TodoTag, UpdateTodoTagDto } from '@hub/todo-data';
 import { TodoTagService } from '../../../services/todo-tag.service';
 import { TodoTagModal } from '../tag-modal/tag-modal';
 import { MatDialog } from '@angular/material/dialog';
