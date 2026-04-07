@@ -181,7 +181,7 @@ export class TodoService {
     query: TodoFilter,
   ): Prisma.TodoOrderByWithRelationInput | undefined {
     if (query.sortBy) {
-      return { [query.sortBy]: query.sortOrder };
+      return { [query.sortBy]: query.sortOrder ?? 'asc' };
     }
     return undefined;
   }
