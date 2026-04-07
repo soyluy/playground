@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'todo-tag-display',
-  standalone: true,
   templateUrl: './tag-display.html',
   styleUrls: ['./tag-display.scss'],
   imports: [MatButtonModule],

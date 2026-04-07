@@ -3,7 +3,6 @@ import { TodoTag } from '@hub/todo-data';
 
 @Component({
   selector: 'todo-tag-pill',
-  standalone: true,
   templateUrl: './tag-pill.html',
   styleUrls: ['./tag-pill.scss'],
   imports: [],

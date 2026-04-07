@@ -18,7 +18,6 @@ import { TodoTag } from '@hub/todo-data';
 
 @Component({
   selector: 'todo-filtering-modal',
-  standalone: true,
   templateUrl: './filtering-modal.html',
   styleUrls: ['./filtering-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +43,9 @@ export class FilteringModal {
     allIncludeTags: new FormControl<number[] | null>(null),
     allExcludeTags: new FormControl<number[] | null>(null),
     completed: new FormControl<boolean | null>(null),
-    sortBy: new FormControl<'title' | 'dueDate' | 'createdAt' | 'updatedAt' | null>(null),
+    sortBy: new FormControl<
+      'title' | 'dueDate' | 'createdAt' | 'updatedAt' | null
+    >(null),
     sortOrder: new FormControl<'asc' | 'desc' | null>(null),
     dueDateBefore: new FormControl<Date | null>(null),
     dueDateAfter: new FormControl<Date | null>(null),

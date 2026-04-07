@@ -17,7 +17,6 @@ export type TodoTagModalOptions = {
 
 @Component({
   selector: 'todo-tag-modal',
-  standalone: true,
   templateUrl: './tag-modal.html',
   styleUrls: ['./tag-modal.scss'],
   imports: [

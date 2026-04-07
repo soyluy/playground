@@ -8,7 +8,6 @@ import { TodoTagModal } from './tag-modal/tag-modal';
 
 @Component({
   selector: 'todo-tag-management',
-  standalone: true,
   templateUrl: './tag-management.html',
   styleUrls: ['./tag-management.scss'],
   imports: [MatButtonModule, TagDisplay],

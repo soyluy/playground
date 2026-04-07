@@ -30,7 +30,6 @@ import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indica
 
 @Component({
   selector: 'todo-item',
-  standalone: true,
   imports: [
     MatListItem,
     MatListItemIcon,

@@ -34,7 +34,6 @@ type FormOutputType = Omit<NewTodoItem, 'tags'> & {
 
 @Component({
   selector: 'todo-modal',
-  standalone: true,
   templateUrl: './todo-modal.html',
   styleUrls: ['./todo-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,7 +46,7 @@ type FormOutputType = Omit<NewTodoItem, 'tags'> & {
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-  ]
+  ],
 })
 export class TodoModal {
   private readonly _data = inject<TodoModalData>(MAT_DIALOG_DATA);

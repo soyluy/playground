@@ -6,7 +6,6 @@ type DueDateValue = Date | string | null;
 
 @Component({
   selector: 'todo-due-date-indicator',
-  standalone: true,
   imports: [MatTooltipModule],
   templateUrl: './due-date-indicator.html',
   styleUrls: ['./due-date-indicator.scss'],
