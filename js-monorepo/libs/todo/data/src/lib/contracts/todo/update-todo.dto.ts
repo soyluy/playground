@@ -1,7 +1,6 @@
 import { TodoItem } from '../../types';
 
 export interface UpdateTodoDto {
-  id: number;
   title: string | null;
   dueDate: Date | null;
   description: string | null;

@@ -59,14 +59,13 @@ export class TodoService {
 
   public updateTodo(todo: TodoItem) {
     const dto: UpdateTodoDto = {
-      id: todo.id,
       title: todo.title,
       dueDate: todo.dueDate,
       description: todo.description,
       completed: todo.completed,
       tagIds: todo.tags !== null ? todo.tags.map((t) => t.id) : null,
     };
-    const res$ = this._persistenceService.updateTodo(dto);
+    const res$ = this._persistenceService.updateTodo(todo.id, dto);
     res$.subscribe({
       next: (res: UpdateTodoResponse) => {
         this._refreshTodos();

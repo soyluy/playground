@@ -4,17 +4,12 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
 
 export class UpdateTodoDto implements IUpdateTodoDto {
-  @IsNumber()
-  @IsNotEmpty()
-  id!: number;
-
   @IsString()
   @IsOptional()
   title: string | null = null;

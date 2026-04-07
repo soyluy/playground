@@ -34,8 +34,11 @@ export class TodoPersistenceService {
     );
   }
 
-  public updateTodo(todo: UpdateTodoDto): Observable<UpdateTodoResponse> {
-    const res$ = this._apiService.updateTodo(todo);
+  public updateTodo(
+    id: number,
+    todo: UpdateTodoDto,
+  ): Observable<UpdateTodoResponse> {
+    const res$ = this._apiService.updateTodo(id, todo);
 
     return res$.pipe(
       tap((res: UpdateTodoResponse) => {

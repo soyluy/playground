@@ -34,8 +34,11 @@ export class TodoApiService {
     return this._http.post<CreateTodoResponse>(url, todo);
   }
 
-  public updateTodo(todo: UpdateTodoDto): Observable<UpdateTodoResponse> {
-    const url = this._urlBuilder.urlBuilder(TODO_ROUTES.UPDATE_ONE(todo.id));
+  public updateTodo(
+    id: number,
+    todo: UpdateTodoDto,
+  ): Observable<UpdateTodoResponse> {
+    const url = this._urlBuilder.urlBuilder(TODO_ROUTES.UPDATE_ONE(id));
     console.log('building update todo request with dto', todo);
     return this._http.patch<UpdateTodoResponse>(url, todo);
   }
