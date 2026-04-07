@@ -5,6 +5,7 @@ export const TODO_ROUTES = {
   CREATE_ONE: `todo`,
   UPDATE_ONE: (id: number) => `todo/${id}`,
   DELETE_ONE: (id: number) => `todo/${id}`,
+  COMPLETE_ONE: (id: number) => `todo/${id}/complete`,
 } as const;
 
 export const TAG_ROUTES = {

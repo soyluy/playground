@@ -119,7 +119,7 @@ export class TodoService {
     });
   }
 
-  async completeTodo(id: number) {
+  async completeTodo(id: number): Promise<TodoItem> {
     const todo = await this._prismaService.todo.findUnique({
       where: { id },
     });
@@ -129,6 +129,7 @@ export class TodoService {
     return this._prismaService.todo.update({
       where: { id },
       data: { completed: !todo.completed },
+      include: { tags: true },
     });
   }
 

@@ -51,6 +51,7 @@ export class TodoService {
       ),
       tap((res: GetTodosResponse) => {
         console.log('todos fetched', res);
+        // TODO: Handle pagination. This approach is not ideal.
         this._total.set(res.total);
         this._page.set(res.page);
         this._pageSize.set(res.pageSize);

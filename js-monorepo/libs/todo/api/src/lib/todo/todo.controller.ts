@@ -56,4 +56,11 @@ export class TodoController {
   getTodo(@Param('id', ParseIntPipe) id: number) {
     return this._todoService.getTodo(id);
   }
+
+  @Patch(':id/complete')
+  async completeTodo(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<UpdateTodoResponse> {
+    return await this._todoService.completeTodo(id);
+  }
 }
