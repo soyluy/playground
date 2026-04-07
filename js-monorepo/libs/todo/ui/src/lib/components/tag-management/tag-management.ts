@@ -20,7 +20,11 @@ export class TagManagement {
   protected readonly tags = this._todoTagService.getTags();
 
   protected onAddTag(): void {
-    const dialogRef = this._dialog.open(TodoTagModal);
+    const dialogRef = this._dialog.open(TodoTagModal, {
+      data: {
+        mode: 'create',
+      },
+    });
     dialogRef.afterClosed().subscribe((result: NewTodoTag | undefined) => {
       if (result) {
         this._todoTagService.addTag(result);
