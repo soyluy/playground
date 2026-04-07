@@ -38,13 +38,12 @@ export class StreamController {
 
     const outputDir = join(STREAMS_DIR, cameraId);
 
-    // POC: hardcoded source — swap this for a real camera URL later
-    const sourceUrl = join(process.cwd(), 'tmp', 'demo.mp4');
+    const sourceUrl = 'https://ireplay.tv/test/blender.m3u8';
 		this.logger.log(`Starting stream for camera ${cameraId} with source ${sourceUrl}`);
 
 
     // Example watermark — in the real app, this would include the user's identity
-		const watermark = `drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text=CAM\\ ${cameraId}:fontcolor=white:fontsize=48:x=10:y=10`;
+		const watermark = `drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text=MERHABA OMER BEY!:fontcolor=white:fontsize=96:x=10:y=10`;
 		
     const hlsProcess = this.ffmpeg.streamToHls(sourceUrl, outputDir, [watermark]);
 

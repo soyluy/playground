@@ -115,8 +115,6 @@ export class FfmpegService implements OnModuleDestroy {
     const hasFilters = filters && filters.length > 0;
 
     const args: string[] = [
-      '-stream_loop', '-1',   // loop input indefinitely (for local files)
-      '-re',
       '-i', sourceUrl,
     ];
 
@@ -125,6 +123,7 @@ export class FfmpegService implements OnModuleDestroy {
       args.push('-c:v', 'libx264');
       args.push('-preset', 'ultrafast');
       args.push('-tune', 'zerolatency');
+			args.push('-r', '30')
     } else {
       args.push('-c:v', 'copy');
     }
