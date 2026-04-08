@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Layout Practice</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="topnav">
+    <span class="nav-title">CSS Layout</span>
+    <div class="nav-tabs">
+      <button class="tab active" onclick="showPage('page-basics', this)">Box Model & Flow</button>
+      <button class="tab" onclick="showPage('page-flex', this)">Flexbox</button>
+      <button class="tab" onclick="showPage('page-position', this)">Positioning</button>
+    </div>
+  </nav>
+
+  <!-- ===================== PAGE: BOX MODEL & FLOW ===================== -->
+  <main id="page-basics" class="page active">
+
+    <section>
+      <h2>Box Model</h2>
+      <p class="label">Content → Padding → Border → Margin. box-sizing: border-box is active globally.</p>
+      <div class="box-demo">
+        <div class="box-model-example">I am the content</div>
+      </div>
+      <p class="label" style="margin-top:12px">
+        Blue area = padding. Dark blue line = border. Outer spacing = margin.
+      </p>
+    </section>
+
+    <section>
+      <h2>Block vs Inline</h2>
+      <p class="label">Block — takes full width of parent, stacks vertically.</p>
+      <div class="block-demo">
+        <div class="block-el">Block A</div>
+        <div class="block-el">Block B</div>
+        <div class="block-el">Block C</div>
+      </div>
+
+      <p class="label">Inline — flows like text, only as wide as content.</p>
+      <div class="inline-demo">
+        <span class="inline-el">Inline A</span>
+        <span class="inline-el">Inline B</span>
+        <span class="inline-el">Inline C</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Margin Collapsing</h2>
+      <p class="label">
+        Top block: margin-bottom 32px. Bottom block: margin-top 16px.<br>
+        Gap = 32px, not 48px. Smaller margin collapses into the larger.
+      </p>
+      <div class="collapse-demo">
+        <div class="collapse-el">margin-bottom: 32px</div>
+        <div class="collapse-el">margin-top: 16px</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Margin Auto (block centering)</h2>
+      <p class="label">margin: 0 auto on a block with a defined width — splits available space equally left and right.</p>
+      <div class="margin-auto-demo">Centered block (width: 300px)</div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: FLEXBOX ===================== -->
+  <main id="page-flex" class="page">
+
+    <section>
+      <h2>Flexbox — Row (default)</h2>
+
+      <p class="label">justify-content: flex-start — main axis = horizontal</p>
+      <div class="flex-row jc-start">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">justify-content: center</p>
+      <div class="flex-row jc-center">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">justify-content: flex-end</p>
+      <div class="flex-row jc-end">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">justify-content: space-between</p>
+      <div class="flex-row jc-between">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">justify-content: space-evenly</p>
+      <div class="flex-row jc-evenly">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">align-items: flex-start — cross axis = vertical</p>
+      <div class="flex-row ai-start tall">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">align-items: center</p>
+      <div class="flex-row ai-center tall">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">align-items: flex-end</p>
+      <div class="flex-row ai-end tall">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">space-between + center — classic navbar pattern</p>
+      <div class="flex-row jc-between ai-center tall">
+        <div class="item">Logo</div><div class="item">Nav</div><div class="item">CTA</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Flexbox — Column</h2>
+      <p class="label">flex-direction: column — main axis is VERTICAL. justify-content = vertical. align-items = horizontal.</p>
+
+      <p class="label">justify-content: center (vertical)</p>
+      <div class="flex-col jc-center tall">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">align-items: center (horizontal)</p>
+      <div class="flex-col ai-center tall">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">Both centered — classic "center everything" pattern</p>
+      <div class="flex-col jc-center ai-center tall">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Gap</h2>
+      <p class="label">gap: 8px</p>
+      <div class="flex-row gap-sm">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+
+      <p class="label">gap: 32px</p>
+      <div class="flex-row gap-lg">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>flex: 1</h2>
+      <p class="label">All items flex: 1 — share space equally</p>
+      <div class="flex-row">
+        <div class="item grow">A</div><div class="item grow">B</div><div class="item grow">C</div>
+      </div>
+
+      <p class="label">Only B has flex: 1 — takes all remaining space</p>
+      <div class="flex-row">
+        <div class="item">A</div><div class="item grow">B</div><div class="item">C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>margin-left: auto</h2>
+      <p class="label">Pushes C to the far right — action bar / logout button pattern</p>
+      <div class="flex-row">
+        <div class="item">A</div><div class="item">B</div><div class="item ml-auto">C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>align-self</h2>
+      <p class="label">Container: align-items: flex-start. B: align-self: center. C: align-self: flex-end.</p>
+      <div class="flex-row ai-start tall">
+        <div class="item">A</div>
+        <div class="item" style="align-self: center">B</div>
+        <div class="item" style="align-self: flex-end">C</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: POSITIONING ===================== -->
+  <main id="page-position" class="page">
+
+    <section>
+      <h2>position: static (default)</h2>
+      <p class="label">Every element is static by default. top/left/right/bottom have no effect. Normal flow.</p>
+      <div class="pos-demo">
+        <div class="pos-el">A</div>
+        <div class="pos-el">B</div>
+        <div class="pos-el">C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>position: relative</h2>
+      <p class="label">
+        B has position: relative; top: 20px; left: 20px.<br>
+        It moves visually but its ghost stays — notice the gap where B originally was.
+      </p>
+      <div class="pos-demo">
+        <div class="pos-el">A</div>
+        <div class="pos-el relative-demo">B (relative)</div>
+        <div class="pos-el">C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>position: absolute</h2>
+      <p class="label">
+        Parent has position: relative (reference point, doesn't move).<br>
+        Badge has position: absolute; top: 8px; right: 8px — anchored to parent's corner.<br>
+        Badge is fully removed from flow — doesn't push the paragraph down.
+      </p>
+      <div class="abs-parent">
+        <p class="abs-content">I am normal content inside the parent. The badge doesn't affect my position at all.</p>
+        <div class="abs-badge">NEW</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>position: fixed</h2>
+      <p class="label">
+        The navigation bar at the top of this page is position: fixed.<br>
+        It's anchored to the viewport — stays put when you scroll. That's why we added padding-top to the page body.
+      </p>
+      <div class="info-box">↑ That bar up there is fixed.</div>
+    </section>
+
+    <section>
+      <h2>position: sticky</h2>
+      <p class="label">
+        Each header is position: sticky; top: 56px (below the fixed nav).<br>
+        Scroll inside this box — headers stick while their section is in view, then get pushed off by the next.
+      </p>
+      <div class="sticky-demo">
+        <div class="sticky-section">
+          <div class="sticky-header">Section 1</div>
+          <div class="sticky-content">
+            <p>Content of section 1. Scroll down to see the header behavior.</p>
+            <p>More content here...</p>
+            <p>Keep scrolling...</p>
+            <p>Almost there...</p>
+          </div>
+        </div>
+        <div class="sticky-section">
+          <div class="sticky-header">Section 2</div>
+          <div class="sticky-content">
+            <p>Section 1's header is gone. Section 2 is now sticky.</p>
+            <p>More content here...</p>
+            <p>Keep scrolling...</p>
+            <p>Almost there...</p>
+          </div>
+        </div>
+        <div class="sticky-section">
+          <div class="sticky-header">Section 3</div>
+          <div class="sticky-content">
+            <p>Section 3 is now sticky.</p>
+            <p>More content here...</p>
+            <p>End of demo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function showPage(id, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
