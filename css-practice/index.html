@@ -15,6 +15,7 @@
       <button class="tab" onclick="showPage('page-flex', this)">Flexbox</button>
       <button class="tab" onclick="showPage('page-position', this)">Positioning</button>
       <button class="tab" onclick="showPage('page-responsive', this)">Responsive</button>
+      <button class="tab" onclick="showPage('page-grid', this)">Grid</button>
     </div>
   </nav>
 
@@ -344,6 +345,100 @@
         <div class="item" style="min-width:100px">Gamma</div>
         <div class="item" style="min-width:100px">Delta</div>
         <div class="item" style="min-width:100px">Epsilon</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: GRID ===================== -->
+  <main id="page-grid" class="page">
+
+    <section>
+      <h2>Basic grid — equal columns</h2>
+      <p class="label">grid-template-columns: 1fr 1fr 1fr — three equal columns. Items flow left to right, wrapping automatically.</p>
+      <div class="grid-basic">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+        <div class="item">D</div>
+        <div class="item">E</div>
+        <div class="item">F</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>repeat()</h2>
+      <p class="label">repeat(4, 1fr) — shorthand for 1fr 1fr 1fr 1fr.</p>
+      <div class="grid-repeat">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+        <div class="item">D</div>
+        <div class="item">E</div>
+        <div class="item">F</div>
+        <div class="item">G</div>
+        <div class="item">H</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>gap</h2>
+      <p class="label">gap: 16px — same property as flexbox, works identically.</p>
+      <div class="grid-gap">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+        <div class="item">D</div>
+        <div class="item">E</div>
+        <div class="item">F</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Spanning — line notation</h2>
+      <p class="label">
+        A: grid-column: 1 / 3 — spans columns 1 and 2.<br>
+        B: grid-column: 3 / 4 — sits in column 3.<br>
+        C, D, E flow into the next row normally.
+      </p>
+      <div class="grid-span">
+        <div class="item grid-span-a">A (spans 2)</div>
+        <div class="item grid-span-b">B</div>
+        <div class="item">C</div>
+        <div class="item">D</div>
+        <div class="item">E</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>grid-template-areas</h2>
+      <p class="label">
+        Named layout — draw it as a string map.<br>
+        Sidebar spans 2 rows. Header, content, footer stack on the right.
+      </p>
+      <div class="grid-areas">
+        <div class="ga-header">Header</div>
+        <div class="ga-sidebar">Sidebar</div>
+        <div class="ga-content">Content</div>
+        <div class="ga-footer">Footer</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>auto-fill + minmax — responsive without media queries</h2>
+      <p class="label">
+        repeat(auto-fill, minmax(140px, 1fr))<br>
+        Browser creates as many columns as fit at minimum 140px each. Resize the window.
+      </p>
+      <div class="grid-autofill">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
+        <div class="item">D</div>
+        <div class="item">E</div>
+        <div class="item">F</div>
+        <div class="item">G</div>
+        <div class="item">H</div>
       </div>
     </section>
 
