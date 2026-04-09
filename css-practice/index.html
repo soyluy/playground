@@ -14,6 +14,7 @@
       <button class="tab active" onclick="showPage('page-basics', this)">Box Model & Flow</button>
       <button class="tab" onclick="showPage('page-flex', this)">Flexbox</button>
       <button class="tab" onclick="showPage('page-position', this)">Positioning</button>
+      <button class="tab" onclick="showPage('page-responsive', this)">Responsive</button>
     </div>
   </nav>
 
@@ -267,6 +268,82 @@
             <p>End of demo.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: RESPONSIVE ===================== -->
+  <main id="page-responsive" class="page">
+
+    <section>
+      <h2>Flexible Units</h2>
+      <p class="label">% — percentage of parent width. Resize the window to see it adapt.</p>
+      <div class="unit-demo-wrap">
+        <div class="unit-percent">width: 50%</div>
+      </div>
+
+      <p class="label">vw — percentage of viewport width. This is always relative to the window, not the parent.</p>
+      <div class="unit-demo-wrap" style="overflow:hidden">
+        <div class="unit-vw">width: 40vw</div>
+      </div>
+
+      <p class="label">rem — relative to root font size (16px default). Consistent everywhere.</p>
+      <div class="unit-demo-wrap">
+        <div class="unit-rem-sm">font-size: 1rem (16px)</div>
+        <div class="unit-rem-lg">font-size: 2rem (32px)</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>max-width container pattern</h2>
+      <p class="label">
+        width: 100% + max-width: 500px + margin: 0 auto.<br>
+        On small screens: fills the parent. On large screens: caps at 500px and centers.
+      </p>
+      <div class="responsive-container-demo">
+        I am the container. Resize the window.
+      </div>
+    </section>
+
+    <section>
+      <h2>Media queries — mobile first</h2>
+      <p class="label">
+        Base (mobile): cards stack vertically, font-size 14px.<br>
+        At 600px+: cards go side by side, font-size 16px.<br>
+        At 900px+: three columns, font-size 18px.<br>
+        Resize the window to see the layout shift.
+      </p>
+      <div class="mq-grid">
+        <div class="mq-card">Card A</div>
+        <div class="mq-card">Card B</div>
+        <div class="mq-card">Card C</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>flex-wrap</h2>
+      <p class="label">
+        Without wrap: items shrink to fit on one line or overflow.<br>
+        With flex-wrap: wrap: items drop to the next line when they run out of space.<br>
+        Resize the window to see items wrap.
+      </p>
+      <p class="label">No wrap (default) — items shrink:</p>
+      <div class="flex-row" style="flex-wrap: nowrap;">
+        <div class="item" style="min-width:100px">Alpha</div>
+        <div class="item" style="min-width:100px">Beta</div>
+        <div class="item" style="min-width:100px">Gamma</div>
+        <div class="item" style="min-width:100px">Delta</div>
+        <div class="item" style="min-width:100px">Epsilon</div>
+      </div>
+
+      <p class="label">flex-wrap: wrap — items drop to next line:</p>
+      <div class="flex-row" style="flex-wrap: wrap;">
+        <div class="item" style="min-width:100px">Alpha</div>
+        <div class="item" style="min-width:100px">Beta</div>
+        <div class="item" style="min-width:100px">Gamma</div>
+        <div class="item" style="min-width:100px">Delta</div>
+        <div class="item" style="min-width:100px">Epsilon</div>
       </div>
     </section>
 

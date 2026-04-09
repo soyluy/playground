@@ -315,3 +315,97 @@ section {
   font-size: 14px;
   color: #555;
 }
+
+/* ===================== RESPONSIVE ===================== */
+.unit-demo-wrap {
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.unit-percent {
+  width: 50%;
+  background: #6366f1;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.unit-vw {
+  width: 40vw;
+  background: #f59e0b;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.unit-rem-sm {
+  font-size: 1rem;
+  background: #6366f1;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.unit-rem-lg {
+  font-size: 2rem;
+  background: #4f46e5;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+/* max-width container pattern */
+.responsive-container-demo {
+  width: 100%;
+  max-width: 500px;
+  margin: 8px auto 0;
+  background: #6366f1;
+  color: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Media query demo — mobile first */
+.mq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.mq-card {
+  background: #6366f1;
+  color: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;   /* mobile base */
+  font-weight: bold;
+}
+
+@media (min-width: 600px) {
+  .mq-grid {
+    flex-direction: row;
+  }
+  .mq-card {
+    flex: 1;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .mq-card {
+    font-size: 18px;
+    padding: 24px;
+  }
+}
