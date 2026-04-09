@@ -16,6 +16,8 @@
       <button class="tab" onclick="showPage('page-position', this)">Positioning</button>
       <button class="tab" onclick="showPage('page-responsive', this)">Responsive</button>
       <button class="tab" onclick="showPage('page-grid', this)">Grid</button>
+      <button class="tab" onclick="showPage('page-scss', this)">SCSS</button>
+      <button class="tab" onclick="showPage('page-principles', this)">Principles</button>
     </div>
   </nav>
 
@@ -440,6 +442,368 @@
         <div class="item">G</div>
         <div class="item">H</div>
       </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: SCSS ===================== -->
+  <main id="page-scss" class="page">
+
+    <section>
+      <h2>Variables</h2>
+      <p class="label">Define once, use everywhere. Great for theming.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label">SCSS</div>
+          <pre>$primary: #6366f1;
+$spacing-md: 16px;
+
+.button {
+  background: $primary;
+  padding: $spacing-md;
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Compiled CSS</div>
+          <pre>.button {
+  background: #6366f1;
+  padding: 16px;
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Nesting</h2>
+      <p class="label">Write child selectors inside their parent. Mirrors your HTML structure.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label">SCSS</div>
+          <pre>.card {
+  padding: 16px;
+
+  .title {
+    font-size: 18px;
+  }
+
+  .body {
+    color: #555;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Compiled CSS</div>
+          <pre>.card {
+  padding: 16px;
+}
+
+.card .title {
+  font-size: 18px;
+}
+
+.card .body {
+  color: #555;
+}
+
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}</pre>
+        </div>
+      </div>
+      <p class="label" style="margin-top:12px">& refers to the parent selector. &:hover becomes .card:hover.</p>
+    </section>
+
+    <section>
+      <h2>Mixins</h2>
+      <p class="label">Reusable chunks of CSS. Define once with @mixin, call with @include.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label">SCSS</div>
+          <pre>@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grid-responsive($min: 200px) {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax($min, 1fr));
+  gap: 16px;
+}
+
+.hero {
+  @include flex-center;
+}
+
+.card-grid {
+  @include grid-responsive(160px);
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Compiled CSS</div>
+          <pre>.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}</pre>
+        </div>
+      </div>
+      <p class="label" style="margin-top:12px">Mixins can accept arguments — $min above defaults to 200px but can be overridden per call.</p>
+    </section>
+
+    <section>
+      <h2>Partials & @use</h2>
+      <p class="label">Split CSS into multiple files. Underscore prefix = not compiled on its own.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label">_variables.scss</div>
+          <pre>$primary: #6366f1;
+$danger: #ef4444;
+$spacing-sm: 8px;
+$spacing-md: 16px;</pre>
+        </div>
+        <div class="code-arrow"> </div>
+        <div class="code-block">
+          <div class="code-label">styles.scss</div>
+          <pre>@use './variables' as *;
+
+.button {
+  background: $primary;
+  padding: $spacing-md;
+}
+
+.error {
+  color: $danger;
+}</pre>
+        </div>
+      </div>
+      <p class="label" style="margin-top:12px">
+        @use is the modern way. @import is deprecated but common in older codebases.<br>
+        In Angular, you'll typically see a _variables.scss or _theme.scss imported into styles.scss and component stylesheets.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: PRINCIPLES ===================== -->
+  <main id="page-principles" class="page">
+
+    <section>
+      <h2>Single source of truth</h2>
+      <p class="label">Never hardcode the same value in two places. If it changes, it should change in one spot.</p>
+      <div class="code-block" style="margin-top:8px">
+        <div class="code-label">_tokens.scss</div>
+        <pre>$color-primary:    #6366f1;
+$color-danger:     #ef4444;
+$color-text:       #222222;
+$color-bg:         #f5f5f5;
+
+$spacing-xs:  4px;
+$spacing-sm:  8px;
+$spacing-md:  16px;
+$spacing-lg:  24px;
+$spacing-xl:  32px;
+$spacing-2xl: 48px;
+
+$font-sm:   0.875rem;
+$font-md:   1rem;
+$font-lg:   1.25rem;
+$font-xl:   1.5rem;
+
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;</pre>
+      </div>
+      <p class="label" style="margin-top:12px">Theme switching = changing this one file. Nothing else.</p>
+    </section>
+
+    <section>
+      <h2>Spacing scale — no magic numbers</h2>
+      <p class="label">Pick a scale and never deviate. Common scale: 4, 8, 12, 16, 24, 32, 48, 64px. Never write padding: 13px.</p>
+      <div class="scale-demo">
+        <div class="scale-item" style="width:4px"></div>
+        <div class="scale-item" style="width:8px"></div>
+        <div class="scale-item" style="width:12px"></div>
+        <div class="scale-item" style="width:16px"></div>
+        <div class="scale-item" style="width:24px"></div>
+        <div class="scale-item" style="width:32px"></div>
+        <div class="scale-item" style="width:48px"></div>
+        <div class="scale-item" style="width:64px"></div>
+      </div>
+      <div class="scale-labels">
+        <span>4</span><span>8</span><span>12</span><span>16</span><span>24</span><span>32</span><span>48</span><span>64</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Don't fight the flow</h2>
+      <p class="label">If you're reaching for position: absolute or negative margins to fix a layout, the layout structure is probably wrong. Fix that first.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label bad-label">Bad — fighting flow</div>
+          <pre>.sidebar {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  /* now everything else
+     needs manual offset */
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Good — use the layout</div>
+          <pre>.layout {
+  display: grid;
+  grid-template-columns:
+    200px 1fr;
+  grid-template-areas:
+    "sidebar content";
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Avoid deep specificity</h2>
+      <p class="label">Deep selectors are fragile and hard to override. Flat class names beat deep nesting.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label bad-label">Bad</div>
+          <pre>.card .body .section .title span {
+  font-size: 14px;
+  /* needs this exact chain
+     to ever override */
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Good</div>
+          <pre>.card-title {
+  font-size: 14px;
+  /* one class, easy
+     to override anywhere */
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Never use IDs for styling</h2>
+      <p class="label">IDs have very high specificity — they beat any class selector and are painful to override. Classes only.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label bad-label">Bad</div>
+          <pre>#submit-button {
+  background: #6366f1;
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Good</div>
+          <pre>.btn-primary {
+  background: #6366f1;
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Mixins for repeated patterns</h2>
+      <p class="label">Don't copy-paste the same 3 lines of flex/grid setup. Extract it.</p>
+      <div class="code-block" style="margin-top:8px">
+        <div class="code-label">_mixins.scss</div>
+        <pre>@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin responsive-grid($min: 200px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min, 1fr));
+  gap: $spacing-md;
+}
+
+// Usage:
+.hero       { @include flex-center; }
+.navbar     { @include flex-between; }
+.card-grid  { @include responsive-grid(160px); }</pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Keep nesting shallow — max 3 levels</h2>
+      <p class="label">Deeper nesting compiles to overly specific selectors that are hard to override.</p>
+      <div class="code-pair">
+        <div class="code-block">
+          <div class="code-label bad-label">Bad — 4 levels deep</div>
+          <pre>.card {
+  .body {
+    .section {
+      .title {
+        font-size: 14px;
+        // compiles to:
+        // .card .body .section .title
+      }
+    }
+  }
+}</pre>
+        </div>
+        <div class="code-arrow">→</div>
+        <div class="code-block">
+          <div class="code-label">Good — max 2 levels</div>
+          <pre>.card {
+  .title { font-size: 14px; }
+  &:hover { box-shadow: ...; }
+}
+
+// compiles to:
+// .card .title
+// .card:hover</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>One partial per concern</h2>
+      <p class="label">Split your SCSS into focused files. styles.scss is just a list of @use statements.</p>
+      <div class="code-block" style="margin-top:8px">
+        <div class="code-label">File structure</div>
+        <pre>styles/
+  _tokens.scss      ← all variables (colors, spacing, fonts)
+  _reset.scss       ← box-sizing, margin reset
+  _typography.scss  ← font sizes, line heights, headings
+  _mixins.scss      ← reusable flex/grid/media query patterns
+  _components.scss  ← card, button, badge, form etc
+  styles.scss       ← only @use statements, nothing else</pre>
+      </div>
+      <p class="label" style="margin-top:12px">In Angular: global styles/ folder for this. Per-component .scss files for component-specific styles only.</p>
+    </section>
+
+    <section>
+      <h2>The overarching principle</h2>
+      <p class="principle-callout">CSS is easy to write and hard to maintain. Every decision should make future changes cheaper, not just make today's thing work.</p>
     </section>
 
   </main>

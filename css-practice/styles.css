@@ -410,7 +410,98 @@ section {
   }
 }
 
-/* ===================== GRID ===================== */
+/* ===================== SCSS CHEAT SHEET ===================== */
+.code-pair {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.code-block {
+  flex: 1;
+  min-width: 220px;
+  background: #1e1e2e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.code-label {
+  background: #2a2a3e;
+  color: #a5b4fc;
+  font-size: 11px;
+  font-family: monospace;
+  padding: 6px 12px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 14px;
+  font-size: 12px;
+  font-family: monospace;
+  color: #e2e8f0;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.code-arrow {
+  font-size: 20px;
+  color: #6366f1;
+  padding-top: 36px;
+  flex-shrink: 0;
+}
+
+/* ===================== PRINCIPLES ===================== */
+.bad-label {
+  background: #3d1e1e;
+  color: #f87171;
+}
+
+.scale-demo {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  background: #f0f0f0;
+  border-radius: 6px;
+}
+
+.scale-item {
+  background: #6366f1;
+  height: 40px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.scale-labels {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 0 12px;
+  font-size: 11px;
+  font-family: monospace;
+  color: #888;
+}
+
+.scale-labels span {
+  flex-shrink: 0;
+}
+
+.principle-callout {
+  background: #eef2ff;
+  border-left: 4px solid #6366f1;
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #3730a3;
+  font-style: italic;
+}
 
 /* Basic 3-column grid */
 .grid-basic {
