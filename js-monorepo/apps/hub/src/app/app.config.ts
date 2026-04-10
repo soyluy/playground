@@ -5,7 +5,7 @@ import {
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { provideEnvironment } from '@hub/todo-ui';
+import { provideEnvironment } from '@hub/ui-infra';
 import { environment } from '../environments/environment';
 import { provideNativeDateAdapter } from '@angular/material/core';
 

@@ -10,4 +10,8 @@ export const appRoutes: Route[] = [
     path: 'todo',
     component: TodoList,
   },
+  {
+    path: 'expense-tracker',
+    component: ExpenseTracker,
+  },
 ];
