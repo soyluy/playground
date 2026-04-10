@@ -4,7 +4,7 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 @Component({
-  selector: 'expense-tracker-transactions',
+  selector: 'expense-transactions',
   standalone: true,
   imports: [
     DashboardComponent,

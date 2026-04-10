@@ -1,13 +1,12 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Transaction } from './transaction.model';
-import { DbWrapperService } from 'src/infra/services/db-wrapper.service';
-import { environment } from '@env';
+import { DbWrapperService, ENVIRONMENT } from '@hub/ui-infra';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
   private readonly _db = inject(DbWrapperService);
   private readonly _transactions = signal<Transaction[]>([]);
-  private readonly _storeKey = environment.expensesObjStoreName;
+  private readonly _storeKey = inject(ENVIRONMENT).expensesObjStoreName;
 
   constructor() {
     this.loadTransactions();
