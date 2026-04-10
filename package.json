@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@types/passport-google-oauth20": "^2.0.17"
+  },
+  "dependencies": {
+    "@nestjs/config": "^4.0.4"
+  }
+}
