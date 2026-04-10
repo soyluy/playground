@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ENVIRONMENT } from '../tokens/environment.token';
+import { ENVIRONMENT } from '@hub/ui-infra';
 
 type QueryParams = Record<string, unknown>;
 type PathParams = Record<string, string>;

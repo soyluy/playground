@@ -7,7 +7,7 @@ import {
   UpdateTodoTagDto,
   UpdateTodoTagResponse,
 } from '@hub/todo-data';
-import { ENVIRONMENT } from '../tokens/environment.token';
+import { ENVIRONMENT } from '@hub/ui-infra';
 import { Observable } from 'rxjs';
 import { TAG_ROUTES } from '../constants/route.constants';
 
