@@ -6,6 +6,15 @@
   box-sizing: border-box;
 }
 
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+}
+
 h1 {
   margin: 0 0 0.75rem;
   font: var(--mat-sys-headline-medium);
@@ -29,4 +38,10 @@ h1 {
   font-size: 16px;
   font-weight: 500;
   font-family: 'Roboto', sans-serif;
+}
+
+.auth-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 }

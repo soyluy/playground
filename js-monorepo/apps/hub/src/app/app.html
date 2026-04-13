@@ -1,9 +1,16 @@
 <h1>Hub</h1>
 
-<nav class="nav">
-  <a class="nav__link" routerLink="/tag-management">Tag Management</a>
-  <a class="nav__link" routerLink="/todo">Todo List</a>
-  <a class="nav__link" routerLink="/expense-tracker">Expense Tracker</a>
-</nav>
+<div class="top-bar">
+  <nav class="nav">
+    <a class="nav__link" routerLink="/tag-management">Tag Management</a>
+    <a class="nav__link" routerLink="/todo">Todo List</a>
+    <a class="nav__link" routerLink="/expense-tracker">Expense Tracker</a>
+  </nav>
+
+  <div class="auth-buttons">
+    <button mat-flat-button (click)="login()">Login</button>
+    <button mat-flat-button (click)="logout()">Logout</button>
+  </div>
+</div>
 
 <router-outlet />

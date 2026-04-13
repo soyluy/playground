@@ -36,12 +36,17 @@ export class GoogleOAuth20Strategy extends PassportStrategy(
   }
 
   validate(
-    req: Request,
-    accessToken: string,
-    refreshToken: string,
+    _req: Request,
+    _accessToken: string,
+    _refreshToken: string,
     profile: any,
   ) {
-    console.log('validate!', req, accessToken, refreshToken, profile);
-    return true;
+    const { id, displayName, emails, photos } = profile;
+    return {
+      googleId: id,
+      displayName,
+      email: emails?.[0]?.value,
+      photo: photos?.[0]?.value,
+    };
   }
 }
