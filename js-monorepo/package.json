@@ -92,6 +92,7 @@
     "libsql": "^0.5.29",
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
+    "passport-session": "^1.0.2",
     "prisma": "^7.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0"

@@ -8,6 +8,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import 'dotenv/config';
 import { DEV_CORS_ORIGIN, PROD_CORS_ORIGIN } from './constants/cors.constants';
+import session from 'express-session';
+import passport from 'passport';
+import { AuthGuard } from '@nestjs/passport';
+import { PassportStrategies } from 'libs/auth/src/lib/enums/passport-strategies.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +23,21 @@ async function bootstrap() {
   app.enableCors({
     origin: corsOrigin,
   });
+
+  if (!process.env.SESSION_SECRET) {
+    throw new Error('SESSION_SECRET is not set');
+  }
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
+
+  passport.initialize();
+  app.use(passport.session());
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

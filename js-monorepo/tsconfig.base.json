@@ -23,7 +23,8 @@
       "@hub/expense-ui": ["libs/expense/ui/src/index.ts"],
       "@hub/ui-infra": ["libs/infra/ui/src/index.ts"],
       "@hub/auth": ["libs/auth/src/index.ts"],
-      "@hub/api-infra": ["libs/infra/api/src/index.ts"]
+      "@hub/api-infra": ["libs/infra/api/src/index.ts"],
+      "@hub/user-api": ["libs/user/api/src/index.ts"]
     },
     "sourceMap": true
   }

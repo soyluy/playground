@@ -29,3 +29,11 @@ model Tag {
 	colorHex		String 		@db.Char(6)
 	todos				Todo[]
 }
+
+model User { 
+	id					Int 			@id @default(autoincrement())
+	googleId		String		@unique
+	displayName	String
+	email				String
+	photoUrl		String
+}

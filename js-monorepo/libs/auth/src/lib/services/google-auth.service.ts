@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { SessionService } from './session.service';
 import { GoogleUser } from '../types/google-user.interface';
+import { UserService } from '@hub/user-api';
 
 @Injectable()
 export class GoogleAuthService {
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(private readonly userService: UserService) {}
 
   async authenticate(user: GoogleUser) {
-    return user;
+    const { user: existingUser, created } =
+      await this.userService.findOrCreateUser(user);
+    return { user: existingUser, created };
   }
 }
