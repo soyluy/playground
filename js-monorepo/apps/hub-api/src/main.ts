@@ -10,8 +10,6 @@ import 'dotenv/config';
 import { DEV_CORS_ORIGIN, PROD_CORS_ORIGIN } from './constants/cors.constants';
 import session from 'express-session';
 import passport from 'passport';
-import { AuthGuard } from '@nestjs/passport';
-import { PassportStrategies } from 'libs/auth/src/lib/enums/passport-strategies.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -35,7 +33,7 @@ async function bootstrap() {
     }),
   );
 
-  passport.initialize();
+  app.use(passport.initialize());
   app.use(passport.session());
 
   app.useGlobalPipes(

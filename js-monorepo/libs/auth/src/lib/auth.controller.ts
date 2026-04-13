@@ -5,10 +5,24 @@ import { GoogleUser } from './types/google-user.interface';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { Public } from './decorators/public-endpoint.decorator';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  private readonly frontendUrl: string;
+
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {
+    const frontendUrl = this.configService.get<string | undefined>(
+      'FRONTEND_URL',
+    );
+    if (!frontendUrl) {
+      throw new Error('FRONTEND_URL is not set');
+    }
+    this.frontendUrl = frontendUrl;
+  }
 
   @Get('google')
   @UseGuards(AuthGuard(PassportStrategies.GOOGLE_OAUTH20))
@@ -23,16 +37,9 @@ export class AuthController {
   @Public()
   async googleAuthCallback(
     @Req() req: Request & { user: GoogleUser },
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
   ) {
-    const { user, sessionToken } = await this.authService.googleAuthCallback(
-      req.user,
-    );
-    res.cookie('sessionToken', sessionToken, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-    return { user };
+    const { user } = await this.authService.googleAuthCallback(req.user);
+    return res.redirect(`${this.frontendUrl}`);
   }
 }

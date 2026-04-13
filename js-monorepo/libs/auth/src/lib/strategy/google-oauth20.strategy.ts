@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 import { ConfigService } from '@nestjs/config';
@@ -10,7 +10,7 @@ export class GoogleOAuth20Strategy extends PassportStrategy(
   Strategy,
   PassportStrategies.GOOGLE_OAUTH20,
 ) {
-  constructor(@Inject(ConfigService) configService: ConfigService) {
+  constructor(configService: ConfigService) {
     const googleClientID = configService.get<string | undefined>(
       'GOOGLE_CLIENT_ID',
     );
@@ -32,16 +32,11 @@ export class GoogleOAuth20Strategy extends PassportStrategy(
       clientSecret: googleClientSecret,
       callbackURL: googleCallbackURL,
       scope: ['email', 'profile'],
-      passReqToCallback: true,
     });
   }
 
-  validate(
-    _req: Request,
-    _accessToken: string,
-    _refreshToken: string,
-    profile: GoogleUser,
-  ) {
+  validate(_accessToken: string, _refreshToken: string, profile: GoogleUser) {
+    console.log('GoogleOAuth20Strategy validate', profile);
     return profile;
   }
 }
