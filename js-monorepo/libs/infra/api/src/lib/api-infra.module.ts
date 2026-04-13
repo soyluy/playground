@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
+import { loggerProvider } from './util/logger-provider';
 
 @Module({
-  controllers: [],
-  providers: [],
-  exports: [],
+  providers: [...loggerProvider()],
 })
 export class ApiInfraModule {}
