@@ -25,9 +25,15 @@ export class UserService {
     return { user: created, created: true };
   }
 
-  async findUser(userFilter: Partial<User>): Promise<User | null> {
+  async findUserById(id: number): Promise<User | null> {
     return this.prismaService.user.findUnique({
-      where: userFilter,
+      where: { id },
+    });
+  }
+
+  async findUserByGoogleId(googleId: string): Promise<User | null> {
+    return this.prismaService.user.findUnique({
+      where: { googleId },
     });
   }
 }

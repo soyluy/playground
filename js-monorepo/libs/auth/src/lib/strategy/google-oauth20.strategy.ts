@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-google-oauth20';
+import { Profile, Strategy } from 'passport-google-oauth20';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategies } from '../enums/passport-strategies.enum';
 import { GoogleUser } from '../types/google-user.interface';
@@ -35,8 +35,16 @@ export class GoogleOAuth20Strategy extends PassportStrategy(
     });
   }
 
-  validate(_accessToken: string, _refreshToken: string, profile: GoogleUser) {
-    console.log('GoogleOAuth20Strategy validate', profile);
-    return profile;
+  validate(
+    _accessToken: string,
+    _refreshToken: string,
+    profile: Profile,
+  ): GoogleUser {
+    return {
+      googleId: profile.id,
+      displayName: profile.displayName,
+      email: profile.emails?.[0]?.value ?? '',
+      photoUrl: profile.photos?.[0]?.value ?? '',
+    };
   }
 }
