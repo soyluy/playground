@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategies } from '../enums/passport-strategies.enum';
+import { GoogleUser } from '../types/google-user.interface';
 
 @Injectable()
 export class GoogleOAuth20Strategy extends PassportStrategy(
@@ -39,14 +40,8 @@ export class GoogleOAuth20Strategy extends PassportStrategy(
     _req: Request,
     _accessToken: string,
     _refreshToken: string,
-    profile: any,
+    profile: GoogleUser,
   ) {
-    const { id, displayName, emails, photos } = profile;
-    return {
-      googleId: id,
-      displayName,
-      email: emails?.[0]?.value,
-      photo: photos?.[0]?.value,
-    };
+    return profile;
   }
 }
