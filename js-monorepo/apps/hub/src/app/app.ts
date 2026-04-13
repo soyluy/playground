@@ -16,6 +16,6 @@ export class App {
   }
 
   protected logout() {
-    console.log('logout');
+    window.location.href = 'http://localhost:3000/api/auth/logout';
   }
 }

@@ -6,6 +6,7 @@ import { UserRegistrationService } from './services/user-registration.service';
 import { PassportModule } from '@nestjs/passport';
 import { SessionSerializerService } from './services/session-serializer.service';
 import { SessionGuard } from './guards/session.guard';
+import { GoogleCallbackGuard } from './guards/google-callback.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { GoogleAuthService } from './services/google-auth.service';
 import { UserModule } from '@hub/user-api';
@@ -19,6 +20,7 @@ import { UserModule } from '@hub/user-api';
     UserRegistrationService,
     SessionSerializerService,
     GoogleAuthService,
+    GoogleCallbackGuard,
     {
       provide: APP_GUARD,
       useClass: SessionGuard,

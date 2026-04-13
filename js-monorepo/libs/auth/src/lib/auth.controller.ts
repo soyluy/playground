@@ -1,20 +1,16 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PassportStrategies } from './enums/passport-strategies.enum';
-import { GoogleUser } from './types/google-user.interface';
-import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { Public } from './decorators/public-endpoint.decorator';
 import { ConfigService } from '@nestjs/config';
+import { GoogleCallbackGuard } from './guards/google-callback.guard';
 
 @Controller('auth')
 export class AuthController {
   private readonly frontendUrl: string;
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly configService: ConfigService,
-  ) {
+  constructor(private readonly configService: ConfigService) {
     const frontendUrl = this.configService.get<string | undefined>(
       'FRONTEND_URL',
     );
@@ -27,19 +23,20 @@ export class AuthController {
   @Get('google')
   @UseGuards(AuthGuard(PassportStrategies.GOOGLE_OAUTH20))
   @Public()
-  async googleAuth() {
-    // Will not be called
-    // The passport strategy will handle the redirect to the Google OAuth2.0 login page
-  }
+  async googleAuth() {}
 
   @Get('google/callback')
-  @UseGuards(AuthGuard(PassportStrategies.GOOGLE_OAUTH20))
+  @UseGuards(GoogleCallbackGuard)
   @Public()
-  async googleAuthCallback(
-    @Req() req: Request & { user: GoogleUser },
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    await this.authService.googleAuthCallback(req.user);
-    return res.redirect(`${this.frontendUrl}`);
+  async googleAuthCallback(@Res({ passthrough: true }) res: Response) {
+    return res.redirect(this.frontendUrl);
+  }
+
+  @Get('logout')
+  async logout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+    await new Promise<void>((resolve, reject) =>
+      req.logOut((err: unknown) => (err ? reject(err) : resolve())),
+    );
+    return res.redirect(this.frontendUrl);
   }
 }

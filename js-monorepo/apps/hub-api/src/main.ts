@@ -20,6 +20,7 @@ async function bootstrap() {
     process.env.ENV === 'development' ? DEV_CORS_ORIGIN : PROD_CORS_ORIGIN;
   app.enableCors({
     origin: corsOrigin,
+    credentials: true,
   });
 
   if (!process.env.SESSION_SECRET) {
