@@ -10,4 +10,5 @@
  */
 export type * from './models/Todo'
 export type * from './models/Tag'
+export type * from './models/User'
 export type * from './commonInputTypes'

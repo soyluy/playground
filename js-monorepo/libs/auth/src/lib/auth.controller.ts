@@ -39,7 +39,7 @@ export class AuthController {
     @Req() req: Request & { user: GoogleUser },
     @Res({ passthrough: true }) res: Response,
   ) {
-    const { user } = await this.authService.googleAuthCallback(req.user);
+    await this.authService.googleAuthCallback(req.user);
     return res.redirect(`${this.frontendUrl}`);
   }
 }
