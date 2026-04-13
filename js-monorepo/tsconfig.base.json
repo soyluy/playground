@@ -21,8 +21,9 @@
       "@hub/todo-data": ["libs/todo/data/src/index.ts"],
       "@hub/prisma": ["libs/prisma/src/index.ts"],
       "@hub/expense-ui": ["libs/expense/ui/src/index.ts"],
-      "@hub/ui-infra": ["libs/ui-infra/src/index.ts"],
-      "@hub/auth": ["libs/auth/src/index.ts"]
+      "@hub/ui-infra": ["libs/infra/ui/src/index.ts"],
+      "@hub/auth": ["libs/auth/src/index.ts"],
+      "@hub/api-infra": ["libs/infra/api/src/index.ts"]
     },
     "sourceMap": true
   }
