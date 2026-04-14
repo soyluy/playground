@@ -1,10 +1,11 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PassportStrategies } from './enums/passport-strategies.enum';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { Public } from './decorators/public-endpoint.decorator';
 import { ConfigService } from '@nestjs/config';
 import { GoogleCallbackGuard } from './guards/google-callback.guard';
+import { User } from '@hub/user-api';
 
 @Controller('auth')
 export class AuthController {
@@ -28,8 +29,11 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(GoogleCallbackGuard)
   @Public()
-  async googleAuthCallback(@Res({ passthrough: true }) res: Response) {
-    return res.redirect(this.frontendUrl);
+  async googleAuthCallback(@Req() req: Request, @Res() res: Response) {
+    req.logIn(req.user as User, (err) => {
+      if (err) return res.redirect(this.frontendUrl + '?error=true');
+      res.redirect(this.frontendUrl);
+    });
   }
 
   @Get('logout')
