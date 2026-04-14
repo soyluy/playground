@@ -328,9 +328,9 @@ export type UserUncheckedUpdateManyInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -371,12 +371,10 @@ export type UserCreateNestedOneWithoutTodosInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutTodosNestedInput = {
+export type UserUpdateOneRequiredWithoutTodosNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTodosInput, Prisma.UserUncheckedCreateWithoutTodosInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTodosInput
   upsert?: Prisma.UserUpsertWithoutTodosInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTodosInput, Prisma.UserUpdateWithoutTodosInput>, Prisma.UserUncheckedUpdateWithoutTodosInput>
 }
@@ -387,12 +385,10 @@ export type UserCreateNestedOneWithoutTagsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutTagsNestedInput = {
+export type UserUpdateOneRequiredWithoutTagsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTagsInput, Prisma.UserUncheckedCreateWithoutTagsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTagsInput
   upsert?: Prisma.UserUpsertWithoutTagsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTagsInput, Prisma.UserUpdateWithoutTagsInput>, Prisma.UserUncheckedUpdateWithoutTagsInput>
 }
