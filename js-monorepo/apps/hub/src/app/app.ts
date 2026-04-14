@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   imports: [RouterModule, MatButtonModule],
@@ -12,10 +13,10 @@ export class App {
   protected title = 'hub';
 
   protected login() {
-    window.location.href = 'http://localhost:3000/api/auth/google';
+    window.location.href = environment.apiUrl + '/auth/google';
   }
 
   protected logout() {
-    window.location.href = 'http://localhost:3000/api/auth/logout';
+    window.location.href = environment.apiUrl + '/auth/logout';
   }
 }
