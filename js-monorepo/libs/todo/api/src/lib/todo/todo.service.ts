@@ -13,22 +13,27 @@ import {
 } from '@hub/todo-data';
 import { Prisma } from '@hub/prisma';
 import { TodoFilter } from '@hub/todo-data';
+import { User } from '@hub/user-api';
 
 @Injectable()
 export class TodoService {
   @Inject(PrismaService)
   private readonly _prismaService!: PrismaService;
 
-  async createTodo(createTodoDto: CreateTodoDto): Promise<TodoItem> {
+  async createTodo(
+    user: User,
+    createTodoDto: CreateTodoDto,
+  ): Promise<TodoItem> {
     const { tagIds, ...data } = createTodoDto;
     return this._prismaService.todo.create({
       data: {
+        ownerId: user.id,
         title: data.title,
         description: data.description ?? undefined,
         dueDate: data.dueDate ?? undefined,
         completed: data.completed,
         tags: {
-          connect: tagIds.map((id) => ({ id })),
+          connect: tagIds.map((id) => ({ id, ownerId: user.id })),
         },
       },
       include: {
@@ -37,10 +42,13 @@ export class TodoService {
     });
   }
 
-  async getTodos(query: GetTodoQueryParamsDto): Promise<GetTodosResponse> {
+  async getTodos(
+    user: User,
+    query: GetTodoQueryParamsDto,
+  ): Promise<GetTodosResponse> {
     const pagination = this.buildPagination(query);
 
-    const where: Prisma.TodoWhereInput = this.buildWhere(query);
+    const where: Prisma.TodoWhereInput = this.buildWhere(user, query);
     const orderBy: Prisma.TodoOrderByWithRelationInput | undefined =
       this.buildOrderBy(query);
 
@@ -78,9 +86,9 @@ export class TodoService {
     };
   }
 
-  async getTodo(id: number) {
+  async getTodo(user: User, id: number) {
     return this._prismaService.todo.findUnique({
-      where: { id },
+      where: { id, ownerId: user.id },
       include: {
         tags: true,
       },
@@ -88,6 +96,7 @@ export class TodoService {
   }
 
   async updateTodo(
+    user: User,
     id: number,
     updateTodoDto: UpdateTodoDto,
   ): Promise<TodoItem> {
@@ -104,7 +113,7 @@ export class TodoService {
       };
     }
     return this._prismaService.todo.update({
-      where: { id },
+      where: { id, ownerId: user.id },
       data: data,
       include: {
         tags: true,
@@ -112,22 +121,22 @@ export class TodoService {
     });
   }
 
-  async deleteTodo(deleteTodoDto: DeleteTodoDto) {
+  async deleteTodo(user: User, deleteTodoDto: DeleteTodoDto) {
     return this._prismaService.todo.delete({
-      where: { id: deleteTodoDto.id },
+      where: { id: deleteTodoDto.id, ownerId: user.id },
       include: { tags: true },
     });
   }
 
-  async completeTodo(id: number): Promise<TodoItem> {
+  async completeTodo(user: User, id: number): Promise<TodoItem> {
     const todo = await this._prismaService.todo.findUnique({
-      where: { id },
+      where: { id, ownerId: user.id },
     });
     if (!todo) {
       throw new NotFoundException('Todo not found');
     }
     return this._prismaService.todo.update({
-      where: { id },
+      where: { id, ownerId: user.id },
       data: { completed: !todo.completed },
       include: { tags: true },
     });
@@ -146,6 +155,7 @@ export class TodoService {
   }
 
   private buildWhere(
+    user: User,
     query: Omit<TodoFilter, 'sortBy' | 'sortOrder'>,
   ): Prisma.TodoWhereInput {
     const where: Prisma.TodoWhereInput = {};
@@ -173,6 +183,9 @@ export class TodoService {
         ...(query.dueDateBefore && { lt: query.dueDateBefore }),
         ...(query.dueDateAfter && { gt: query.dueDateAfter }),
       };
+    }
+    if (user.id) {
+      where.ownerId = user.id;
     }
     return where;
   }

@@ -35,4 +35,8 @@ export interface TodoFilter {
    * Filter by due date after.
    */
   dueDateAfter?: Date;
+  /**
+   * Filter by owner ID.
+   */
+  ownerId?: number;
 }
