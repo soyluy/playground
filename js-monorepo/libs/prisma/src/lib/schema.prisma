@@ -18,6 +18,8 @@ model Todo {
 	completed		Boolean		@default(false)
 	description	String		@default("")
 	dueDate			DateTime?	
+	owner				User?			@relation(fields: [ownerId], references: [id])
+	ownerId			Int?
 	createdAt		DateTime 	@default(now())
 	updatedAt 	DateTime	@updatedAt
 	tags				Tag[]			
@@ -27,13 +29,17 @@ model Tag {
 	id					Int 			@id @default(autoincrement())
 	name				String
 	colorHex		String 		@db.Char(6)
+	owner				User?			@relation(fields: [ownerId], references: [id])
+	ownerId			Int?
 	todos				Todo[]
 }
 
-model User { 
+model User {
 	id					Int 			@id @default(autoincrement())
 	googleId		String		@unique
 	displayName	String
 	email				String
 	photoUrl		String
+	todos				Todo[]
+	tags				Tag[]
 }

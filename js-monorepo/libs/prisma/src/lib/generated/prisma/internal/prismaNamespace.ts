@@ -673,6 +673,7 @@ export const TodoScalarFieldEnum = {
   completed: 'completed',
   description: 'description',
   dueDate: 'dueDate',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -683,7 +684,8 @@ export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof Todo
 export const TagScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  colorHex: 'colorHex'
+  colorHex: 'colorHex',
+  ownerId: 'ownerId'
 } as const
 
 export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]

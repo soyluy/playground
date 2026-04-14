@@ -28,10 +28,12 @@ export type AggregateTodo = {
 
 export type TodoAvgAggregateOutputType = {
   id: number | null
+  ownerId: number | null
 }
 
 export type TodoSumAggregateOutputType = {
   id: number | null
+  ownerId: number | null
 }
 
 export type TodoMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type TodoMinAggregateOutputType = {
   completed: boolean | null
   description: string | null
   dueDate: Date | null
+  ownerId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +53,7 @@ export type TodoMaxAggregateOutputType = {
   completed: boolean | null
   description: string | null
   dueDate: Date | null
+  ownerId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +64,7 @@ export type TodoCountAggregateOutputType = {
   completed: number
   description: number
   dueDate: number
+  ownerId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -68,10 +73,12 @@ export type TodoCountAggregateOutputType = {
 
 export type TodoAvgAggregateInputType = {
   id?: true
+  ownerId?: true
 }
 
 export type TodoSumAggregateInputType = {
   id?: true
+  ownerId?: true
 }
 
 export type TodoMinAggregateInputType = {
@@ -80,6 +87,7 @@ export type TodoMinAggregateInputType = {
   completed?: true
   description?: true
   dueDate?: true
+  ownerId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,6 +98,7 @@ export type TodoMaxAggregateInputType = {
   completed?: true
   description?: true
   dueDate?: true
+  ownerId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +109,7 @@ export type TodoCountAggregateInputType = {
   completed?: true
   description?: true
   dueDate?: true
+  ownerId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -197,6 +207,7 @@ export type TodoGroupByOutputType = {
   completed: boolean
   description: string
   dueDate: Date | null
+  ownerId: number | null
   createdAt: Date
   updatedAt: Date
   _count: TodoCountAggregateOutputType | null
@@ -230,8 +241,10 @@ export type TodoWhereInput = {
   completed?: Prisma.BoolFilter<"Todo"> | boolean
   description?: Prisma.StringFilter<"Todo"> | string
   dueDate?: Prisma.DateTimeNullableFilter<"Todo"> | Date | string | null
+  ownerId?: Prisma.IntNullableFilter<"Todo"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
+  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   tags?: Prisma.TagListRelationFilter
 }
 
@@ -241,8 +254,10 @@ export type TodoOrderByWithRelationInput = {
   completed?: Prisma.SortOrder
   description?: Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  owner?: Prisma.UserOrderByWithRelationInput
   tags?: Prisma.TagOrderByRelationAggregateInput
 }
 
@@ -255,8 +270,10 @@ export type TodoWhereUniqueInput = Prisma.AtLeast<{
   completed?: Prisma.BoolFilter<"Todo"> | boolean
   description?: Prisma.StringFilter<"Todo"> | string
   dueDate?: Prisma.DateTimeNullableFilter<"Todo"> | Date | string | null
+  ownerId?: Prisma.IntNullableFilter<"Todo"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
+  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   tags?: Prisma.TagListRelationFilter
 }, "id">
 
@@ -266,6 +283,7 @@ export type TodoOrderByWithAggregationInput = {
   completed?: Prisma.SortOrder
   description?: Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TodoCountOrderByAggregateInput
@@ -284,6 +302,7 @@ export type TodoScalarWhereWithAggregatesInput = {
   completed?: Prisma.BoolWithAggregatesFilter<"Todo"> | boolean
   description?: Prisma.StringWithAggregatesFilter<"Todo"> | string
   dueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Todo"> | Date | string | null
+  ownerId?: Prisma.IntNullableWithAggregatesFilter<"Todo"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Todo"> | Date | string
 }
@@ -295,6 +314,7 @@ export type TodoCreateInput = {
   dueDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  owner?: Prisma.UserCreateNestedOneWithoutTodosInput
   tags?: Prisma.TagCreateNestedManyWithoutTodosInput
 }
 
@@ -304,6 +324,7 @@ export type TodoUncheckedCreateInput = {
   completed?: boolean
   description?: string
   dueDate?: Date | string | null
+  ownerId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutTodosInput
@@ -316,6 +337,7 @@ export type TodoUpdateInput = {
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneWithoutTodosNestedInput
   tags?: Prisma.TagUpdateManyWithoutTodosNestedInput
 }
 
@@ -325,6 +347,7 @@ export type TodoUncheckedUpdateInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.TagUncheckedUpdateManyWithoutTodosNestedInput
@@ -336,6 +359,7 @@ export type TodoCreateManyInput = {
   completed?: boolean
   description?: string
   dueDate?: Date | string | null
+  ownerId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -355,6 +379,7 @@ export type TodoUncheckedUpdateManyInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -365,12 +390,14 @@ export type TodoCountOrderByAggregateInput = {
   completed?: Prisma.SortOrder
   description?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TodoAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type TodoMaxOrderByAggregateInput = {
@@ -379,6 +406,7 @@ export type TodoMaxOrderByAggregateInput = {
   completed?: Prisma.SortOrder
   description?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -389,12 +417,14 @@ export type TodoMinOrderByAggregateInput = {
   completed?: Prisma.SortOrder
   description?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TodoSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type TodoListRelationFilter = {
@@ -425,6 +455,14 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type IntFieldUpdateOperationsInput = {
   set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
@@ -469,6 +507,48 @@ export type TodoUncheckedUpdateManyWithoutTagsNestedInput = {
   deleteMany?: Prisma.TodoScalarWhereInput | Prisma.TodoScalarWhereInput[]
 }
 
+export type TodoCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutOwnerInput, Prisma.TodoUncheckedCreateWithoutOwnerInput> | Prisma.TodoCreateWithoutOwnerInput[] | Prisma.TodoUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutOwnerInput | Prisma.TodoCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.TodoCreateManyOwnerInputEnvelope
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+}
+
+export type TodoUncheckedCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutOwnerInput, Prisma.TodoUncheckedCreateWithoutOwnerInput> | Prisma.TodoCreateWithoutOwnerInput[] | Prisma.TodoUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutOwnerInput | Prisma.TodoCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.TodoCreateManyOwnerInputEnvelope
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+}
+
+export type TodoUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutOwnerInput, Prisma.TodoUncheckedCreateWithoutOwnerInput> | Prisma.TodoCreateWithoutOwnerInput[] | Prisma.TodoUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutOwnerInput | Prisma.TodoCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.TodoUpsertWithWhereUniqueWithoutOwnerInput | Prisma.TodoUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.TodoCreateManyOwnerInputEnvelope
+  set?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  disconnect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  delete?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  update?: Prisma.TodoUpdateWithWhereUniqueWithoutOwnerInput | Prisma.TodoUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.TodoUpdateManyWithWhereWithoutOwnerInput | Prisma.TodoUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.TodoScalarWhereInput | Prisma.TodoScalarWhereInput[]
+}
+
+export type TodoUncheckedUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.TodoCreateWithoutOwnerInput, Prisma.TodoUncheckedCreateWithoutOwnerInput> | Prisma.TodoCreateWithoutOwnerInput[] | Prisma.TodoUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.TodoCreateOrConnectWithoutOwnerInput | Prisma.TodoCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.TodoUpsertWithWhereUniqueWithoutOwnerInput | Prisma.TodoUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.TodoCreateManyOwnerInputEnvelope
+  set?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  disconnect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  delete?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  connect?: Prisma.TodoWhereUniqueInput | Prisma.TodoWhereUniqueInput[]
+  update?: Prisma.TodoUpdateWithWhereUniqueWithoutOwnerInput | Prisma.TodoUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.TodoUpdateManyWithWhereWithoutOwnerInput | Prisma.TodoUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.TodoScalarWhereInput | Prisma.TodoScalarWhereInput[]
+}
+
 export type TodoCreateWithoutTagsInput = {
   title: string
   completed?: boolean
@@ -476,6 +556,7 @@ export type TodoCreateWithoutTagsInput = {
   dueDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  owner?: Prisma.UserCreateNestedOneWithoutTodosInput
 }
 
 export type TodoUncheckedCreateWithoutTagsInput = {
@@ -484,6 +565,7 @@ export type TodoUncheckedCreateWithoutTagsInput = {
   completed?: boolean
   description?: string
   dueDate?: Date | string | null
+  ownerId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -518,8 +600,56 @@ export type TodoScalarWhereInput = {
   completed?: Prisma.BoolFilter<"Todo"> | boolean
   description?: Prisma.StringFilter<"Todo"> | string
   dueDate?: Prisma.DateTimeNullableFilter<"Todo"> | Date | string | null
+  ownerId?: Prisma.IntNullableFilter<"Todo"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Todo"> | Date | string
+}
+
+export type TodoCreateWithoutOwnerInput = {
+  title: string
+  completed?: boolean
+  description?: string
+  dueDate?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tags?: Prisma.TagCreateNestedManyWithoutTodosInput
+}
+
+export type TodoUncheckedCreateWithoutOwnerInput = {
+  id?: number
+  title: string
+  completed?: boolean
+  description?: string
+  dueDate?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutTodosInput
+}
+
+export type TodoCreateOrConnectWithoutOwnerInput = {
+  where: Prisma.TodoWhereUniqueInput
+  create: Prisma.XOR<Prisma.TodoCreateWithoutOwnerInput, Prisma.TodoUncheckedCreateWithoutOwnerInput>
+}
+
+export type TodoCreateManyOwnerInputEnvelope = {
+  data: Prisma.TodoCreateManyOwnerInput | Prisma.TodoCreateManyOwnerInput[]
+  skipDuplicates?: boolean
+}
+
+export type TodoUpsertWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.TodoWhereUniqueInput
+  update: Prisma.XOR<Prisma.TodoUpdateWithoutOwnerInput, Prisma.TodoUncheckedUpdateWithoutOwnerInput>
+  create: Prisma.XOR<Prisma.TodoCreateWithoutOwnerInput, Prisma.TodoUncheckedCreateWithoutOwnerInput>
+}
+
+export type TodoUpdateWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.TodoWhereUniqueInput
+  data: Prisma.XOR<Prisma.TodoUpdateWithoutOwnerInput, Prisma.TodoUncheckedUpdateWithoutOwnerInput>
+}
+
+export type TodoUpdateManyWithWhereWithoutOwnerInput = {
+  where: Prisma.TodoScalarWhereInput
+  data: Prisma.XOR<Prisma.TodoUpdateManyMutationInput, Prisma.TodoUncheckedUpdateManyWithoutOwnerInput>
 }
 
 export type TodoUpdateWithoutTagsInput = {
@@ -529,6 +659,7 @@ export type TodoUpdateWithoutTagsInput = {
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneWithoutTodosNestedInput
 }
 
 export type TodoUncheckedUpdateWithoutTagsInput = {
@@ -537,11 +668,54 @@ export type TodoUncheckedUpdateWithoutTagsInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TodoUncheckedUpdateManyWithoutTagsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TodoCreateManyOwnerInput = {
+  id?: number
+  title: string
+  completed?: boolean
+  description?: string
+  dueDate?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TodoUpdateWithoutOwnerInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.TagUpdateManyWithoutTodosNestedInput
+}
+
+export type TodoUncheckedUpdateWithoutOwnerInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.TagUncheckedUpdateManyWithoutTodosNestedInput
+}
+
+export type TodoUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -588,8 +762,10 @@ export type TodoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   completed?: boolean
   description?: boolean
   dueDate?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  owner?: boolean | Prisma.Todo$ownerArgs<ExtArgs>
   tags?: boolean | Prisma.Todo$tagsArgs<ExtArgs>
   _count?: boolean | Prisma.TodoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["todo"]>
@@ -600,8 +776,10 @@ export type TodoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   completed?: boolean
   description?: boolean
   dueDate?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  owner?: boolean | Prisma.Todo$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["todo"]>
 
 export type TodoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -610,8 +788,10 @@ export type TodoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   completed?: boolean
   description?: boolean
   dueDate?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  owner?: boolean | Prisma.Todo$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["todo"]>
 
 export type TodoSelectScalar = {
@@ -620,21 +800,28 @@ export type TodoSelectScalar = {
   completed?: boolean
   description?: boolean
   dueDate?: boolean
+  ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TodoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "completed" | "description" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["todo"]>
+export type TodoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "completed" | "description" | "dueDate" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["todo"]>
 export type TodoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.Todo$ownerArgs<ExtArgs>
   tags?: boolean | Prisma.Todo$tagsArgs<ExtArgs>
   _count?: boolean | Prisma.TodoCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type TodoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type TodoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type TodoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.Todo$ownerArgs<ExtArgs>
+}
+export type TodoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.Todo$ownerArgs<ExtArgs>
+}
 
 export type $TodoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Todo"
   objects: {
+    owner: Prisma.$UserPayload<ExtArgs> | null
     tags: Prisma.$TagPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -643,6 +830,7 @@ export type $TodoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     completed: boolean
     description: string
     dueDate: Date | null
+    ownerId: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["todo"]>
@@ -1039,6 +1227,7 @@ readonly fields: TodoFieldRefs;
  */
 export interface Prisma__TodoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  owner<T extends Prisma.Todo$ownerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Todo$ownerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tags<T extends Prisma.Todo$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Todo$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1074,6 +1263,7 @@ export interface TodoFieldRefs {
   readonly completed: Prisma.FieldRef<"Todo", 'Boolean'>
   readonly description: Prisma.FieldRef<"Todo", 'String'>
   readonly dueDate: Prisma.FieldRef<"Todo", 'DateTime'>
+  readonly ownerId: Prisma.FieldRef<"Todo", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Todo", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Todo", 'DateTime'>
 }
@@ -1330,6 +1520,10 @@ export type TodoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.TodoCreateManyInput | Prisma.TodoCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1400,6 +1594,10 @@ export type TodoUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Todos to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TodoIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1466,6 +1664,25 @@ export type TodoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Todos to delete.
    */
   limit?: number
+}
+
+/**
+ * Todo.owner
+ */
+export type Todo$ownerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
