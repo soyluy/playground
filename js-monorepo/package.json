@@ -37,7 +37,6 @@
     "@nx/devkit": "22.5.1",
     "@nx/eslint": "22.5.1",
     "@nx/eslint-plugin": "22.5.1",
-    "@nx/jest": "22.5.1",
     "@nx/js": "22.5.2",
     "@nx/nest": "22.5.2",
     "@nx/node": "22.5.2",
@@ -49,9 +48,9 @@
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
     "@schematics/angular": "~21.1.0",
+    "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
-    "@swc-node/register": "~1.11.1",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/express-session": "^1.18.2",
     "@types/jest": "^30.0.0",
@@ -81,8 +80,8 @@
     "jest-util": "^30.0.2",
     "jsonc-eslint-parser": "^2.1.0",
     "libsql": "^0.5.29",
-    "nx": "22.5.2",
     "ng-packagr": "~21.1.0",
+    "nx": "22.5.2",
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
     "passport-session": "^1.0.2",
@@ -92,11 +91,14 @@
     "prisma": "^7.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
     "ts-jest": "^29.4.0",
     "ts-node": "10.9.1",
+    "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
     "webpack-cli": "^5.1.4"
+  },
+  "devDependencies": {
+    "@nx/jest": "22.5.1"
   }
 }
