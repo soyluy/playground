@@ -5,6 +5,9 @@ import { AuthModule } from '@hub/auth';
 import { ApiInfraModule } from '@hub/api-infra';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ResourceModule } from '@hub/resource-api';
+import { MongooseModule } from '@nestjs/mongoose';
+import { getMongoUrl } from '../util/get-mongo-url.util';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -12,10 +15,12 @@ import { ResourceModule } from '@hub/resource-api';
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     ApiInfraModule,
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
       autoSchemaFile: true,
     }),
     ResourceModule,
+    MongooseModule.forRoot(getMongoUrl()),
   ],
 })
 export class AppModule {}

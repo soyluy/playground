@@ -1,3 +1,5 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export enum ResourceType {
   ARTICLE = 'ARTICLE',
   BOOK = 'BOOK',
@@ -6,3 +8,7 @@ export enum ResourceType {
   LINK = 'LINK',
   NOTE = 'NOTE',
 }
+
+registerEnumType(ResourceType, {
+  name: 'ResourceType',
+});

@@ -55,9 +55,9 @@ export class CreateResourceInput {
   @IsEnum(ResourceStatus)
   status?: ResourceStatus;
 
-  @Field(() => String, { nullable: true, defaultValue: '{}' })
+  @Field(() => String, { nullable: true })
   @Transform(toObjectOrDefault)
   @IsOptional()
   @IsObject()
-  metadata: Record<string, unknown> = {};
+  metadata?: Record<string, unknown>;
 }
