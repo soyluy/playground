@@ -25,7 +25,8 @@
       "@hub/auth": ["libs/auth/src/index.ts"],
       "@hub/api-infra": ["libs/infra/api/src/index.ts"],
       "@hub/user-api": ["libs/user/api/src/index.ts"],
-      "@hub/resource-api": ["libs/resource/api/src/index.ts"]
+      "@hub/resource-api": ["libs/resource/api/src/index.ts"],
+      "@hub/core": ["libs/core/src/index.ts"]
     },
     "sourceMap": true
   }
