@@ -1,5 +1,6 @@
 import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { GraphQLJSON } from 'graphql-scalars';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 
 import { ResourceStatus } from '../resource/enums/resource-status.enum';
@@ -65,6 +66,7 @@ export class Resource {
   })
   status!: ResourceStatus;
 
+  @Field(() => GraphQLJSON)
   @Prop({
     type: SchemaTypes.Mixed,
     default: {},

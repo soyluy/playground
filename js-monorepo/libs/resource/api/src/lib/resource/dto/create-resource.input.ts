@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { toObjectOrDefault, toStringArray } from '@hub/core';
 import { Transform } from 'class-transformer';
+import { GraphQLJSON } from 'graphql-scalars';
 import {
   IsArray,
   IsEnum,
@@ -55,7 +56,7 @@ export class CreateResourceInput {
   @IsEnum(ResourceStatus)
   status?: ResourceStatus;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
   @Transform(toObjectOrDefault)
   @IsOptional()
   @IsObject()

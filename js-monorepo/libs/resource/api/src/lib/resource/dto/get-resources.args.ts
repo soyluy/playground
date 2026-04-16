@@ -1,14 +1,40 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { ArgsType, Field, Int } from '@nestjs/graphql';
+import { toNumber } from '@hub/core';
 import { toOptionalStringArray } from '@hub/core';
 import { Transform } from 'class-transformer';
-import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
-import { PaginationDto } from '../../common/dto/pagination.dto';
+import {
+  DEFAULT_RESOURCE_LIMIT,
+  DEFAULT_RESOURCE_OFFSET,
+  MAX_RESOURCE_LIMIT,
+} from '../../common/dto/pagination.dto';
 import { ResourceStatus } from '../enums/resource-status.enum';
 import { ResourceType } from '../enums/resource-type.enum';
 
 @ArgsType()
-export class GetResourcesArgs extends PaginationDto {
+export class GetResourcesArgs {
+  @Field(() => Int, { defaultValue: DEFAULT_RESOURCE_LIMIT })
+  @Transform(toNumber)
+  @IsInt()
+  @Min(1)
+  @Max(MAX_RESOURCE_LIMIT)
+  limit: number = DEFAULT_RESOURCE_LIMIT;
+
+  @Field(() => Int, { defaultValue: DEFAULT_RESOURCE_OFFSET })
+  @Transform(toNumber)
+  @IsInt()
+  @Min(0)
+  offset: number = DEFAULT_RESOURCE_OFFSET;
+
   @Field(() => ResourceType, { nullable: true })
   @IsOptional()
   @IsEnum(ResourceType)

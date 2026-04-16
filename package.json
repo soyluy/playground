@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "graphql-scalars": "^1.25.0"
+  }
+}

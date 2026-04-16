@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLJSON } from 'graphql-scalars';
 
 import { ResourceResolver } from './resource/resource.resolver';
 import { ResourceService } from './resource/resource.service';
@@ -14,6 +15,13 @@ import { Resource, ResourceSchema } from './schemas/resource.schema';
       },
     ]),
   ],
-  providers: [ResourceResolver, ResourceService],
+  providers: [
+    ResourceResolver,
+    ResourceService,
+    {
+      provide: 'JSON',
+      useValue: GraphQLJSON,
+    },
+  ],
 })
 export class ResourceModule {}
