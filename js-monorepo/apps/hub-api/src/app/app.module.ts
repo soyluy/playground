@@ -6,7 +6,7 @@ import { ApiInfraModule } from '@hub/api-infra';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ResourceModule } from '@hub/resource-api';
 import { MongooseModule } from '@nestjs/mongoose';
-import { getMongoUrl } from '../util/get-mongo-url.util';
+import { getMongoDbName, getMongoUrl } from '../util/get-mongo-env-vars.util';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
@@ -20,7 +20,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       autoSchemaFile: true,
     }),
     ResourceModule,
-    MongooseModule.forRoot(getMongoUrl()),
+    MongooseModule.forRoot(getMongoUrl(), {
+      dbName: getMongoDbName(),
+    }),
   ],
 })
 export class AppModule {}
