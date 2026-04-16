@@ -25,6 +25,7 @@ async function bootstrap() {
     origin: corsOrigin,
     credentials: true,
   });
+  app.getHttpAdapter().getInstance().set('trust proxy', 1);
 
   // Session
   const pgPool = new Pool({
