@@ -1,15 +1,17 @@
 import { inject, Injectable } from '@angular/core';
+import {
+  GetResourcesResponse,
+  NewResourceItem,
+  ResourceItem,
+  ResourceQuery,
+  UpdateResourceInput,
+} from '@hub/resource-data';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { map, Observable } from 'rxjs';
 import {
   DEFAULT_RESOURCE_LIMIT,
   DEFAULT_RESOURCE_OFFSET,
-  GetResourcesResponse,
-  NewResourceItem,
-  ResourceItem,
-  ResourceQuery,
-  UpdateResourceInput,
 } from '../constants/ui.constants';
 
 type ResourcesQueryResponse = {

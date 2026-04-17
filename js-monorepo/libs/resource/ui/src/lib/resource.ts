@@ -5,10 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatList } from '@angular/material/list';
 import { ResourceItemComponent } from './components/resource-item/resource-item';
-import {
-  NewResourceItem,
-  ResourceFilter,
-} from './constants/ui.constants';
+import { NewResourceItem, ResourceFilter } from '@hub/resource-data';
 import {
   ResourceModal,
   ResourceModalOptions,

@@ -7,11 +7,10 @@ import {
   MatListItemMeta,
   MatListItemTitle,
 } from '@angular/material/list';
+import { NewResourceItem, ResourceItem } from '@hub/resource-data';
 import {
-  NewResourceItem,
   RESOURCE_STATUS_LABELS,
   RESOURCE_TYPE_LABELS,
-  ResourceItem,
 } from '../../constants/ui.constants';
 import { ResourceService } from '../../services/resource.service';
 import {

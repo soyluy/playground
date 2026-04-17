@@ -11,7 +11,7 @@ import {
   ResourceFilter,
   ResourceStatus,
   ResourceType,
-} from '../../constants/ui.constants';
+} from '@hub/resource-data';
 
 @Component({
   selector: 'resource-filtering-modal',

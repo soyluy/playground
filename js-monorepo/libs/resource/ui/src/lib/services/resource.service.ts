@@ -7,15 +7,17 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, map, switchMap, tap } from 'rxjs';
 import {
-  DEFAULT_RESOURCE_LIMIT,
-  DEFAULT_RESOURCE_OFFSET,
   GetResourcesResponse,
   NewResourceItem,
   ResourceFilter,
   ResourceItem,
   UpdateResourceInput,
+} from '@hub/resource-data';
+import { debounceTime, map, switchMap, tap } from 'rxjs';
+import {
+  DEFAULT_RESOURCE_LIMIT,
+  DEFAULT_RESOURCE_OFFSET,
 } from '../constants/ui.constants';
 import { ResourceApolloService } from './resource-apollo.service';
 import { ResourceFilterService } from './resource-filter.service';

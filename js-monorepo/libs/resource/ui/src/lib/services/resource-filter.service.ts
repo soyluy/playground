@@ -1,5 +1,5 @@
 import { Injectable, Signal, computed, signal } from '@angular/core';
-import { ResourceFilter } from '../constants/ui.constants';
+import { ResourceFilter } from '@hub/resource-data';
 
 @Injectable({ providedIn: 'root' })
 export class ResourceFilterService {

@@ -21,7 +21,7 @@ import {
   ResourceItem,
   ResourceStatus,
   ResourceType,
-} from '../../constants/ui.constants';
+} from '@hub/resource-data';
 
 export type ResourceModalData = {
   options: ResourceModalOptions;
