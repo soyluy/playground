@@ -1,0 +1,60 @@
+<section class="resource-shell">
+  <header class="resource-shell__header">
+    <h1 class="resource-shell__title">Resources</h1>
+    <div class="resource-shell__actions">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="onSetFiltersClick()"
+      >
+        {{ filterButtonLabel() }}
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="onAddResourceClick()"
+      >
+        Add Resource
+      </button>
+    </div>
+  </header>
+
+  @if (resources().length === 0) {
+    <p class="resource-empty">There are no resources yet</p>
+  } @else {
+    <mat-card class="resource-list-card" appearance="outlined">
+      <mat-list>
+        @for (resource of resources(); track resource.id; let isLast = $last) {
+          <resource-item [resource]="resource"></resource-item>
+          @if (!isLast) {
+            <mat-divider></mat-divider>
+          }
+        }
+      </mat-list>
+    </mat-card>
+  }
+
+  <div class="resource-pagination">
+    <span class="resource-pagination__label">{{ pageLabel() }}</span>
+    <div class="resource-pagination__actions">
+      <button
+        mat-button
+        type="button"
+        [disabled]="!hasPreviousPage()"
+        (click)="onPreviousPageClick()"
+      >
+        Previous
+      </button>
+      <button
+        mat-button
+        type="button"
+        [disabled]="!hasNextPage()"
+        (click)="onNextPageClick()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</section>

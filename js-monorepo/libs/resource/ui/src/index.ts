@@ -1,1 +1,1 @@
-export * from './lib/resource-ui';
+export * from './lib/resource';

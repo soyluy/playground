@@ -1,0 +1,44 @@
+<mat-list-item class="resource-item">
+  <span matListItemTitle class="resource-item__title-row">
+    <span class="resource-item__title-text">{{ resource().title }}</span>
+    <span class="resource-item__meta-pill resource-item__meta-pill--type">
+      {{ typeLabel() }}
+    </span>
+    <span class="resource-item__meta-pill resource-item__meta-pill--status">
+      {{ statusLabel() }}
+    </span>
+  </span>
+
+  <span matListItemLine class="resource-item__description-line">
+    @if (hasDescription()) {
+      <span class="resource-item__description-text">
+        {{ resource().description }}
+      </span>
+    } @else {
+      <span class="resource-item__description-text resource-item__description-text--empty">
+        No description
+      </span>
+    }
+  </span>
+
+  <span matListItemLine class="resource-item__details-line">
+    <span class="resource-item__category">Category: {{ resource().category }}</span>
+    @if (hasUrl()) {
+      <a
+        class="resource-item__url"
+        [href]="resource().url"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Open link
+      </a>
+    }
+  </span>
+
+  <div matListItemMeta class="resource-item__actions">
+    <button mat-button type="button" (click)="onEdit()">Edit</button>
+    <button mat-button color="warn" type="button" (click)="onDelete()">
+      Delete
+    </button>
+  </div>
+</mat-list-item>

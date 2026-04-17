@@ -1,0 +1,114 @@
+.resource-item {
+  &.mdc-list-item--with-one-line,
+  &.mdc-list-item--with-two-lines {
+    height: auto;
+    min-height: var(--mat-list-list-item-two-line-container-height, 72px);
+    align-items: flex-start;
+    padding-block: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .mdc-list-item__content {
+    justify-content: center;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  &.mdc-list-item--with-two-lines .mdc-list-item__primary-text {
+    margin-bottom: 0;
+    line-height: normal;
+  }
+
+  &.mdc-list-item--with-two-lines .mdc-list-item__primary-text::before,
+  &.mdc-list-item--with-two-lines .mdc-list-item__primary-text::after {
+    display: none;
+  }
+
+  .resource-item__title-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.5rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .resource-item__title-text {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .resource-item__meta-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.125rem 0.5rem;
+    font: var(--mat-sys-label-small, 500 0.6875rem/1rem Roboto, sans-serif);
+  }
+
+  .resource-item__meta-pill--type {
+    background: color-mix(
+      in srgb,
+      var(--mat-sys-primary, #6750a4) 14%,
+      transparent
+    );
+    color: var(--mat-sys-primary, #6750a4);
+  }
+
+  .resource-item__meta-pill--status {
+    background: color-mix(
+      in srgb,
+      var(--mat-sys-secondary, #625b71) 14%,
+      transparent
+    );
+    color: var(--mat-sys-secondary, #625b71);
+  }
+
+  .resource-item__description-line {
+    margin-top: 0.125rem;
+    font: var(--mat-sys-body-medium, inherit);
+    line-height: 1.5;
+    color: var(--mat-sys-on-surface-variant, inherit);
+    min-width: 0;
+  }
+
+  .resource-item__description-text {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .resource-item__description-text--empty {
+    opacity: 0.72;
+  }
+
+  .resource-item__details-line {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.125rem;
+    color: var(--mat-sys-on-surface-variant, inherit);
+  }
+
+  .resource-item__url {
+    text-decoration: none;
+    color: var(--mat-sys-primary, #6750a4);
+  }
+
+  .resource-item__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+}

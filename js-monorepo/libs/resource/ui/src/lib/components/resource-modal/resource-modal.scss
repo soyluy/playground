@@ -1,0 +1,13 @@
+::ng-deep .mat-mdc-dialog-content {
+  overflow: hidden !important;
+}
+
+.resource-form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+}
+
+.full-width {
+  width: 100%;
+}

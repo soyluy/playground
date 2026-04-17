@@ -1,0 +1,37 @@
+<div class="filtering-modal">
+  <h2 mat-dialog-title>Filter Resources</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="form" class="filter-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option [value]="null">Any</mat-option>
+          @for (resourceType of resourceTypes; track resourceType) {
+            <mat-option [value]="resourceType">{{ resourceType }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option [value]="null">Any</mat-option>
+          @for (resourceStatus of resourceStatuses; track resourceStatus) {
+            <mat-option [value]="resourceStatus">{{ resourceStatus }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input matInput formControlName="category" />
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-flat-button type="button" (click)="onSubmitClick()">Apply</button>
+  </mat-dialog-actions>
+</div>
