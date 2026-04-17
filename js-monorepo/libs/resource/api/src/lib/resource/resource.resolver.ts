@@ -1,70 +1,15 @@
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+
+import { PaginatedResources, Resource } from '../schemas/resource.schema';
 import {
-  Args,
-  ArgsType,
-  Field,
-  Int,
-  Mutation,
-  ObjectType,
-  Query,
-  Resolver,
-} from '@nestjs/graphql';
-
-import { CreateResourceInput } from './dto/create-resource.input';
+  CreateResourceArgs,
+  DeleteResourceArgs,
+  GetResourceArgs,
+  UpdateResourceArgs,
+  UpdateResourceTagsArgs,
+} from './dto/resource.args';
 import { GetResourcesArgs } from './dto/get-resources.args';
-import { UpdateResourceInput } from './dto/update-resource.input';
 import { ResourceService } from './resource.service';
-import { Resource } from '../schemas/resource.schema';
-
-@ObjectType()
-class PaginatedResources {
-  @Field(() => [Resource])
-  data!: Resource[];
-
-  @Field(() => Int)
-  total!: number;
-
-  @Field(() => Int)
-  limit!: number;
-
-  @Field(() => Int)
-  offset!: number;
-}
-
-@ArgsType()
-class GetResourceArgs {
-  @Field()
-  id!: string;
-}
-
-@ArgsType()
-class UpdateResourceArgs {
-  @Field()
-  id!: string;
-
-  @Field(() => UpdateResourceInput)
-  input!: UpdateResourceInput;
-}
-
-@ArgsType()
-class DeleteResourceArgs {
-  @Field()
-  id!: string;
-}
-
-@ArgsType()
-class UpdateResourceTagsArgs {
-  @Field()
-  id!: string;
-
-  @Field(() => [String])
-  tags!: string[];
-}
-
-@ArgsType()
-class CreateResourceArgs {
-  @Field(() => CreateResourceInput)
-  input!: CreateResourceInput;
-}
 
 @Resolver(() => Resource)
 export class ResourceResolver {
@@ -79,8 +24,7 @@ export class ResourceResolver {
   async getResources(
     @Args() args: GetResourcesArgs,
   ): Promise<PaginatedResources> {
-    const result = await this._resourceService.getResources(args);
-    return result;
+    return this._resourceService.getResources(args);
   }
 
   @Mutation(() => Resource, { name: 'createResource' })

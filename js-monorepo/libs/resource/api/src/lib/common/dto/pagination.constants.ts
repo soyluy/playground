@@ -1,0 +1,3 @@
+export const DEFAULT_RESOURCE_LIMIT = 20;
+export const MAX_RESOURCE_LIMIT = 100;
+export const DEFAULT_RESOURCE_OFFSET = 0;

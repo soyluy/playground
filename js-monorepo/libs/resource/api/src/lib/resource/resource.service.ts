@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { QueryFilter, Model, SortOrder, Types, UpdateQuery } from 'mongoose';
 
-import { ResourceDocument } from '../schemas/resource.schema';
+import { Resource, ResourceDocument } from '../schemas/resource.schema';
 import { CreateResourceInput } from './dto/create-resource.input';
 import { GetResourcesArgs } from './dto/get-resources.args';
 import { UpdateResourceInput } from './dto/update-resource.input';
@@ -22,7 +22,7 @@ export type GetResourcesResult = {
 @Injectable()
 export class ResourceService {
   constructor(
-    @InjectModel('Resource')
+    @InjectModel(Resource.name)
     private readonly _resourceModel: Model<ResourceDocument>,
   ) {}
 

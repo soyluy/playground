@@ -1,6 +1,5 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
-import { toNumber } from '@hub/core';
-import { toOptionalStringArray } from '@hub/core';
+import { toNumber, toOptionalStringArray } from '@hub/core';
 import { Transform } from 'class-transformer';
 import {
   IsArray,
@@ -16,7 +15,7 @@ import {
   DEFAULT_RESOURCE_LIMIT,
   DEFAULT_RESOURCE_OFFSET,
   MAX_RESOURCE_LIMIT,
-} from '../../common/dto/pagination.dto';
+} from '../../common/dto/pagination.constants';
 import { ResourceStatus } from '../enums/resource-status.enum';
 import { ResourceType } from '../enums/resource-type.enum';
 

@@ -1,4 +1,4 @@
-import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { GraphQLJSON } from 'graphql-scalars';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
@@ -80,3 +80,18 @@ export class Resource {
 }
 
 export const ResourceSchema = SchemaFactory.createForClass(Resource);
+
+@ObjectType()
+export class PaginatedResources {
+  @Field(() => [Resource])
+  data!: Resource[];
+
+  @Field(() => Int)
+  total!: number;
+
+  @Field(() => Int)
+  limit!: number;
+
+  @Field(() => Int)
+  offset!: number;
+}
