@@ -1,4 +1,13 @@
-import { Args, ArgsType, Field, Int, Mutation, ObjectType, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  ArgsType,
+  Field,
+  Int,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
+} from '@nestjs/graphql';
 
 import { CreateResourceInput } from './dto/create-resource.input';
 import { GetResourcesArgs } from './dto/get-resources.args';
@@ -67,8 +76,11 @@ export class ResourceResolver {
   }
 
   @Query(() => PaginatedResources, { name: 'resources' })
-  async getResources(@Args() args: GetResourcesArgs): Promise<PaginatedResources> {
-    return this._resourceService.getResources(args);
+  async getResources(
+    @Args() args: GetResourcesArgs,
+  ): Promise<PaginatedResources> {
+    const result = await this._resourceService.getResources(args);
+    return result;
   }
 
   @Mutation(() => Resource, { name: 'createResource' })
