@@ -1,0 +1,53 @@
+=== MISTAKE LOG START ===
+
+1. File: src/main/java/com/orderprocessor/web/dto/request/CreateCustomerRequest.java
+   Lines: ~26-32
+   Difficulty: Medium
+   Description: CreateCustomerRequest exposes tier and loyaltyPoints as client-settable fields and CustomerMapper.toEntity forwards them directly into the Customer entity saved via CustomerService.
+
+2. File: src/main/java/com/orderprocessor/web/controller/OrderController.java
+   Lines: ~58-78
+   Difficulty: Medium
+   Description: get, getByNumber, and byCustomer endpoints are annotated @PreAuthorize("isAuthenticated()") and do not verify that the authenticated principal owns the requested order or customer resource.
+
+3. File: src/main/java/com/orderprocessor/web/controller/OrderController.java
+   Lines: ~82-88
+   Difficulty: Easy
+   Description: updateStatus accepts @RequestBody UpdateOrderRequest without @Valid.
+
+4. File: src/main/java/com/orderprocessor/web/controller/PaymentController.java
+   Lines: ~58-62
+   Difficulty: Hard
+   Description: The /webhook endpoint is defined without @PreAuthorize or any signature verification and forwards the raw payload directly to PaymentService.handleGatewayCallback.
+
+5. File: src/main/java/com/orderprocessor/web/controller/AdminController.java
+   Lines: ~33
+   Difficulty: Hard
+   Description: The class-level @PreAuthorize expression uses "hasRole('ADMIN') or hasRole('SUPPORT')" granting SUPPORT access to all admin endpoints including bulk price update and bulk status update.
+
+6. File: src/main/java/com/orderprocessor/web/exception/GlobalExceptionHandler.java
+   Lines: ~84-99
+   Difficulty: Hard
+   Description: The generic Exception handler serializes the full stack trace into the "trace" field of the ErrorResponse body returned to the client.
+
+7. File: src/main/java/com/orderprocessor/web/controller/ProductController.java
+   Lines: ~74-81
+   Difficulty: Medium
+   Description: The product search endpoint accepts client-supplied page and size query parameters with no upper bound on size.
+
+8. File: src/main/java/com/orderprocessor/web/mapper/ProductMapper.java
+   Lines: ~38-41
+   Difficulty: Hard
+   Description: toResponse silently truncates product descriptions longer than 500 characters using substring.
+
+9. File: src/main/java/com/orderprocessor/web/controller/CustomerController.java
+   Lines: ~52-56
+   Difficulty: Easy
+   Description: The GET /{id} endpoint is @PreAuthorize("isAuthenticated()") and returns full CustomerResponse including email, phone, and address to any authenticated principal regardless of ownership.
+
+10. File: src/main/java/com/orderprocessor/web/controller/CustomerController.java
+    Lines: ~83-88
+    Difficulty: Easy
+    Description: adjustLoyaltyPoints accepts delta as a raw int query parameter without validation for range or sign.
+
+=== MISTAKE LOG END ===

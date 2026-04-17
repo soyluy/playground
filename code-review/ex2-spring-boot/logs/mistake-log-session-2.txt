@@ -1,0 +1,43 @@
+=== MISTAKE LOG START ===
+
+1. File: src/main/java/com/orderprocessor/infrastructure/repository/CustomerRepository.java
+   Lines: ~22-30
+   Difficulty: Medium
+   Description: findTopCustomersByOrderCount groups by the root Customer entity and orders by count of a left-joined collection without fetching and relies on Pageable with a group-by aggregate.
+
+2. File: src/main/java/com/orderprocessor/infrastructure/repository/ProductRepository.java
+   Lines: ~21-22
+   Difficulty: Medium
+   Description: findLowStockProducts uses strict less-than comparison against the threshold parameter.
+
+3. File: src/main/java/com/orderprocessor/infrastructure/repository/OrderRepository.java
+   Lines: ~35-43
+   Difficulty: Hard
+   Description: calculateRevenueByDateRange is a native query that sums total_amount with a status filter excluding only 'CANCELLED', without accounting for REFUNDED rows.
+
+4. File: src/main/java/com/orderprocessor/infrastructure/persistence/CustomerPersistenceAdapter.java
+   Lines: ~25-29
+   Difficulty: Medium
+   Description: The save method is annotated with Propagation.REQUIRES_NEW.
+
+5. File: src/main/java/com/orderprocessor/infrastructure/config/DatabaseConfig.java
+   Lines: ~41-46, ~72-76
+   Difficulty: Hard
+   Description: HikariCP pool is configured with minimumIdle defaulting equal to maximumPoolSize (10) and setAutoCommit(true) while JPA is managing transactions.
+
+6. File: src/main/java/com/orderprocessor/infrastructure/config/FlywayConfig.java
+   Lines: ~27-32
+   Difficulty: Hard
+   Description: FlywayMigrationStrategy invokes flyway.repair() before every migrate call and cleanDisabled is set to false.
+
+7. File: src/main/resources/db/migration/V1__create_customers_table.sql
+   Lines: ~2, ~19
+   Difficulty: Easy
+   Description: The email column has no NOT NULL uniqueness enforced at the column definition level and relies solely on a separately created unique index without a table constraint; email lacks CITEXT or lower() index for case-insensitive lookups used by findByEmail.
+
+8. File: src/main/resources/db/migration/V3__create_orders_and_items_table.sql
+   Lines: ~30-47
+   Difficulty: Easy
+   Description: order_items defines ON DELETE CASCADE on fk_items_order but products foreign key has no ON DELETE action, and there is no unique constraint preventing duplicate (order_id, product_id) rows.
+
+=== MISTAKE LOG END ===

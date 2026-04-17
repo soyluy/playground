@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orderprocessor_dev
+    username: orderprocessor
+    password: orderprocessor
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  error:
+    include-stacktrace: always
+
+app:
+  security:
+    jwt:
+      secret: dev-secret-change-me-to-something-long-enough-for-hs256
+
+logging:
+  level:
+    root: INFO
+    com.orderprocessor: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.security: DEBUG

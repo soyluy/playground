@@ -1,0 +1,43 @@
+=== MISTAKE LOG START ===
+
+1. File: src/main/java/com/orderprocessor/security/jwt/JwtAuthenticationFilter.java
+   Lines: ~38-46
+   Difficulty: Hard
+   Description: The filter populates authentication authorities directly from the "authorities" claim carried in the JWT without re-resolving them from the persisted user record.
+
+2. File: src/main/java/com/orderprocessor/security/jwt/JwtAuthenticationFilter.java
+   Lines: ~55-62
+   Difficulty: Medium
+   Description: resolveToken accepts the JWT from the "access_token" query string parameter in addition to the Authorization header.
+
+3. File: src/main/java/com/orderprocessor/security/jwt/JwtAuthenticationFilter.java
+   Lines: ~65-68
+   Difficulty: Hard
+   Description: shouldNotFilter returns true for any path starting with "/api/auth/" so the filter is skipped entirely for those endpoints regardless of method or sub-path.
+
+4. File: src/main/java/com/orderprocessor/security/config/SecurityConfig.java
+   Lines: ~33, ~48-55
+   Difficulty: Easy
+   Description: CSRF is disabled globally and CORS allows credentials with allowedOriginPatterns set to "*".
+
+5. File: src/main/java/com/orderprocessor/security/config/SecurityConfig.java
+   Lines: ~40
+   Difficulty: Easy
+   Description: Authorization rule hasAnyRole("ADMIN", "WAREHOUSE") does not match the WAREHOUSE_STAFF role string derived from the UserRole enum name.
+
+6. File: src/main/java/com/orderprocessor/security/service/AuthService.java
+   Lines: ~46-66
+   Difficulty: Medium
+   Description: login reads, increments, and persists failedLoginAttempts without any pessimistic lock or atomic update, and saves on each failed attempt before checking the threshold.
+
+7. File: src/main/java/com/orderprocessor/security/service/AuthService.java
+   Lines: ~118-134
+   Difficulty: Hard
+   Description: refreshToken uses @Transactional(readOnly = true), calls tokenProvider.validate without verifying the token type is "refresh", and returns the original token back to the client as the new refreshToken.
+
+8. File: src/main/java/com/orderprocessor/security/jwt/JwtTokenProvider.java
+   Lines: ~32-35
+   Difficulty: Medium
+   Description: Keys.hmacShaKeyFor is called on raw UTF-8 bytes of the configured secret without enforcing a minimum key length or rejecting short secrets at startup.
+
+=== MISTAKE LOG END ===

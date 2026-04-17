@@ -1,0 +1,43 @@
+=== MISTAKE LOG START ===
+
+1. File: src/test/java/com/orderprocessor/application/service/CustomerServiceTest.java
+   Lines: ~88-95
+   Difficulty: Medium
+   Description: updateLoyaltyPoints_addsAndAutoUpgradesTier seeds loyaltyPoints to 900, adds 200, and asserts tier becomes SILVER based on the service's autoUpgradeTier thresholds without covering the case where loyaltyPoints decreases past a tier boundary.
+
+2. File: src/test/java/com/orderprocessor/application/service/InventoryServiceTest.java
+   Lines: ~107-139
+   Difficulty: Hard
+   Description: concurrentReservationsDoNotOversell stubs productRepository.findById to return the same in-memory Product instance for every thread and asserts only that stockQuantity is non-negative and successes <= thread count.
+
+3. File: src/test/java/com/orderprocessor/application/service/PaymentServiceTest.java
+   Lines: ~93-107
+   Difficulty: Medium
+   Description: processPayment_retriesOnFailure stubs the gateway to return two non-success responses followed by success, assuming the production retry loop drives up to three attempts without asserting the exact number of gateway invocations.
+
+4. File: src/test/java/com/orderprocessor/application/service/PricingServiceTest.java
+   Lines: ~67-72
+   Difficulty: Hard
+   Description: calculateShipping_freeAboveThreshold asserts free shipping at subtotal 100.00, above the 75.00 threshold, but no test covers the boundary at exactly 75.00 or just below it (74.99).
+
+5. File: src/test/java/com/orderprocessor/web/controller/OrderControllerTest.java
+   Lines: ~108-113
+   Difficulty: Hard
+   Description: listOrders_customerCanListOrders asserts status is 200 OK for a @WithMockUser(roles="CUSTOMER") request to GET /api/orders even though the controller method is annotated @PreAuthorize("hasAnyRole('ADMIN', 'SUPPORT')").
+
+6. File: src/test/java/com/orderprocessor/web/controller/OrderControllerTest.java
+   Lines: ~44-50
+   Difficulty: Medium
+   Description: The test mocks JwtAuthenticationFilter as a @MockBean so the real JWT filter is bypassed, and there are no tests verifying the ownership/authorization rules for GET /api/orders/{id} and /api/orders/by-customer/{id}.
+
+7. File: src/test/java/com/orderprocessor/infrastructure/repository/OrderRepositoryTest.java
+   Lines: ~20-23
+   Difficulty: Medium
+   Description: @DataJpaTest with @AutoConfigureTestDatabase (defaulting to in-memory H2) wraps each test in a rollback transaction and targets a schema that differs from the Flyway-managed Postgres schema used in production.
+
+8. File: src/test/java/com/orderprocessor/util/PriceCalculatorTest.java
+   Lines: ~19-27
+   Difficulty: Easy
+   Description: applyPercent_addsPercentage tests only the positive percent path and has no coverage for negative percent or zero base inputs which the production method also accepts.
+
+=== MISTAKE LOG END ===

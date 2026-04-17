@@ -1,0 +1,56 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        generate_statistics: false
+  flyway:
+    validate-on-migrate: true
+    out-of-order: false
+
+server:
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+    max-connections: 8192
+    accept-count: 100
+
+management:
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  datasource:
+    pool:
+      maximum-pool-size: 20
+      minimum-idle: 20
+      connection-timeout: 5000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      access-ttl-ms: 600000
+      refresh-ttl-ms: 86400000
+  async:
+    core-size: 8
+    max-size: 16
+    queue-capacity: 5000
+  http:
+    connect-timeout-ms: 2000
+    read-timeout-ms: 5000
+
+logging:
+  level:
+    root: WARN
+    com.orderprocessor: INFO

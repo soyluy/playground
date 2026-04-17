@@ -1,0 +1,53 @@
+=== MISTAKE LOG START ===
+
+1. File: src/main/java/com/orderprocessor/infrastructure/external/PaymentGatewayClient.java
+   Lines: ~55-62
+   Difficulty: Hard
+   Description: charge catches ResourceAccessException from a gateway timeout and returns a ChargeResponse with success=false and transactionId=null without distinguishing timeout from a definite failure response.
+
+2. File: src/main/java/com/orderprocessor/application/service/PaymentService.java
+   Lines: ~60-82
+   Difficulty: Hard
+   Description: processPayment retries gateway.charge up to MAX_RETRIES times on any non-success response, then on the first successful response persists the returned transactionId.
+
+3. File: src/main/java/com/orderprocessor/application/service/PaymentService.java
+   Lines: ~142-160
+   Difficulty: Medium
+   Description: handleGatewayCallback updates payment status based solely on the callback payload without verifying a signature, replay window, or that the callback status is consistent with the current persisted status.
+
+4. File: src/main/java/com/orderprocessor/application/service/AuditService.java
+   Lines: ~24-39
+   Difficulty: Hard
+   Description: logEntityChange is annotated with both @Async and @Transactional(Propagation.REQUIRES_NEW) and executes a native insert against the audit_log table from within the async boundary.
+
+5. File: src/main/java/com/orderprocessor/application/eventhandler/OrderEventHandler.java
+   Lines: ~27-35
+   Difficulty: Medium
+   Description: handleOrderCreated is annotated with @Async and @EventListener together and dereferences event.getOrder().getCustomer().getEmail() for audit logging.
+
+6. File: src/main/java/com/orderprocessor/application/eventhandler/PaymentEventHandler.java
+   Lines: ~30-52
+   Difficulty: Medium
+   Description: handlePaymentCompleted is annotated with @Async, @EventListener, and @Transactional, and transitions order from PENDING to CONFIRMED without re-checking whether the payment amount still matches the order total.
+
+7. File: src/main/java/com/orderprocessor/infrastructure/scheduler/OrderTimeoutScheduler.java
+   Lines: ~31-52
+   Difficulty: Hard
+   Description: cancelStalePendingOrders runs on a fixedDelay schedule against all pending orders older than the cutoff with no distributed lock, leader election, or database-level ownership flag.
+
+8. File: src/main/java/com/orderprocessor/infrastructure/scheduler/OrderTimeoutScheduler.java
+   Lines: ~42-50
+   Difficulty: Medium
+   Description: The scheduler re-checks order.getStatus() == PENDING inside the loop but between that check and the subsequent order.cancel()/stock release, no pessimistic lock is acquired on the order row.
+
+9. File: src/main/java/com/orderprocessor/application/service/NotificationService.java
+   Lines: ~25-40
+   Difficulty: Easy
+   Description: sendOrderConfirmation is @Async and dereferences order.getCustomer() to read email and firstName without forcing initialization before the async boundary.
+
+10. File: src/main/java/com/orderprocessor/domain/event/OrderCreatedEvent.java
+    Lines: ~11-15
+    Difficulty: Easy
+    Description: OrderCreatedEvent carries a direct reference to the Order entity as a mutable field rather than an immutable snapshot of the relevant data.
+
+=== MISTAKE LOG END ===
