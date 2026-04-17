@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { TagManagement, TodoList } from '@hub/todo-ui';
 import { ExpenseTracker } from '@hub/expense-ui';
+import { ResourceComponent } from '@hub/resource-ui';
 
 export const appRoutes: Route[] = [
   {
@@ -14,5 +15,9 @@ export const appRoutes: Route[] = [
   {
     path: 'expense-tracker',
     component: ExpenseTracker,
+  },
+  {
+    path: 'resource',
+    component: ResourceComponent,
   },
 ];
