@@ -1,23 +1,22 @@
 import { Route } from '@angular/router';
-import { TagManagement, TodoList } from '@hub/todo-ui';
-import { ExpenseTracker } from '@hub/expense-ui';
-import { ResourceComponent } from '@hub/resource-ui';
 
 export const appRoutes: Route[] = [
   {
     path: 'tag-management',
-    component: TagManagement,
+    loadComponent: () => import('@hub/todo-ui').then((m) => m.TagManagement),
   },
   {
     path: 'todo',
-    component: TodoList,
+    loadComponent: () => import('@hub/todo-ui').then((m) => m.TodoList),
   },
   {
     path: 'expense-tracker',
-    component: ExpenseTracker,
+    loadComponent: () =>
+      import('@hub/expense-ui').then((m) => m.ExpenseTracker),
   },
   {
     path: 'resource',
-    component: ResourceComponent,
+    loadComponent: () =>
+      import('@hub/resource-ui').then((m) => m.ResourceComponent),
   },
 ];
