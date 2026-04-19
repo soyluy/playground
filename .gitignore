@@ -48,6 +48,7 @@ dependency-reduced-pom.xml
 
 # Environment variables
 *.env*
+!.env.example
 
 # Prisma
 dev.db
