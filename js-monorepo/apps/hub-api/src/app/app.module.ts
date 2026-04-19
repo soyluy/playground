@@ -18,6 +18,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+      path: '/api/graphql',
+      context: ({ req }: { req: Request }) => ({ req }),
     }),
     ResourceModule,
     MongooseModule.forRoot(getMongoUrl(), {

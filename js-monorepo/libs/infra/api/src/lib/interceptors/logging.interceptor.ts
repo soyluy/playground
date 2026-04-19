@@ -2,26 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { Observable, tap } from 'rxjs';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 type ColorFn = (text: string) => string;
 
 @Injectable()
 export class DevLoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const ctx = context.switchToHttp();
-    const request = ctx.getRequest();
-    const method = request.method ?? 'UNKNOWN_METHOD';
-    const route = request.originalUrl ?? request.url ?? 'UNKNOWN_ROUTE';
-    const hasBody = this.hasBody(request.body);
-
     const reqId = randomUUID().slice(0, 8);
     const colorer = this.pickColor(reqId);
 
+    let method: string;
+    let route: string;
+    let body: unknown;
+
+    if (context.getType<string>() === 'graphql') {
+      const gqlCtx = GqlExecutionContext.create(context);
+      const info = gqlCtx.getInfo();
+      method = info.operation.operation.toUpperCase(); // 'QUERY' | 'MUTATION' | 'SUBSCRIPTION'
+      route = info.fieldName; // e.g. 'resources', 'createResource'
+      body = gqlCtx.getArgs();
+    } else {
+      const request = context.switchToHttp().getRequest();
+      method = request.method ?? 'UNKNOWN_METHOD';
+      route = request.originalUrl ?? request.url ?? 'UNKNOWN_ROUTE';
+      body = request.body;
+    }
+
+    const hasBody = this.hasBody(body);
+
     if (hasBody) {
       console.log(
-        colorer(
-          `[${reqId}] ${method} ${route} body=${JSON.stringify(request.body)}`,
-        ),
+        colorer(`[${reqId}] ${method} ${route} body=${JSON.stringify(body)}`),
       );
     } else {
       console.log(colorer(`[${reqId}] ${method} ${route}`));
