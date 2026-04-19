@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'api',
+  displayName: 'todo-api',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

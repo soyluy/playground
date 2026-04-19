@@ -43,10 +43,7 @@ describe('TagService', () => {
     prisma = makePrismaMock();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        TagService,
-        { provide: PrismaService, useValue: prisma },
-      ],
+      providers: [TagService, { provide: PrismaService, useValue: prisma }],
     }).compile();
 
     service = module.get(TagService);
@@ -59,7 +56,10 @@ describe('TagService', () => {
   describe('getTags', () => {
     it('returns all tags belonging to the user', async () => {
       const user = makeUser({ id: 7 });
-      const tags = [makeTag({ ownerId: 7 }), makeTag({ id: 2, name: 'Personal', ownerId: 7 })];
+      const tags = [
+        makeTag({ ownerId: 7 }),
+        makeTag({ id: 2, name: 'Personal', ownerId: 7 }),
+      ];
       prisma.tag.findMany.mockResolvedValue(tags);
 
       const result = await service.getTags(user);
@@ -106,7 +106,9 @@ describe('TagService', () => {
       await service.createTag(user, dto);
 
       expect(prisma.tag.create).toHaveBeenCalledWith(
-        expect.objectContaining({ data: expect.objectContaining({ ownerId: 99 }) }),
+        expect.objectContaining({
+          data: expect.objectContaining({ ownerId: 99 }),
+        }),
       );
     });
   });

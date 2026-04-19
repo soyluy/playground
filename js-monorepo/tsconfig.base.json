@@ -17,7 +17,6 @@
     "baseUrl": ".",
     "paths": {
       "@hub/todo-ui": ["libs/todo/ui/src/index.ts"],
-      "@hub/todo-api": ["libs/todo/api/src/index.ts"],
       "@hub/todo-data": ["libs/todo/data/src/index.ts"],
       "@hub/prisma": ["libs/prisma/src/index.ts"],
       "@hub/expense-ui": ["libs/expense/ui/src/index.ts"],
@@ -28,7 +27,8 @@
       "@hub/resource-api": ["libs/resource/api/src/index.ts"],
       "@hub/core": ["libs/core/src/index.ts"],
       "@hub/resource-ui": ["libs/resource/ui/src/index.ts"],
-      "@hub/resource-data": ["libs/resource/data/src/index.ts"]
+      "@hub/resource-data": ["libs/resource/data/src/index.ts"],
+      "@hub/todo-api": ["libs/todo/api/src/index.ts"]
     },
     "sourceMap": true
   }

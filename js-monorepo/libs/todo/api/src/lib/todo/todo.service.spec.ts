@@ -59,10 +59,7 @@ describe('TodoService', () => {
     prisma = makePrismaMock();
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        TodoService,
-        { provide: PrismaService, useValue: prisma },
-      ],
+      providers: [TodoService, { provide: PrismaService, useValue: prisma }],
     }).compile();
 
     service = module.get(TodoService);
@@ -110,7 +107,9 @@ describe('TodoService', () => {
         completed: false,
         tagIds: [10, 20],
       };
-      prisma.todo.create.mockResolvedValue(makeTodo({ tags: [makeTag(10), makeTag(20)] }));
+      prisma.todo.create.mockResolvedValue(
+        makeTodo({ tags: [makeTag(10), makeTag(20)] }),
+      );
 
       await service.createTodo(user, dto);
 
@@ -191,7 +190,10 @@ describe('TodoService', () => {
 
     it('applies sortBy and sortOrder to the query', async () => {
       const user = makeUser();
-      const query: GetTodoQueryParamsDto = { sortBy: 'dueDate', sortOrder: 'desc' };
+      const query: GetTodoQueryParamsDto = {
+        sortBy: 'dueDate',
+        sortOrder: 'desc',
+      };
       prisma.todo.findMany.mockResolvedValue([]);
       prisma.todo.count.mockResolvedValue(0);
 
@@ -206,7 +208,10 @@ describe('TodoService', () => {
       const user = makeUser();
       const before = new Date('2025-06-01');
       const after = new Date('2025-01-01');
-      const query: GetTodoQueryParamsDto = { dueDateBefore: before, dueDateAfter: after };
+      const query: GetTodoQueryParamsDto = {
+        dueDateBefore: before,
+        dueDateAfter: after,
+      };
       prisma.todo.findMany.mockResolvedValue([]);
       prisma.todo.count.mockResolvedValue(0);
 
@@ -272,7 +277,13 @@ describe('TodoService', () => {
   describe('updateTodo', () => {
     it('updates and returns the todo', async () => {
       const user = makeUser();
-      const dto = { title: 'Updated', description: null, dueDate: null, completed: null, tagIds: null };
+      const dto = {
+        title: 'Updated',
+        description: null,
+        dueDate: null,
+        completed: null,
+        tagIds: null,
+      };
       const updated = makeTodo({ title: 'Updated' });
       prisma.todo.update.mockResolvedValue(updated);
 
@@ -283,7 +294,13 @@ describe('TodoService', () => {
 
     it('sets the tag relation when tagIds are provided', async () => {
       const user = makeUser();
-      const dto = { title: null, description: null, dueDate: null, completed: null, tagIds: [5] };
+      const dto = {
+        title: null,
+        description: null,
+        dueDate: null,
+        completed: null,
+        tagIds: [5],
+      };
       prisma.todo.update.mockResolvedValue(makeTodo());
 
       await service.updateTodo(user, 1, dto);
@@ -294,7 +311,13 @@ describe('TodoService', () => {
 
     it('does not set the tag relation when tagIds is null', async () => {
       const user = makeUser();
-      const dto = { title: 'New title', description: null, dueDate: null, completed: null, tagIds: null };
+      const dto = {
+        title: 'New title',
+        description: null,
+        dueDate: null,
+        completed: null,
+        tagIds: null,
+      };
       prisma.todo.update.mockResolvedValue(makeTodo());
 
       await service.updateTodo(user, 1, dto);

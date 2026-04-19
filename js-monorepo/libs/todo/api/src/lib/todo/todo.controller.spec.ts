@@ -68,7 +68,12 @@ describe('TodoController', () => {
     it('delegates to TodoService and returns the result', async () => {
       const user = makeUser();
       const query: GetTodoQueryParamsDto = {};
-      const expected = { data: [makeTodo()], total: 1, page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE };
+      const expected = {
+        data: [makeTodo()],
+        total: 1,
+        page: DEFAULT_PAGE,
+        pageSize: DEFAULT_PAGE_SIZE,
+      };
       todoService.getTodos.mockResolvedValue(expected);
 
       const result = await controller.getTodos(query, user);
@@ -126,7 +131,13 @@ describe('TodoController', () => {
   describe('updateTodo', () => {
     it('delegates to TodoService with the id and update data', async () => {
       const user = makeUser();
-      const dto = { title: 'Updated', description: null, dueDate: null, completed: null, tagIds: null };
+      const dto = {
+        title: 'Updated',
+        description: null,
+        dueDate: null,
+        completed: null,
+        tagIds: null,
+      };
       const updated = makeTodo({ title: 'Updated' });
       todoService.updateTodo.mockResolvedValue(updated);
 
