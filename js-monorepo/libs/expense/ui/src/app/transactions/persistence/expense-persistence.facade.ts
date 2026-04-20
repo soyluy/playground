@@ -1,16 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Transaction } from '@hub/expense-data';
-import {
-  EXPENSE_PERSISTENCE_MODE,
-  ExpensePersistenceMode,
-} from './expense-persistence.types';
+import { ExpensePersistenceMode } from './expense-persistence.types';
 import { ExpensePersistenceStrategy } from './expense-persistence.strategy';
 import { LocalExpensePersistenceStrategy } from './local-expense-persistence.strategy';
 import { ServerExpensePersistenceStrategy } from './server-expense-persistence.strategy';
+import { ExpensePersistenceConfigService } from './expense-persistence-config.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExpensePersistenceFacade {
-  private readonly _mode = inject(EXPENSE_PERSISTENCE_MODE);
+  private readonly _configService = inject(ExpensePersistenceConfigService);
   private readonly _localStrategy = inject(LocalExpensePersistenceStrategy);
   private readonly _serverStrategy = inject(ServerExpensePersistenceStrategy);
 
@@ -28,8 +26,16 @@ export class ExpensePersistenceFacade {
     await this.strategy.deleteTransaction(id);
   }
 
+  getMode(): ExpensePersistenceMode {
+    return this._configService.getMode();
+  }
+
+  setMode(mode: ExpensePersistenceMode): void {
+    this._configService.setMode(mode);
+  }
+
   private get strategy(): ExpensePersistenceStrategy {
-    return this.getStrategy(this._mode);
+    return this.getStrategy(this._configService.mode());
   }
 
   private getStrategy(mode: ExpensePersistenceMode): ExpensePersistenceStrategy {
