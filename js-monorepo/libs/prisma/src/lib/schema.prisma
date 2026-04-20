@@ -43,3 +43,13 @@ model User {
 	todos				Todo[]
 	tags				Tag[]
 }
+
+model Expense {
+	id					Int 			@id @default(autoincrement())
+	description String
+	amount			Int
+	currency		String
+	type				String
+	category		String
+	date				String
+}
