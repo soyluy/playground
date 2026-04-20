@@ -1,0 +1,27 @@
+{
+  "name": "expense-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expense/api/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/expense/api",
+        "tsConfig": "libs/expense/api/tsconfig.lib.json",
+        "packageJson": "libs/expense/api/package.json",
+        "main": "libs/expense/api/src/index.ts",
+        "assets": ["libs/expense/api/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/expense/api/jest.config.cts"
+      }
+    }
+  }
+}

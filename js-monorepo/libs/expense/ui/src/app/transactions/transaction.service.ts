@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Transaction } from './transaction.model';
+import { Transaction } from '@hub/expense-data';
 import { DbWrapperService, ENVIRONMENT } from '@hub/ui-infra';
 
 @Injectable({ providedIn: 'root' })

@@ -28,7 +28,9 @@
       "@hub/core": ["libs/core/src/index.ts"],
       "@hub/resource-ui": ["libs/resource/ui/src/index.ts"],
       "@hub/resource-data": ["libs/resource/data/src/index.ts"],
-      "@hub/todo-api": ["libs/todo/api/src/index.ts"]
+      "@hub/todo-api": ["libs/todo/api/src/index.ts"],
+      "@hub/expense-api": ["libs/expense/api/src/index.ts"],
+      "@hub/expense-data": ["libs/expense/data/src/index.ts"]
     },
     "sourceMap": true
   }

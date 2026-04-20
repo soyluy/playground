@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Transaction } from '../transaction.model';
+import { Transaction } from '@hub/expense-data';
 
 @Component({
   selector: 'expense-tracker-transaction-item',

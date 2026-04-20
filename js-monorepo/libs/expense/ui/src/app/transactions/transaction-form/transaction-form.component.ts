@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TRANSACTION_CATEGORIES, TransactionType } from '../transaction.model';
+import { TRANSACTION_CATEGORIES, TransactionType } from '@hub/expense-data';
 import { TransactionService } from '../transaction.service';
 
 @Component({
