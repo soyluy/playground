@@ -1,4 +1,5 @@
 import { TransactionType } from '../interfaces/transaction.interface';
+import { Transaction } from '../interfaces';
 
 export interface CreateTransactionDto {
   description: string;
@@ -7,3 +8,5 @@ export interface CreateTransactionDto {
   category: string;
   date: string;
 }
+
+export type CreateTransactionResponse = Transaction;

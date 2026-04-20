@@ -54,3 +54,8 @@ export type Tag = Prisma.TagModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Expense
+ * 
+ */
+export type Expense = Prisma.ExpenseModel

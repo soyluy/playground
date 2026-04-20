@@ -218,6 +218,7 @@ export type UserWhereInput = {
   photoUrl?: Prisma.StringFilter<"User"> | string
   todos?: Prisma.TodoListRelationFilter
   tags?: Prisma.TagListRelationFilter
+  expenses?: Prisma.ExpenseListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -228,6 +229,7 @@ export type UserOrderByWithRelationInput = {
   photoUrl?: Prisma.SortOrder
   todos?: Prisma.TodoOrderByRelationAggregateInput
   tags?: Prisma.TagOrderByRelationAggregateInput
+  expenses?: Prisma.ExpenseOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -241,6 +243,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   photoUrl?: Prisma.StringFilter<"User"> | string
   todos?: Prisma.TodoListRelationFilter
   tags?: Prisma.TagListRelationFilter
+  expenses?: Prisma.ExpenseListRelationFilter
 }, "id" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -274,6 +277,7 @@ export type UserCreateInput = {
   photoUrl: string
   todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
   tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -284,6 +288,7 @@ export type UserUncheckedCreateInput = {
   photoUrl: string
   todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -293,6 +298,7 @@ export type UserUpdateInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
   tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -303,6 +309,7 @@ export type UserUncheckedUpdateInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -393,12 +400,27 @@ export type UserUpdateOneRequiredWithoutTagsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTagsInput, Prisma.UserUpdateWithoutTagsInput>, Prisma.UserUncheckedUpdateWithoutTagsInput>
 }
 
+export type UserCreateNestedOneWithoutExpensesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExpensesInput, Prisma.UserUncheckedCreateWithoutExpensesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExpensesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExpensesInput, Prisma.UserUncheckedCreateWithoutExpensesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExpensesInput
+  upsert?: Prisma.UserUpsertWithoutExpensesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExpensesInput, Prisma.UserUpdateWithoutExpensesInput>, Prisma.UserUncheckedUpdateWithoutExpensesInput>
+}
+
 export type UserCreateWithoutTodosInput = {
   googleId: string
   displayName: string
   email: string
   photoUrl: string
   tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutTodosInput = {
@@ -408,6 +430,7 @@ export type UserUncheckedCreateWithoutTodosInput = {
   email: string
   photoUrl: string
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutTodosInput = {
@@ -432,6 +455,7 @@ export type UserUpdateWithoutTodosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTodosInput = {
@@ -441,6 +465,7 @@ export type UserUncheckedUpdateWithoutTodosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutTagsInput = {
@@ -449,6 +474,7 @@ export type UserCreateWithoutTagsInput = {
   email: string
   photoUrl: string
   todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutTagsInput = {
@@ -458,6 +484,7 @@ export type UserUncheckedCreateWithoutTagsInput = {
   email: string
   photoUrl: string
   todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutTagsInput = {
@@ -482,6 +509,7 @@ export type UserUpdateWithoutTagsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTagsInput = {
@@ -491,6 +519,61 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutExpensesInput = {
+  googleId: string
+  displayName: string
+  email: string
+  photoUrl: string
+  todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
+  tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutExpensesInput = {
+  id?: number
+  googleId: string
+  displayName: string
+  email: string
+  photoUrl: string
+  todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutExpensesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutExpensesInput, Prisma.UserUncheckedCreateWithoutExpensesInput>
+}
+
+export type UserUpsertWithoutExpensesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutExpensesInput, Prisma.UserUncheckedUpdateWithoutExpensesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutExpensesInput, Prisma.UserUncheckedCreateWithoutExpensesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutExpensesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutExpensesInput, Prisma.UserUncheckedUpdateWithoutExpensesInput>
+}
+
+export type UserUpdateWithoutExpensesInput = {
+  googleId?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
+  tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutExpensesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  googleId?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 
@@ -501,11 +584,13 @@ export type UserUncheckedUpdateWithoutTagsInput = {
 export type UserCountOutputType = {
   todos: number
   tags: number
+  expenses: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   todos?: boolean | UserCountOutputTypeCountTodosArgs
   tags?: boolean | UserCountOutputTypeCountTagsArgs
+  expenses?: boolean | UserCountOutputTypeCountExpensesArgs
 }
 
 /**
@@ -532,6 +617,13 @@ export type UserCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Exten
   where?: Prisma.TagWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExpenseWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -541,6 +633,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   photoUrl?: boolean
   todos?: boolean | Prisma.User$todosArgs<ExtArgs>
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
+  expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -572,6 +665,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   todos?: boolean | Prisma.User$todosArgs<ExtArgs>
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
+  expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -582,6 +676,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     todos: Prisma.$TodoPayload<ExtArgs>[]
     tags: Prisma.$TagPayload<ExtArgs>[]
+    expenses: Prisma.$ExpensePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -985,6 +1080,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   todos<T extends Prisma.User$todosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$todosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tags<T extends Prisma.User$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  expenses<T extends Prisma.User$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1457,6 +1553,30 @@ export type User$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   take?: number
   skip?: number
   distinct?: Prisma.TagScalarFieldEnum | Prisma.TagScalarFieldEnum[]
+}
+
+/**
+ * User.expenses
+ */
+export type User$expensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Expense
+   */
+  select?: Prisma.ExpenseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Expense
+   */
+  omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  where?: Prisma.ExpenseWhereInput
+  orderBy?: Prisma.ExpenseOrderByWithRelationInput | Prisma.ExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.ExpenseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[]
 }
 
 /**

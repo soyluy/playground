@@ -12,6 +12,11 @@ datasource db {
   provider 	= "postgresql"
 }
 
+enum TransactionType {
+	income
+	expense
+}
+
 model Todo {
 	id					Int				@id @default(autoincrement())
 	title 			String
@@ -42,14 +47,16 @@ model User {
 	photoUrl		String
 	todos				Todo[]
 	tags				Tag[]
+	expenses		Expense[]
 }
 
 model Expense {
 	id					Int 			@id @default(autoincrement())
 	description String
-	amount			Int
-	currency		String
-	type				String
+	amount			Float
+	type				TransactionType
 	category		String
 	date				String
+	owner				User			@relation(fields: [ownerId], references: [id])
+	ownerId			Int
 }

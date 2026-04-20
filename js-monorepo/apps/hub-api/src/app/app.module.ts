@@ -8,10 +8,12 @@ import { ResourceModule } from '@hub/resource-api';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbName, getMongoUrl } from '../util/get-mongo-env-vars.util';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ExpenseModule } from '@hub/expense-api';
 
 @Module({
   imports: [
     TodoModule,
+    ExpenseModule,
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     ApiInfraModule,
