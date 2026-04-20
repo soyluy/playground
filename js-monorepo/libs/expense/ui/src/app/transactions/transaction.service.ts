@@ -1,15 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Transaction } from '@hub/expense-data';
-import { DbWrapperService, ENVIRONMENT } from '@hub/ui-infra';
+import { ExpensePersistenceFacade } from './persistence';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private readonly _db = inject(DbWrapperService);
+  private readonly _persistence = inject(ExpensePersistenceFacade);
   private readonly _transactions = signal<Transaction[]>([]);
-  private readonly _storeKey = inject(ENVIRONMENT).expensesObjStoreName;
 
   constructor() {
-    this.loadTransactions();
+    void this.loadTransactions();
   }
 
   readonly transactions = this._transactions.asReadonly();
@@ -28,20 +27,40 @@ export class TransactionService {
 
   readonly balance = computed(() => this.totalIncome() - this.totalExpenses());
 
-  loadTransactions() {
-    this._db.bulkReadFromStore<Transaction>(this._storeKey, (data) => {
+  async loadTransactions(): Promise<void> {
+    try {
+      const data = await this._persistence.loadTransactions();
       this._transactions.set(data);
-    });
+    } catch (error) {
+      console.error('Failed to load transactions', error);
+    }
   }
 
   addTransaction(transaction: Omit<Transaction, 'id'>): void {
-    const entry: Transaction = { ...transaction, id: crypto.randomUUID() };
-    this._transactions.update((txns) => [entry, ...txns]);
-    this._db.writeToStore(this._storeKey, [entry]);
+    void this.persistTransaction(transaction);
   }
 
-  deleteTransaction(id: string): void {
-    this._transactions.update((txns) => txns.filter((t) => t.id !== id));
-    this._db.deleteFromStore(this._storeKey, id);
+  deleteTransaction(id: number): void {
+    void this.removeTransaction(id);
+  }
+
+  private async persistTransaction(
+    transaction: Omit<Transaction, 'id'>,
+  ): Promise<void> {
+    try {
+      const entry = await this._persistence.addTransaction(transaction);
+      this._transactions.update((txns) => [entry, ...txns]);
+    } catch (error) {
+      console.error('Failed to add transaction', error);
+    }
+  }
+
+  private async removeTransaction(id: number): Promise<void> {
+    try {
+      await this._persistence.deleteTransaction(id);
+      this._transactions.update((txns) => txns.filter((t) => t.id !== id));
+    } catch (error) {
+      console.error('Failed to delete transaction', error);
+    }
   }
 }

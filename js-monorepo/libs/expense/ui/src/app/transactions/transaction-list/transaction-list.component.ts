@@ -30,7 +30,7 @@ export class TransactionListComponent {
     this.activeFilter.set(filter);
   }
 
-  protected onDelete(id: string): void {
+  protected onDelete(id: number): void {
     this.txService.deleteTransaction(id);
   }
 
