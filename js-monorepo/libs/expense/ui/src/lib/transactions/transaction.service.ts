@@ -1,14 +1,17 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { Transaction } from '@hub/expense-data';
-import { ExpensePersistenceService } from './persistence';
+import { ExpenseStrategyService } from './persistence';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private readonly _persistence = inject(ExpensePersistenceService);
+  private readonly _strategyService = inject(ExpenseStrategyService);
   private readonly _transactions = signal<Transaction[]>([]);
 
   constructor() {
-    void this.loadTransactions();
+    effect(() => {
+      this._strategyService.strategy(); // track strategy changes
+      void this.loadTransactions();
+    });
   }
 
   readonly transactions = this._transactions.asReadonly();
@@ -29,7 +32,7 @@ export class TransactionService {
 
   async loadTransactions(): Promise<void> {
     try {
-      const data = await this._persistence.loadTransactions();
+      const data = await this._strategyService.strategy().loadTransactions();
       this._transactions.set(data);
     } catch (error) {
       console.error('Failed to load transactions', error);
@@ -48,7 +51,9 @@ export class TransactionService {
     transaction: Omit<Transaction, 'id'>,
   ): Promise<void> {
     try {
-      const entry = await this._persistence.addTransaction(transaction);
+      const entry = await this._strategyService
+        .strategy()
+        .addTransaction(transaction);
       this._transactions.update((txns) => [entry, ...txns]);
     } catch (error) {
       console.error('Failed to add transaction', error);
@@ -57,7 +62,7 @@ export class TransactionService {
 
   private async removeTransaction(id: number): Promise<void> {
     try {
-      await this._persistence.deleteTransaction(id);
+      await this._strategyService.strategy().deleteTransaction(id);
       this._transactions.update((txns) => txns.filter((t) => t.id !== id));
     } catch (error) {
       console.error('Failed to delete transaction', error);
