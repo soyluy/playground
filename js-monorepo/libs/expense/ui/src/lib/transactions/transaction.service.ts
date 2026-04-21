@@ -43,6 +43,10 @@ export class TransactionService {
     void this.persistTransaction(transaction);
   }
 
+  updateTransaction(transaction: Transaction): void {
+    void this.persistUpdateTransaction(transaction);
+  }
+
   deleteTransaction(id: number): void {
     void this.removeTransaction(id);
   }
@@ -57,6 +61,21 @@ export class TransactionService {
       this._transactions.update((txns) => [entry, ...txns]);
     } catch (error) {
       console.error('Failed to add transaction', error);
+    }
+  }
+
+  private async persistUpdateTransaction(
+    transaction: Transaction,
+  ): Promise<void> {
+    try {
+      const entry = await this._strategyService
+        .strategy()
+        .updateTransaction(transaction);
+      this._transactions.update((txns) =>
+        txns.map((t) => (t.id === entry.id ? entry : t)),
+      );
+    } catch (error) {
+      console.error('Failed to update transaction', error);
     }
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Transaction } from '@hub/expense-data';
+import { Transaction, UpdateTransactionDto } from '@hub/expense-data';
 import { ENVIRONMENT } from '@hub/ui-infra';
 import { firstValueFrom } from 'rxjs';
 import { ExpensePersistenceStrategy } from '../expense-persistence.strategy';
@@ -26,11 +26,15 @@ export class ServerExpensePersistenceStrategy
   }
 
   async updateTransaction(transaction: Transaction): Promise<Transaction> {
+    const dto: UpdateTransactionDto = {
+      description: transaction.description,
+      amount: transaction.amount,
+      type: transaction.type,
+      category: transaction.category,
+      date: transaction.date,
+    };
     return await firstValueFrom(
-      this._http.put<Transaction>(
-        `${this._basePath}/${transaction.id}`,
-        transaction,
-      ),
+      this._http.put<Transaction>(`${this._basePath}/${transaction.id}`, dto),
     );
   }
 

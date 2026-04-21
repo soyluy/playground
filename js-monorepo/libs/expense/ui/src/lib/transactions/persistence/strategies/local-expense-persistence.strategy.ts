@@ -29,7 +29,7 @@ export class LocalExpensePersistenceStrategy
   async updateTransaction(transaction: Transaction): Promise<Transaction> {
     await this._db.deleteFromStore(
       this._storeKey,
-      transaction.id as unknown as string,
+      transaction.id.toString() as unknown as string,
     );
     return await this.addTransaction(transaction);
   }

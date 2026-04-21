@@ -12,8 +12,13 @@ import { Transaction } from '@hub/expense-data';
 export class TransactionItemComponent {
   readonly transaction = input.required<Transaction>();
   readonly deleted = output<number>();
+  readonly edited = output<Transaction>();
 
   protected onDelete(): void {
     this.deleted.emit(this.transaction().id);
+  }
+
+  protected onEdit(): void {
+    this.edited.emit(this.transaction());
   }
 }

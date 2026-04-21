@@ -61,6 +61,7 @@ export class DbWrapperService {
       .objectStore(store)
       .delete(key);
     req.onsuccess = () => console.log('deleted!', key);
+    req.onerror = (event) => console.error('a delete error occurred: ', event);
   }
 
   async readFromStore(store: string, key: string): Promise<void> {

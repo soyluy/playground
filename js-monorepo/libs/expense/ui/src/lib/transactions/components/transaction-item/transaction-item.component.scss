@@ -23,8 +23,12 @@
   border-radius: 2px;
   flex-shrink: 0;
 
-  .income & { background: var(--income); }
-  .expense & { background: var(--expense); }
+  .income & {
+    background: var(--income);
+  }
+  .expense & {
+    background: var(--expense);
+  }
 }
 
 .item__body {
@@ -55,8 +59,12 @@
   font-weight: 500;
   flex-shrink: 0;
 
-  .income & { color: var(--income); }
-  .expense & { color: var(--expense); }
+  .income & {
+    color: var(--income);
+  }
+  .expense & {
+    color: var(--expense);
+  }
 }
 
 .item__delete {
@@ -67,7 +75,30 @@
   justify-content: center;
   padding: 4px;
   border-radius: var(--radius-sm);
-  transition: opacity 0.15s, color 0.15s, background 0.15s;
+  transition:
+    opacity 0.15s,
+    color 0.15s,
+    background 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--expense);
+    background: var(--expense-dim);
+  }
+}
+
+.item__edit {
+  opacity: 0;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition:
+    opacity 0.15s,
+    color 0.15s,
+    background 0.15s;
   flex-shrink: 0;
 
   &:hover {
