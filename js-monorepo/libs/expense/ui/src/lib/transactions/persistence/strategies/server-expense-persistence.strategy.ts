@@ -25,6 +25,15 @@ export class ServerExpensePersistenceStrategy
     );
   }
 
+  async updateTransaction(transaction: Transaction): Promise<Transaction> {
+    return await firstValueFrom(
+      this._http.put<Transaction>(
+        `${this._basePath}/${transaction.id}`,
+        transaction,
+      ),
+    );
+  }
+
   async deleteTransaction(id: number): Promise<void> {
     await firstValueFrom(
       this._http.delete<Transaction>(`${this._basePath}/${id}`),
