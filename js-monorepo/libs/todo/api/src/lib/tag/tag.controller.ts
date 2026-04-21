@@ -19,7 +19,7 @@ import {
 import { CreateTodoTagDto } from './dto/create-todo-tag.dto';
 import { UpdateTodoTagDto } from './dto/update-todo-tag.dto';
 import { User } from '@hub/user-api';
-import { CurrentUser } from '@hub/auth';
+import { CurrentUser } from '@hub/auth-api';
 
 @Controller('tag')
 export class TagController {

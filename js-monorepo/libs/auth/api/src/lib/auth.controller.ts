@@ -6,6 +6,7 @@ import { Public } from './decorators/public-endpoint.decorator';
 import { ConfigService } from '@nestjs/config';
 import { GoogleCallbackGuard } from './guards/google-callback.guard';
 import { User } from '@hub/user-api';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +20,12 @@ export class AuthController {
       throw new Error('FRONTEND_URL is not set');
     }
     this.frontendUrl = frontendUrl;
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard())
+  async me(@CurrentUser() user: User) {
+    return user;
   }
 
   @Get('google')

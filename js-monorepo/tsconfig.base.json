@@ -21,7 +21,6 @@
       "@hub/prisma": ["libs/prisma/src/index.ts"],
       "@hub/expense-ui": ["libs/expense/ui/src/index.ts"],
       "@hub/ui-infra": ["libs/infra/ui/src/index.ts"],
-      "@hub/auth": ["libs/auth/src/index.ts"],
       "@hub/api-infra": ["libs/infra/api/src/index.ts"],
       "@hub/user-api": ["libs/user/api/src/index.ts"],
       "@hub/resource-api": ["libs/resource/api/src/index.ts"],
@@ -30,7 +29,9 @@
       "@hub/resource-data": ["libs/resource/data/src/index.ts"],
       "@hub/todo-api": ["libs/todo/api/src/index.ts"],
       "@hub/expense-api": ["libs/expense/api/src/index.ts"],
-      "@hub/expense-data": ["libs/expense/data/src/index.ts"]
+      "@hub/expense-data": ["libs/expense/data/src/index.ts"],
+      "@hub/auth-api": ["libs/auth/api/src/index.ts"],
+      "@hub/auth-ui": ["libs/auth/ui/src/index.ts"]
     },
     "sourceMap": true
   }

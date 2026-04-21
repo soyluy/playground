@@ -1,10 +1,10 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Transaction } from '@hub/expense-data';
-import { ExpensePersistenceFacade } from './persistence';
+import { ExpensePersistenceService } from './persistence';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private readonly _persistence = inject(ExpensePersistenceFacade);
+  private readonly _persistence = inject(ExpensePersistenceService);
   private readonly _transactions = signal<Transaction[]>([]);
 
   constructor() {

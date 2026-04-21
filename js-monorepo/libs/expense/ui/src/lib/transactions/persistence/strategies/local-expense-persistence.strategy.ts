@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Transaction } from '@hub/expense-data';
 import { DbWrapperService, ENVIRONMENT } from '@hub/ui-infra';
-import { ExpensePersistenceStrategy } from './expense-persistence.strategy';
+import { ExpensePersistenceStrategy } from '../expense-persistence.strategy';
 
 @Injectable({ providedIn: 'root' })
 export class LocalExpensePersistenceStrategy

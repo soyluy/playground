@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TodoModule } from '@hub/todo-api';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from '@hub/auth';
+import { AuthModule } from '@hub/auth-api';
 import { ApiInfraModule } from '@hub/api-infra';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ResourceModule } from '@hub/resource-api';

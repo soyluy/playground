@@ -19,7 +19,7 @@ import {
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { User } from '@hub/user-api';
-import { CurrentUser } from '@hub/auth';
+import { CurrentUser } from '@hub/auth-api';
 
 @Controller('expense')
 export class ExpenseController {

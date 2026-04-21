@@ -1,1 +1,1 @@
-export * from './app/expense-tracker';
+export * from './lib/expense-tracker';

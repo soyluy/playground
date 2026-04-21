@@ -1,6 +1,8 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   inject,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -13,6 +15,7 @@ import { withCredentialsInterceptor } from '@hub/ui-infra';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache, ApolloLink } from '@apollo/client/core';
+import { AuthService } from '@hub/auth-ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +36,10 @@ export const appConfig: ApplicationConfig = {
         ]),
         cache: new InMemoryCache(),
       };
+    }),
+    provideAppInitializer(() => {
+      const authService = inject(AuthService);
+      authService.loadUser();
     }),
   ],
 };

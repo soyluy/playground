@@ -20,7 +20,7 @@ import {
 } from '@hub/todo-data';
 import { GetTodoQueryParamsDto } from './dto/get-todo.dto';
 import { User } from '@hub/user-api';
-import { CurrentUser } from '@hub/auth';
+import { CurrentUser } from '@hub/auth-api';
 
 @Controller('todo')
 export class TodoController {

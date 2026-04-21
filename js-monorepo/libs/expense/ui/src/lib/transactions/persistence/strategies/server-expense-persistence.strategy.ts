@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Transaction } from '@hub/expense-data';
 import { ENVIRONMENT } from '@hub/ui-infra';
 import { firstValueFrom } from 'rxjs';
-import { ExpensePersistenceStrategy } from './expense-persistence.strategy';
+import { ExpensePersistenceStrategy } from '../expense-persistence.strategy';
 
 @Injectable({ providedIn: 'root' })
 export class ServerExpensePersistenceStrategy
@@ -26,6 +26,8 @@ export class ServerExpensePersistenceStrategy
   }
 
   async deleteTransaction(id: number): Promise<void> {
-    await firstValueFrom(this._http.delete<Transaction>(`${this._basePath}/${id}`));
+    await firstValueFrom(
+      this._http.delete<Transaction>(`${this._basePath}/${id}`),
+    );
   }
 }
