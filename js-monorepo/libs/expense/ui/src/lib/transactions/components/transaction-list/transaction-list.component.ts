@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { TransactionItemComponent } from '../transaction-item/transaction-item.component';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../../transaction.service';
 import { TransactionType } from '@hub/expense-data';
 import { CommonModule } from '@angular/common';
 import { ENVIRONMENT } from '@hub/ui-infra';

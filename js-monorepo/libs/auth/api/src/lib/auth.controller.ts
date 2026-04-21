@@ -23,7 +23,7 @@ export class AuthController {
   }
 
   @Get('me')
-  @UseGuards(AuthGuard())
+  @Public()
   async me(@CurrentUser() user: User) {
     return user;
   }

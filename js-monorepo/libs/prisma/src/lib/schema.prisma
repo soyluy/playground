@@ -60,3 +60,12 @@ model Expense {
 	owner				User			@relation(fields: [ownerId], references: [id])
 	ownerId			Int
 }
+
+// connect-pg-simple managed session table. defined because prisma tries to remove it, causing conflicts.
+model session {
+  sid    String   @id @db.VarChar
+  sess   Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire])
+}

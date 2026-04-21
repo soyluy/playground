@@ -16,14 +16,19 @@ export class AuthService {
   private readonly _user: WritableSignal<User | null> = signal(null);
 
   public loadUser(): Observable<void> {
-    return this._http.get<User>('/api/auth/me').pipe(
-      tap((user) => this._user.set(user)),
-      catchError(() => {
+    const obs = this._http.get<User>('/api/auth/me').pipe(
+      tap((user) => {
+        this._user.set(user);
+      }),
+      catchError((error) => {
+        console.error('error loading user', error);
         this._user.set(null);
         return EMPTY;
       }),
       map(() => void 0),
     );
+    obs.subscribe();
+    return obs;
   }
 
   get user(): Signal<User | null> {

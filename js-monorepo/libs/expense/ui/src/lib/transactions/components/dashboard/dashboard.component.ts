@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../../transaction.service';
 import { ENVIRONMENT } from '@hub/ui-infra';
 
 @Component({
