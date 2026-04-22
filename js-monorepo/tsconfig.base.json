@@ -31,7 +31,9 @@
       "@hub/expense-api": ["libs/expense/api/src/index.ts"],
       "@hub/expense-data": ["libs/expense/data/src/index.ts"],
       "@hub/auth-api": ["libs/auth/api/src/index.ts"],
-      "@hub/auth-ui": ["libs/auth/ui/src/index.ts"]
+      "@hub/auth-ui": ["libs/auth/ui/src/index.ts"],
+      "@hub/research-api": ["libs/research/api/src/index.ts"],
+      "@hub/research-data": ["libs/research/data/src/index.ts"]
     },
     "sourceMap": true
   }
