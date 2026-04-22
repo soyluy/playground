@@ -4,6 +4,36 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  // Colors - dark theme
+  --bg-base: #0c0c10;
+  --bg-surface: #141418;
+  --bg-elevated: #1c1c24;
+  --bg-hover: #22222c;
+
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+
+  --text-primary: #e4e4f0;
+  --text-secondary: #7a7a96;
+  --text-muted: #4a4a60;
+
+  --income: #4ecca8;
+  --income-dim: rgba(78, 204, 168, 0.12);
+  --expense: #f06292;
+  --expense-dim: rgba(240, 98, 146, 0.12);
+  --accent: #7c6af7;
+  --accent-dim: rgba(124, 106, 247, 0.12);
+
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}
 
 html {
   height: 100%;
@@ -44,4 +74,9 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
