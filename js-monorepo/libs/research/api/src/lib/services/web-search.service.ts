@@ -31,6 +31,7 @@ export class WebSearchService {
       }),
     );
     return {
+      subtopic,
       results: normalizedResults,
     };
   }

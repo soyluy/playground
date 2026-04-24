@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ResearchableItem } from '@hub/research-data';
-import { Subtopic } from '../types';
+import { Subtopic, SubtopicGenerationResult } from '../types';
 import Anthropic from '@anthropic-ai/sdk';
-
-export type SubtopicGenerationResult = {
-  subtopics: Subtopic[];
-};
+import { Message } from '@anthropic-ai/sdk/resources';
 
 const SYSTEM_PROMPT = `
 You are a research planning assistant. Given a topic and optional metadata (tags, notes, instructions), generate a set of 5-8 subtopics that together provide complete coverage of the topic for research or preparation purposes.
@@ -42,12 +39,18 @@ export class SubtopicGenerationService {
         },
       ],
     });
+    const subtopics = this.parseSubtopics(msg);
+    return {
+      subtopics,
+    };
+  }
+
+  private parseSubtopics(msg: Message): Subtopic[] {
     const subtopics = JSON.parse(
       // TODO: Handle errors
       msg.content[0].type === 'text' ? msg.content[0].text : '[]',
     ) as Subtopic[];
-    return {
-      subtopics,
-    };
+
+    return subtopics;
   }
 }
