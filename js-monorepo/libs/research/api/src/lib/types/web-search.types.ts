@@ -3,3 +3,7 @@ export type WebSearchResultItem = {
   url: string;
   content: string;
 };
+
+export type WebSearchResult = {
+  results: WebSearchResultItem[];
+};
