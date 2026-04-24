@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbName, getMongoUrl } from '../util/get-mongo-env-vars.util';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ExpenseModule } from '@hub/expense-api';
+import { ResearchModule } from '@hub/research-api';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ExpenseModule } from '@hub/expense-api';
     MongooseModule.forRoot(getMongoUrl(), {
       dbName: getMongoDbName(),
     }),
+    ResearchModule,
   ],
 })
 export class AppModule {}

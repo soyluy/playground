@@ -1,1 +1,1 @@
-export * from './lib/research-data';
+export * from './lib/interfaces';
