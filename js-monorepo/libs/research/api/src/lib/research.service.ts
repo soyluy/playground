@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ResearchableItem } from '@hub/research-data';
 import { SubtopicGenerationService } from './services/subtopic-generation.service';
 import { WebSearchService } from './services/web-search.service';
@@ -6,6 +6,8 @@ import { SourceAnalysisService } from './services/source-analysis.service';
 import { VerificationService } from './services/verification.service';
 import { SynthesisService } from './services/synthesis.service';
 import { ResearchReport, Source, SourceAnalysisResult } from './types';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 @Injectable()
 export class ResearchService {
@@ -15,14 +17,30 @@ export class ResearchService {
     private readonly _sourceAnalysis: SourceAnalysisService,
     private readonly _verification: VerificationService,
     private readonly _synthesis: SynthesisService,
+    @Inject(WINSTON_MODULE_PROVIDER)
+    private readonly _logger: Logger,
   ) {}
 
   async research(item: ResearchableItem): Promise<ResearchReport> {
+    this._logger.info('research_started', { topic: item.topic });
+
     const { subtopics } =
       await this._subtopicGeneration.generateSubtopics(item);
+    this._logger.info('subtopics_generated', {
+      subtopics: subtopics.map((s) => s.label),
+    });
 
     const searchResults = await Promise.all(
-      subtopics.map((subtopic) => this._webSearch.searchWeb(subtopic)),
+      subtopics.map(async (subtopic) => {
+        this._logger.info('web_search_started', { subtopic: subtopic.label });
+        const results = await this._webSearch.searchWeb(subtopic);
+        this._logger.info('web_search_complete', {
+          subtopic: subtopic.label,
+          resultCount: results.results.length,
+          urls: results.results.map((r) => r.url),
+        });
+        return results;
+      }),
     );
 
     const subtopicFindings = await Promise.all(
@@ -39,12 +57,31 @@ export class ResearchService {
         const analysisResults: SourceAnalysisResult[] = [];
 
         for (const source of sources) {
-          const res = await this._sourceAnalysis.analyzeSource(source);
-          await new Promise((resolve) => {
-            setTimeout(resolve, 15000); // To avoid hitting rate limits
+          this._logger.info('source_analysis_started', {
+            subtopic: subtopic.label,
+            url: results[analysisResults.length].url,
           });
+          const res = await this._sourceAnalysis.analyzeSource(source);
+          this._logger.info('source_analysis_complete', {
+            subtopic: subtopic.label,
+            url: results[analysisResults.length].url,
+            status: res.status,
+          });
+          await new Promise((resolve) => setTimeout(resolve, 15000));
           analysisResults.push(res);
         }
+
+        const accepted = analysisResults.filter(
+          (r) => r.status === 'accepted',
+        ).length;
+        const rejected = analysisResults.filter(
+          (r) => r.status === 'rejected',
+        ).length;
+        this._logger.info('source_analysis_summary', {
+          subtopic: subtopic.label,
+          accepted,
+          rejected,
+        });
 
         const findings = analysisResults.flatMap((result, i) =>
           result.status === 'accepted'
@@ -57,10 +94,20 @@ export class ResearchService {
     );
 
     const populated = subtopicFindings.filter((s) => s.findings.length > 0);
+    this._logger.info('subtopics_with_findings', { count: populated.length });
 
     const sections = [];
     for (const s of populated) {
+      this._logger.info('verification_started', { subtopic: s.subtopic.label });
       const verification = await this._verification.verify(s);
+      this._logger.info('verification_complete', {
+        subtopic: s.subtopic.label,
+        corroborated: verification.findings.filter((f) => f.corroborated)
+          .length,
+        contradictions: verification.findings.filter(
+          (f) => f.contradictions.length > 0,
+        ).length,
+      });
 
       const mergedFindings = s.findings.map((f) => {
         const v = verification.findings.find(
@@ -74,14 +121,20 @@ export class ResearchService {
         };
       });
 
+      this._logger.info('synthesis_started', { subtopic: s.subtopic.label });
       const section = await this._synthesis.synthesize(item, {
         subtopic: s.subtopic,
         findings: mergedFindings,
       });
+      this._logger.info('synthesis_complete', { subtopic: s.subtopic.label });
 
       sections.push(section);
     }
 
+    this._logger.info('research_complete', {
+      topic: item.topic,
+      sectionCount: sections.length,
+    });
     return { title: item.topic, sections };
   }
 }
