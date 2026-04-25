@@ -5,7 +5,7 @@ import { WebSearchService } from './services/web-search.service';
 import { SourceAnalysisService } from './services/source-analysis.service';
 import { VerificationService } from './services/verification.service';
 import { SynthesisService } from './services/synthesis.service';
-import { ResearchReport, Source } from './types';
+import { ResearchReport, Source, SourceAnalysisResult } from './types';
 
 @Injectable()
 export class ResearchService {
@@ -36,9 +36,15 @@ export class ResearchService {
           instructions: item.instructions ?? '',
         }));
 
-        const analysisResults = await Promise.all(
-          sources.map((source) => this._sourceAnalysis.analyzeSource(source)),
-        );
+        const analysisResults: SourceAnalysisResult[] = [];
+
+        for (const source of sources) {
+          const res = await this._sourceAnalysis.analyzeSource(source);
+          await new Promise((resolve) => {
+            setTimeout(resolve, 15000); // To avoid hitting rate limits
+          });
+          analysisResults.push(res);
+        }
 
         const findings = analysisResults.flatMap((result, i) =>
           result.status === 'accepted'

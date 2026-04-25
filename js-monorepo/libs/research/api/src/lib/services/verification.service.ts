@@ -46,8 +46,10 @@ export class VerificationService {
   private readonly _anthropic: Anthropic;
 
   constructor(private readonly _configService: ConfigService) {
+    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
     this._anthropic = new Anthropic({
-      apiKey: this._configService.getOrThrow<string>('ANTHROPIC_API_KEY'),
+      apiKey,
+      timeout: 60000, // 60 seconds
     });
   }
 

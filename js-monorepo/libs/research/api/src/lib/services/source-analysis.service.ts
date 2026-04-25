@@ -33,11 +33,15 @@ ${source.content}
 
 @Injectable()
 export class SourceAnalysisService {
-  private readonly anthropic = new Anthropic({
-    apiKey: this._configService.getOrThrow<string>('ANTHROPIC_API_KEY'),
-  });
+  private readonly anthropic: Anthropic;
 
-  constructor(private readonly _configService: ConfigService) {}
+  constructor(private readonly _configService: ConfigService) {
+    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
+    this.anthropic = new Anthropic({
+      apiKey,
+      timeout: 60000, // 60 seconds
+    });
+  }
 
   async analyzeSource(source: Source): Promise<SourceAnalysisResult> {
     const prompt = analysisPromptGenerator(source);

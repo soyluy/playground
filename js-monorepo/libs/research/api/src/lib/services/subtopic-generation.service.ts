@@ -3,6 +3,7 @@ import { ResearchableItem } from '@hub/research-data';
 import { Subtopic, SubtopicGenerationResult } from '../types';
 import Anthropic from '@anthropic-ai/sdk';
 import { Message } from '@anthropic-ai/sdk/resources';
+import { ConfigService } from '@nestjs/config';
 
 const SYSTEM_PROMPT = `
 You are a research planning assistant. Given a topic and optional metadata (tags, notes, instructions), generate a set of 5-8 subtopics that together provide complete coverage of the topic for research or preparation purposes.
@@ -22,12 +23,20 @@ Instructions: ${item.instructions}
 
 @Injectable()
 export class SubtopicGenerationService {
-  private readonly anthropic = new Anthropic();
+  private readonly anthropic: Anthropic;
+
+  constructor(private readonly _configService: ConfigService) {
+    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
+    this.anthropic = new Anthropic({
+      apiKey,
+      timeout: 60000, // 60 seconds
+    });
+    console.log('apiKey', apiKey);
+  }
 
   public async generateSubtopics(
     item: Omit<ResearchableItem, 'id' | 'status' | 'dueDate'>,
   ): Promise<SubtopicGenerationResult> {
-    // TODO: Implement subtopic generation
     const msg = await this.anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 1000,
