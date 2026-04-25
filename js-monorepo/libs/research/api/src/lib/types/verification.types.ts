@@ -1,13 +1,12 @@
 import { Subtopic } from './subtopic.types';
 
-export type VerifiedFinding = {
-  content: string;
+export type VerificationFinding = {
   sourceUrl: string;
   corroborated: boolean;
-  contradictions: string[]; // content of conflicting findings
+  contradictions: string[];
 };
 
 export type VerificationResult = {
   subtopic: Subtopic;
-  findings: VerifiedFinding[];
+  findings: VerificationFinding[];
 };

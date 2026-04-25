@@ -57,7 +57,31 @@ export class ResearchService {
     );
 
     const populated = subtopicFindings.filter((s) => s.findings.length > 0);
-    const verified = await this._verification.verify(populated);
-    return this._synthesis.synthesize(item, verified);
+
+    const sections = [];
+    for (const s of populated) {
+      const verification = await this._verification.verify(s);
+
+      const mergedFindings = s.findings.map((f) => {
+        const v = verification.findings.find(
+          (vf) => vf.sourceUrl === f.sourceUrl,
+        );
+        return {
+          content: f.content,
+          sourceUrl: f.sourceUrl,
+          corroborated: v?.corroborated ?? false,
+          contradictions: v?.contradictions ?? [],
+        };
+      });
+
+      const section = await this._synthesis.synthesize(item, {
+        subtopic: s.subtopic,
+        findings: mergedFindings,
+      });
+
+      sections.push(section);
+    }
+
+    return { title: item.topic, sections };
   }
 }

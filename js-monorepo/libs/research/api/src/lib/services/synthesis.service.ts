@@ -1,39 +1,38 @@
+// synthesis.service.ts
 import { Injectable } from '@nestjs/common';
 import Anthropic from '@anthropic-ai/sdk';
 import { ConfigService } from '@nestjs/config';
-import { VerificationResult, ResearchReport } from '../types';
+import { SynthesisInput } from '../types/synthesis.types';
 import { ResearchableItem } from '@hub/research-data';
-
 const SYSTEM_PROMPT = `
-You are a research writer. You will receive verified findings organized by subtopic, each with corroboration status and any contradictions noted.
+You are a research writer. You will receive verified findings for a single subtopic, each with corroboration status and any contradictions noted.
 
-Your job: write a clear, dense, informative summary for each subtopic based on its findings. 
+Your job: write a clear, dense, informative summary based on the findings.
 
 Rules:
 - Write in third person, present tense
 - Prioritize corroborated findings
-- If contradictions exist in a subtopic, briefly note them
+- If contradictions exist, briefly note them
 - Do not invent information not present in the findings
-- Keep each section summary concise but complete
+- Keep the summary concise but complete
 
-Return ONLY a raw JSON array, no markdown, no explanation:
-[{
-  "subtopicLabel": "exact subtopic label",
-  "summary": "written summary here",
-  "hasContradictions": true or false
-}]
+Return ONLY a JSON object, no markdown, no explanation:
+{"summary": "written summary here", "hasContradictions": true or false}
 `;
 
 const synthesisPromptGenerator = (
   item: ResearchableItem,
-  results: VerificationResult[],
+  input: SynthesisInput,
 ): string => {
-  const sections = results
-    .map(
-      ({ subtopic, findings }) => `
-Subtopic: ${subtopic.label}
+  return `
+Topic: ${item.topic}
+${item.tags?.length ? `Tags: ${item.tags.join(', ')}` : ''}
+${item.notes ? `Notes: ${item.notes}` : ''}
+${item.instructions ? `Instructions: ${item.instructions}` : ''}
+
+Subtopic: ${input.subtopic.label}
 Findings:
-${findings
+${input.findings
   .map(
     (f) => `
   Content: ${f.content}
@@ -42,18 +41,6 @@ ${findings
 `,
   )
   .join('\n')}
-`,
-    )
-    .join('\n---\n');
-
-  return `
-Topic: ${item.topic}
-${item.tags?.length ? `Tags: ${item.tags.join(', ')}` : ''}
-${item.notes ? `Notes: ${item.notes}` : ''}
-${item.instructions ? `Instructions: ${item.instructions}` : ''}
-
-Findings by subtopic:
-${sections}
 `;
 };
 
@@ -63,49 +50,39 @@ export class SynthesisService {
 
   constructor(private readonly _configService: ConfigService) {
     const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    this._anthropic = new Anthropic({
-      apiKey,
-      timeout: 600000, // 10 minutes
-    });
+    this._anthropic = new Anthropic({ apiKey, timeout: 600000 });
   }
 
   async synthesize(
     item: ResearchableItem,
-    results: VerificationResult[],
-  ): Promise<ResearchReport> {
-    const prompt = synthesisPromptGenerator(item, results);
+    input: SynthesisInput,
+  ): Promise<{
+    subtopicLabel: string;
+    summary: string;
+    hasContradictions: boolean;
+    sources: string[];
+  }> {
+    const prompt = synthesisPromptGenerator(item, input);
 
     const response = await this._anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 4000,
+      max_tokens: 8000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     });
 
     const text =
-      response.content[0].type === 'text' ? response.content[0].text : '[]';
-
+      response.content[0].type === 'text' ? response.content[0].text : '{}';
     const parsed = JSON.parse(text) as {
-      subtopicLabel: string;
       summary: string;
       hasContradictions: boolean;
-    }[];
-
-    const sourceMap = new Map(
-      results.map((r) => [
-        r.subtopic.label,
-        r.findings.map((f) => f.sourceUrl),
-      ]),
-    );
+    };
 
     return {
-      title: item.topic,
-      sections: parsed.map(({ subtopicLabel, summary, hasContradictions }) => ({
-        subtopicLabel,
-        summary,
-        hasContradictions,
-        sources: sourceMap.get(subtopicLabel) ?? [],
-      })),
+      subtopicLabel: input.subtopic.label,
+      summary: parsed.summary,
+      hasContradictions: parsed.hasContradictions,
+      sources: input.findings.map((f) => f.sourceUrl),
     };
   }
 }
