@@ -23,21 +23,20 @@ Instructions: ${item.instructions}
 
 @Injectable()
 export class SubtopicGenerationService {
-  private readonly anthropic: Anthropic;
+  private readonly _anthropic: Anthropic;
 
   constructor(private readonly _configService: ConfigService) {
     const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    this.anthropic = new Anthropic({
+    this._anthropic = new Anthropic({
       apiKey,
-      timeout: 60000, // 60 seconds
+      timeout: 600000, // 10 minutes
     });
-    console.log('apiKey', apiKey);
   }
 
   public async generateSubtopics(
     item: Omit<ResearchableItem, 'id' | 'status' | 'dueDate'>,
   ): Promise<SubtopicGenerationResult> {
-    const msg = await this.anthropic.messages.create({
+    const msg = await this._anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 1000,
       system: SYSTEM_PROMPT,

@@ -49,7 +49,7 @@ export class VerificationService {
     const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
     this._anthropic = new Anthropic({
       apiKey,
-      timeout: 60000, // 60 seconds
+      timeout: 600000, // 10 minutes
     });
   }
 

@@ -39,7 +39,7 @@ export class SourceAnalysisService {
     const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
     this.anthropic = new Anthropic({
       apiKey,
-      timeout: 60000, // 60 seconds
+      timeout: 600000, // 10 minutes
     });
   }
 
