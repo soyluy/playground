@@ -6,6 +6,9 @@ import {
   LLMRequest,
 } from '../../interfaces/llm-provider.interface';
 import { UnexpectedContentTypeException } from './unexpected-content-type.exception';
+import { MessageCreateParamsNonStreaming } from '@anthropic-ai/sdk/resources/messages';
+
+export type AnthropicGenerateOptions = MessageCreateParamsNonStreaming;
 
 @Injectable()
 export class AnthropicProvider implements LLMProvider {
@@ -33,6 +36,14 @@ export class AnthropicProvider implements LLMProvider {
       system: request.system,
       messages: request.messages,
     });
+    if (response.content[0].type !== 'text') {
+      throw new UnexpectedContentTypeException(response);
+    }
+    return response.content[0].text;
+  }
+
+  async generateWithOptions(options: AnthropicGenerateOptions) {
+    const response = await this._anthropic.messages.create(options);
     if (response.content[0].type !== 'text') {
       throw new UnexpectedContentTypeException(response);
     }
