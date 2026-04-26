@@ -1,4 +1,9 @@
-export interface LLM {
+export interface LLMProvider {
+  /**
+   * Generates a response from the LLM.
+   * @param request - The request to generate a response from.
+   * @returns The response from the LLM.
+   */
   generate(request: LLMRequest): Promise<string>;
 }
 

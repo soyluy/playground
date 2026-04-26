@@ -5,9 +5,10 @@ import { WebSearchService } from './services/web-search.service';
 import { SourceAnalysisService } from './services/source-analysis.service';
 import { VerificationService } from './services/verification.service';
 import { SynthesisService } from './services/synthesis.service';
+import { LLMModule } from '@hub/llm-api';
 
 @Module({
-  controllers: [],
+  imports: [LLMModule],
   providers: [
     ResearchService,
     SubtopicGenerationService,

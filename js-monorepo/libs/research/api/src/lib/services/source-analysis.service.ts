@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Source, SourceAnalysisResult } from '../types';
-import Anthropic from '@anthropic-ai/sdk';
-import { Message } from '@anthropic-ai/sdk/resources';
-import { ConfigService } from '@nestjs/config';
+import { LLM, LLMProvider, LLMRequest } from '@hub/llm-api';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 const SYSTEM_PROMPT = `
 You are a research analyst evaluating a single web source for relevance and quality.
@@ -33,35 +33,34 @@ ${source.content}
 
 @Injectable()
 export class SourceAnalysisService {
-  private readonly anthropic: Anthropic;
-
-  constructor(private readonly _configService: ConfigService) {
-    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    this.anthropic = new Anthropic({
-      apiKey,
-      timeout: 600000, // 10 minutes
-    });
-  }
+  constructor(
+    @Inject(LLM) private readonly _llm: LLMProvider,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly _logger: Logger,
+  ) {}
 
   async analyzeSource(source: Source): Promise<SourceAnalysisResult> {
     const prompt = analysisPromptGenerator(source);
-    const response = await this.anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 2000,
+    const request: LLMRequest = {
+      maxTokens: 2000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
-    });
-    const content = this.parseContent(response);
-    return content;
-  }
-
-  private parseContent(msg: Message): SourceAnalysisResult {
-    if (msg.content[0].type !== 'text' || msg.content[0].text === 'REJECTED') {
+    };
+    try {
+      const response = await this._llm.generate(request);
+      return this.formatResponse(response);
+    } catch (error) {
+      this._logger.error('source_analysis_error', { error });
       return { status: 'rejected' };
     }
-    return {
-      status: 'accepted',
-      content: msg.content[0].text,
-    };
+  }
+
+  private formatResponse(response: string): SourceAnalysisResult {
+    if (response.trim() === 'REJECTED') return { status: 'rejected' };
+    try {
+      const parsed = JSON.parse(response);
+      return { status: 'accepted', content: parsed.content };
+    } catch {
+      return { status: 'rejected' }; // malformed response
+    }
   }
 }

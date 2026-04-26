@@ -9,7 +9,8 @@ import { LLM } from './constants/injection-token.constants';
       provide: LLM,
       useClass: AnthropicProvider, // TODO: Add other providers here
     },
+    AnthropicProvider,
   ],
-  exports: [LLM],
+  exports: [LLM, AnthropicProvider],
 })
 export class LLMModule {}
