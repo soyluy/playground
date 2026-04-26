@@ -1,9 +1,11 @@
 // synthesis.service.ts
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import Anthropic from '@anthropic-ai/sdk';
 import { ConfigService } from '@nestjs/config';
 import { SynthesisInput } from '../types/synthesis.types';
 import { ResearchableItem } from '@hub/research-data';
+import { LLM, LLMProvider } from '@hub/llm-api';
+import { MalformedResponseException } from '../exceptions/malformed-response.exception';
 const SYSTEM_PROMPT = `
 You are a research writer. You will receive verified findings for a single subtopic, each with corroboration status and any contradictions noted.
 
@@ -46,12 +48,7 @@ ${input.findings
 
 @Injectable()
 export class SynthesisService {
-  private readonly _anthropic: Anthropic;
-
-  constructor(private readonly _configService: ConfigService) {
-    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    this._anthropic = new Anthropic({ apiKey, timeout: 600000 });
-  }
+  constructor(@Inject(LLM) private readonly _llm: LLMProvider) {}
 
   async synthesize(
     item: ResearchableItem,
@@ -64,19 +61,13 @@ export class SynthesisService {
   }> {
     const prompt = synthesisPromptGenerator(item, input);
 
-    const response = await this._anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 8000,
+    const response = await this._llm.generate({
+      maxTokens: 8000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     });
 
-    const text =
-      response.content[0].type === 'text' ? response.content[0].text : '{}';
-    const parsed = JSON.parse(text) as {
-      summary: string;
-      hasContradictions: boolean;
-    };
+    const parsed = this.parseResponse(response);
 
     return {
       subtopicLabel: input.subtopic.label,
@@ -84,5 +75,23 @@ export class SynthesisService {
       hasContradictions: parsed.hasContradictions,
       sources: input.findings.map((f) => f.sourceUrl),
     };
+  }
+
+  private parseResponse(response: string): {
+    summary: string;
+    hasContradictions: boolean;
+  } {
+    try {
+      const parsed = JSON.parse(response) as {
+        summary: string;
+        hasContradictions: boolean;
+      };
+      return parsed;
+    } catch {
+      throw new MalformedResponseException(
+        response,
+        'JSON object with summary and hasContradictions',
+      );
+    }
   }
 }

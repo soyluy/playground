@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ResearchableItem } from '@hub/research-data';
 import { Subtopic, SubtopicGenerationResult } from '../types';
 import Anthropic from '@anthropic-ai/sdk';
 import { Message } from '@anthropic-ai/sdk/resources';
 import { ConfigService } from '@nestjs/config';
+import { LLM, LLMProvider } from '@hub/llm-api';
+import { MalformedResponseException } from '../exceptions/malformed-response.exception';
 
 const SYSTEM_PROMPT = `
 You are a research planning assistant. Given a topic and optional metadata (tags, notes, instructions), generate a set of 5-8 subtopics that together provide complete coverage of the topic for research or preparation purposes.
@@ -23,42 +25,29 @@ Instructions: ${item.instructions}
 
 @Injectable()
 export class SubtopicGenerationService {
-  private readonly _anthropic: Anthropic;
-
-  constructor(private readonly _configService: ConfigService) {
-    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    this._anthropic = new Anthropic({
-      apiKey,
-      timeout: 600000, // 10 minutes
-    });
-  }
+  constructor(@Inject(LLM) private readonly _llm: LLMProvider) {}
 
   public async generateSubtopics(
     item: Omit<ResearchableItem, 'id' | 'status' | 'dueDate'>,
   ): Promise<SubtopicGenerationResult> {
-    const msg = await this._anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1000,
+    const response = await this._llm.generate({
       system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: 'user',
-          content: userPromptGenerator(item),
-        },
-      ],
+      messages: [{ role: 'user', content: userPromptGenerator(item) }],
+      maxTokens: 1000,
     });
-    const subtopics = this.parseSubtopics(msg);
+    const subtopics = this.parseSubtopics(response);
     return {
       subtopics,
     };
   }
 
-  private parseSubtopics(msg: Message): Subtopic[] {
-    const subtopics = JSON.parse(
-      // TODO: Handle errors
-      msg.content[0].type === 'text' ? msg.content[0].text : '[]',
-    ) as Subtopic[];
-
-    return subtopics;
+  private parseSubtopics(response: string): Subtopic[] {
+    if (response.trim() === 'REJECTED') return [];
+    try {
+      const parsed = JSON.parse(response);
+      return parsed as Subtopic[];
+    } catch {
+      throw new MalformedResponseException(response, 'JSON array of subtopics');
+    }
   }
 }

@@ -1,7 +1,9 @@
 import { Anthropic } from '@anthropic-ai/sdk';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Subtopic, VerificationFinding, VerificationResult } from '../types';
+import { LLM, LLMProvider } from '@hub/llm-api';
+import { MalformedResponseException } from '../exceptions/malformed-response.exception';
 
 type SubtopicFindings = {
   subtopic: Subtopic;
@@ -36,34 +38,34 @@ const verificationPromptGenerator = (
 
 @Injectable()
 export class VerificationService {
-  private readonly _anthropic: Anthropic;
-
-  constructor(private readonly _configService: ConfigService) {
-    const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    this._anthropic = new Anthropic({
-      apiKey,
-      timeout: 600000, // 10 minutes
-    });
-  }
+  constructor(@Inject(LLM) private readonly _llm: LLMProvider) {}
 
   async verify(subtopicFinding: SubtopicFindings): Promise<VerificationResult> {
     const prompt = verificationPromptGenerator(subtopicFinding);
 
-    const response = await this._anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 8000,
+    const response = await this._llm.generate({
+      maxTokens: 8000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }],
     });
 
-    const text =
-      response.content[0].type === 'text' ? response.content[0].text : '[]';
-
-    const findings = JSON.parse(text) as VerificationFinding[];
+    const findings = this.parseResponse(response);
 
     return {
       subtopic: subtopicFinding.subtopic,
       findings: findings,
     };
+  }
+
+  private parseResponse(response: string): VerificationFinding[] {
+    try {
+      const parsed = JSON.parse(response) as VerificationFinding[];
+      return parsed;
+    } catch {
+      throw new MalformedResponseException(
+        response,
+        'JSON array of verification findings',
+      );
+    }
   }
 }
