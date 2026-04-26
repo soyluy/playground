@@ -1,7 +1,5 @@
 // synthesis.service.ts
 import { Inject, Injectable } from '@nestjs/common';
-import Anthropic from '@anthropic-ai/sdk';
-import { ConfigService } from '@nestjs/config';
 import { SynthesisInput } from '../types/synthesis.types';
 import { ResearchableItem } from '@hub/research-data';
 import { LLM, LLMProvider } from '@hub/llm-api';

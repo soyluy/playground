@@ -1,9 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ResearchableItem } from '@hub/research-data';
 import { Subtopic, SubtopicGenerationResult } from '../types';
-import Anthropic from '@anthropic-ai/sdk';
-import { Message } from '@anthropic-ai/sdk/resources';
-import { ConfigService } from '@nestjs/config';
 import { LLM, LLMProvider } from '@hub/llm-api';
 import { MalformedResponseException } from '../exceptions/malformed-response.exception';
 

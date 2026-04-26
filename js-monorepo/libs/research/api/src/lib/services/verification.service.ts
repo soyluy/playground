@@ -1,6 +1,4 @@
-import { Anthropic } from '@anthropic-ai/sdk';
 import { Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { Subtopic, VerificationFinding, VerificationResult } from '../types';
 import { LLM, LLMProvider } from '@hub/llm-api';
 import { MalformedResponseException } from '../exceptions/malformed-response.exception';
