@@ -18,23 +18,4 @@ import { SynthesisService } from './services/synthesis.service';
   ],
   exports: [ResearchService],
 })
-export class ResearchModule {
-  constructor(private readonly researchService: ResearchService) {
-    this.researchService
-      .research({
-        id: '1',
-        topic: 'Understand how redis works',
-        tags: ['databases', 'caching'],
-        notes: '',
-        instructions: '',
-        status: 'pending',
-        dueDate: new Date(),
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-}
+export class ResearchModule {}
