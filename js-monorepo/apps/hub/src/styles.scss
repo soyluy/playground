@@ -1,82 +1,182 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-:root {
-  // Colors - dark theme
-  --bg-base: #0c0c10;
-  --bg-surface: #141418;
-  --bg-elevated: #1c1c24;
-  --bg-hover: #22222c;
-
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.12);
-
-  --text-primary: #e4e4f0;
-  --text-secondary: #7a7a96;
-  --text-muted: #4a4a60;
-
-  --income: #4ecca8;
-  --income-dim: rgba(78, 204, 168, 0.12);
-  --expense: #f06292;
-  --expense-dim: rgba(240, 98, 146, 0.12);
-  --accent: #7c6af7;
-  --accent-dim: rgba(124, 106, 247, 0.12);
-
-  --font-body: 'Outfit', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-}
-
-html {
-  height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$magenta-palette,
-        tertiary: mat.$violet-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-}
-
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
-}
-/* You can add global styles to this file, and also import other style files */
-
-.todo-modal .mat-mdc-dialog-container {
-  width: 520px;
-}
+/* your :root block */
+/* your theme blocks */
 
 * {
   box-sizing: border-box;
 }
-
 a {
   color: inherit;
   text-decoration: none;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+html {
+  height: 100%;
+}
+
+:root {
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Typography */
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Z-index */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* ── Default: Warm Dark ── */
+body,
+body.theme-warm {
+  --bg-base: #0f0e0c;
+  --bg-surface: #171614;
+  --bg-elevated: #201e1b;
+  --bg-hover: #272420;
+  --border: rgba(255, 240, 200, 0.07);
+  --border-strong: rgba(255, 240, 200, 0.13);
+  --text-primary: #f0ece4;
+  --text-secondary: #8a8278;
+  --text-muted: #4a4640;
+  --accent: #e8a838;
+  --accent-dim: rgba(232, 168, 56, 0.12);
+  --positive: #4ec994;
+  --positive-dim: rgba(78, 201, 148, 0.1);
+  --negative: #e8604a;
+  --negative-dim: rgba(232, 96, 74, 0.1);
+}
+
+/* ── Cool Slate ── */
+body.theme-slate {
+  --bg-base: #080b10;
+  --bg-surface: #0d1117;
+  --bg-elevated: #161b22;
+  --bg-hover: #1c2230;
+  --border: rgba(139, 148, 158, 0.1);
+  --border-strong: rgba(139, 148, 158, 0.2);
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #484f58;
+  --accent: #58a6ff;
+  --accent-dim: rgba(88, 166, 255, 0.1);
+  --positive: #3fb950;
+  --positive-dim: rgba(63, 185, 80, 0.1);
+  --negative: #f85149;
+  --negative-dim: rgba(248, 81, 73, 0.1);
+}
+
+/* ── Neutral Dark ── */
+body.theme-neutral {
+  --bg-base: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --bg-hover: #222222;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --text-primary: #ebebeb;
+  --text-secondary: #737373;
+  --text-muted: #404040;
+  --accent: #7c3aed;
+  --accent-dim: rgba(124, 58, 237, 0.12);
+  --positive: #22c55e;
+  --positive-dim: rgba(34, 197, 94, 0.1);
+  --negative: #ef4444;
+  --negative-dim: rgba(239, 68, 68, 0.1);
+}
+
+/* ── Deep Navy ── */
+body.theme-navy {
+  --bg-base: #060810;
+  --bg-surface: #0c0f1e;
+  --bg-elevated: #131728;
+  --bg-hover: #1a1f33;
+  --border: rgba(100, 120, 200, 0.1);
+  --border-strong: rgba(100, 120, 200, 0.2);
+  --text-primary: #e2e8ff;
+  --text-secondary: #6b7db3;
+  --text-muted: #3a4466;
+  --accent: #4d7cfe;
+  --accent-dim: rgba(77, 124, 254, 0.12);
+  --positive: #34d399;
+  --positive-dim: rgba(52, 211, 153, 0.1);
+  --negative: #fb7185;
+  --negative-dim: rgba(251, 113, 133, 0.1);
+}
+
+/* ── Terminal ── */
+body.theme-terminal {
+  --bg-base: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-hover: #181818;
+  --border: rgba(0, 255, 70, 0.12);
+  --border-strong: rgba(0, 255, 70, 0.25);
+  --text-primary: #e8ffe8;
+  --text-secondary: #4dbb4d;
+  --text-muted: #1a5c1a;
+  --accent: #00ff46;
+  --accent-dim: rgba(0, 255, 70, 0.08);
+  --positive: #00ff46;
+  --positive-dim: rgba(0, 255, 70, 0.08);
+  --negative: #ff3333;
+  --negative-dim: rgba(255, 51, 51, 0.1);
+}
+
+/* ── Paper Light ── */
+body.theme-light {
+  --bg-base: #f5f2ee;
+  --bg-surface: #faf8f5;
+  --bg-elevated: #ffffff;
+  --bg-hover: #ede9e3;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.15);
+  --text-primary: #1a1814;
+  --text-secondary: #6b6560;
+  --text-muted: #b0aba4;
+  --accent: #2563eb;
+  --accent-dim: rgba(37, 99, 235, 0.08);
+  --positive: #16a34a;
+  --positive-dim: rgba(22, 163, 74, 0.08);
+  --negative: #dc2626;
+  --negative-dim: rgba(220, 38, 38, 0.08);
 }
