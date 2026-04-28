@@ -1,9 +1,7 @@
 <div class="shell">
   <header class="topbar" appScrollVisibility [scrollContainer]="contentElement">
     <div class="topbar__left">
-      <button class="sidebar-toggle" (click)="toggleSidebar()">
-        <span class="sidebar-toggle__icon">&#9776;</span>
-      </button>
+      <h1 class="topbar__title">Hub</h1>
     </div>
     <div class="topbar__right">
       <button class="btn-auth" (click)="login()">Login</button>
@@ -13,6 +11,9 @@
 
   <div class="shell__body">
     <nav class="sidebar" [class.sidebar--expanded]="sidebarExpanded()">
+      <button class="sidebar-toggle" (click)="toggleSidebar()">
+        <span class="sidebar-toggle__icon">&#9776;</span>
+      </button>
       <a
         class="sidebar__item"
         routerLink="/tag-management"

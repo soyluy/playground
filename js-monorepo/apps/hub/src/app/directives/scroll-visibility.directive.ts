@@ -31,10 +31,8 @@ export class ScrollVisibilityDirective implements OnInit {
   }
 
   private onScroll(): void {
-    console.log('scroll');
     const currentScrollPosition = this.scrollContainer().scrollTop;
     const element = this._elementRef.nativeElement;
-    console.log(currentScrollPosition, this.lastScrollPosition);
     if (currentScrollPosition > this.lastScrollPosition) {
       element.classList.add('hidden');
     } else {
