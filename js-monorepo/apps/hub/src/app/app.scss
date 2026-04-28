@@ -20,6 +20,17 @@
   z-index: var(--z-sticky);
   border-bottom: 1px solid var(--border);
   background-color: var(--bg-surface);
+  transition: transform 0.3s ease-in-out;
+
+  &.hidden {
+    transform: translateY(-100%);
+  }
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .shell__body {
