@@ -1,45 +1,47 @@
 .todo-shell {
-  box-sizing: border-box;
-  max-width: 560px;
+  max-width: 640px;
   margin: 0 auto;
-  padding: 24px 16px 32px;
+  padding: var(--space-8) var(--space-4) var(--space-10);
   width: 100%;
 }
 
 .todo-shell__header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
 }
 
 .todo-shell__title {
   margin: 0;
-  font: var(--mat-sys-title-large, 500 1.375rem/1.75rem Roboto, sans-serif);
-  color: var(--mat-sys-on-background, inherit);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-body);
+  color: var(--text-primary);
 }
 
 .todo-shell__actions {
-  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.todo-list-card {
-  margin: 0;
-
-  .mat-mdc-list {
-    padding: 0;
-  }
+  gap: var(--space-2);
 }
 
 .todo-empty {
   margin: 0;
-  padding: 24px 8px;
+  padding: var(--space-8);
   text-align: center;
-  color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
-  font: var(--mat-sys-body-medium, 400 0.875rem/1.25rem Roboto, sans-serif);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+}
+
+.todo-list-card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+
+  .mat-mdc-list {
+    padding: 0;
+  }
 }
