@@ -1,17 +1,66 @@
-<h1>Hub</h1>
+<div class="shell">
+  <header class="topbar">
+    <div class="topbar__left">
+      <button class="sidebar-toggle" (click)="toggleSidebar()">
+        <span class="sidebar-toggle__icon">&#9776;</span>
+      </button>
+    </div>
+    <div class="topbar__right">
+      <button class="btn-auth" (click)="login()">Login</button>
+      <button class="btn-auth btn-auth--ghost" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </header>
 
-<div class="top-bar">
-  <nav class="nav">
-    <a class="nav__link" routerLink="/tag-management">Tag Management</a>
-    <a class="nav__link" routerLink="/todo">Todo List</a>
-    <a class="nav__link" routerLink="/expense-tracker">Expense Tracker</a>
-    <a class="nav__link" routerLink="/resource">Resources</a>
-  </nav>
+  <div class="shell__body">
+    <nav class="sidebar" [class.sidebar--expanded]="sidebarExpanded()">
+      <a
+        class="sidebar__item"
+        routerLink="/tag-management"
+        routerLinkActive="sidebar__item--active"
+      >
+        <span class="sidebar__icon">⊞</span>
+        <span class="sidebar__label">Tag Management</span>
+      </a>
+      <a
+        class="sidebar__item"
+        routerLink="/todo"
+        routerLinkActive="sidebar__item--active"
+      >
+        <span class="sidebar__icon">☑</span>
+        <span class="sidebar__label">Todo List</span>
+      </a>
+      <a
+        class="sidebar__item"
+        routerLink="/expense-tracker"
+        routerLinkActive="sidebar__item--active"
+      >
+        <span class="sidebar__icon">◎</span>
+        <span class="sidebar__label">Expense Tracker</span>
+      </a>
+      <a
+        class="sidebar__item"
+        routerLink="/resource"
+        routerLinkActive="sidebar__item--active"
+      >
+        <span class="sidebar__icon">◈</span>
+        <span class="sidebar__label">Resources</span>
+      </a>
+    </nav>
 
-  <div class="auth-buttons">
-    <button mat-flat-button (click)="login()">Login</button>
-    <button mat-flat-button (click)="logout()">Logout</button>
+    <div
+      class="backdrop"
+      [class.backdrop--visible]="sidebarExpanded()"
+      (click)="toggleSidebar()"
+      (keydown)="toggleSidebar()"
+      (keyup)="toggleSidebar()"
+      (keypress)="toggleSidebar()"
+      tabindex="0"
+    ></div>
+
+    <main class="content">
+      <router-outlet />
+    </main>
   </div>
 </div>
-
-<router-outlet />

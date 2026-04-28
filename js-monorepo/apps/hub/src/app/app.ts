@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
 
 @Component({
-  imports: [RouterModule, MatButtonModule],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
   protected title = 'hub';
+  protected sidebarExpanded = signal<boolean>(false);
+
+  protected toggleSidebar() {
+    this.sidebarExpanded.set(!this.sidebarExpanded());
+  }
 
   protected login() {
     window.location.href = environment.apiUrl + '/auth/google';
