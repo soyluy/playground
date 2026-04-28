@@ -1,0 +1,17 @@
+Product
+Hub is a personal agent for people who can't afford an assistant. It captures todos, expenses, calendar events, and resources in one place, and works asynchronously on your behalf — researching, preparing context, and surfacing relevant material while you're away. Proactive by default, reactive on demand.
+Tagline
+Assistants for people who can't afford an assistant.
+Target User
+Recently graduated young professionals — juggling learning, career, side projects, and finances — who want a system but don't have time to maintain one.
+Modules
+Todos, expenses, calendar, resources, AI research. Potentially: goals, sticky notes. All are data sources; the agent is the connective tissue.
+Agent (v1)
+Explicit trigger: user toggles an "AI research" flag on a todo. Agent infers context from the todo text, runs research pipeline, surfaces results and potentially additional resources. No chat interface. No user configuration yet — all inferred.
+Core Flows (examples, not exhaustive)
+
+User flags a todo → agent researches → user reviews results and optionally adds resources to their reading queue.
+User asks agent to monitor for specific events → agent finds one → user buys ticket, logs the expense and event.
+
+What makes it different
+Not the all-in-one aspect. The async preparation loop — you capture, the agent works, you come back to context ready to act.
