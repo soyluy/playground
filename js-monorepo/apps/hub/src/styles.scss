@@ -192,3 +192,15 @@ body.theme-light {
   --negative: #dc2626;
   --negative-dim: rgba(220, 38, 38, 0.08);
 }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  background-color: var(--accent);
+  color: var(--bg-base);
+}
