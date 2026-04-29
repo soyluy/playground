@@ -30,6 +30,10 @@ export class AnthropicProvider implements LLMProvider {
   }
 
   async generate(request: LLMRequest): Promise<string> {
+    return this.generateResponse(request);
+  }
+
+  private async generateResponse(request: LLMRequest): Promise<string> {
     const response = await this._anthropic.messages.create({
       model: this._model,
       max_tokens: request.maxTokens,
