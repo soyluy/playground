@@ -34,7 +34,8 @@
       "@hub/auth-ui": ["libs/auth/ui/src/index.ts"],
       "@hub/research-api": ["libs/research/api/src/index.ts"],
       "@hub/research-data": ["libs/research/data/src/index.ts"],
-      "@hub/llm-api": ["libs/llm/api/src/index.ts"]
+      "@hub/llm-api": ["libs/llm/api/src/index.ts"],
+      "@hub/shared-infra": ["libs/infra/shared/src/index.ts"]
     },
     "sourceMap": true
   }
