@@ -117,7 +117,7 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
       description: this.todo().description,
       completed: !this.todo().completed,
       tagIds: this.todo().tags?.map((t) => t.id) ?? null,
-      research: this.todo().research,
+      research: this.todo().researchId ? true : false,
     });
   }
 

@@ -8,7 +8,7 @@ export class ResearchController {
   constructor(private readonly _researchService: ResearchStreamService) {}
 
   @PublicRoute()
-  @Sse(':id')
+  @Sse(':id/stream')
   researchStream(@Param('id') id: string) {
     return this._researchService.getOrThrow(id).pipe(
       map((event) => ({

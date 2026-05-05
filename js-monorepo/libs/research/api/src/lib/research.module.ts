@@ -6,6 +6,7 @@ import { SourceAnalysisService } from './services/pipeline/source-analysis.servi
 import { VerificationService } from './services/pipeline/verification.service';
 import { SynthesisService } from './services/pipeline/synthesis.service';
 import { LLMModule } from '@hub/llm-api';
+import { ResearchStreamService } from './services/research-stream.service';
 
 @Module({
   imports: [LLMModule],
@@ -16,6 +17,7 @@ import { LLMModule } from '@hub/llm-api';
     SourceAnalysisService,
     VerificationService,
     SynthesisService,
+    ResearchStreamService,
   ],
   exports: [ResearchService],
 })

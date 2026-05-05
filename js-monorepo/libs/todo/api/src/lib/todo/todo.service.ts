@@ -68,7 +68,7 @@ export class TodoService {
             colorHex: true,
           },
         },
-        research: true,
+        researchId: true,
       },
       where,
       orderBy,
