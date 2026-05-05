@@ -20,6 +20,13 @@ import { ResearchStreamService } from './services/research-stream.service';
 import { Subject } from 'rxjs';
 import { WebSearchResult } from './types/web-search.types';
 import { Subtopic } from './types/subtopic.types';
+import { InjectModel } from '@nestjs/mongoose';
+import {
+  Research,
+  ResearchDocument,
+  ResearchResult,
+} from './schemas/research-result.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class ResearchService {
@@ -32,10 +39,18 @@ export class ResearchService {
     @Inject(WINSTON_MODULE_PROVIDER)
     private readonly _logger: Logger,
     private readonly _streamService: ResearchStreamService,
+    @InjectModel(Research.name)
+    private readonly _researchModel: Model<ResearchDocument>,
   ) {}
 
   async research(item: ResearchableItem): Promise<ResearchReport> {
     this._logger.info('research_started', { topic: item.topic });
+    const research = await this._researchModel.create({
+      todoId: item.id,
+      topic: item.topic,
+      status: 'running',
+    });
+
     const { subject, id } = this._streamService.create();
     subject.next({ type: 'start', item });
 
@@ -52,13 +67,31 @@ export class ResearchService {
         subtopicFindings,
         subject,
       );
+      const result: ResearchResult = {
+        summary: item.topic,
+        subtopics: sections.map((section) => {
+          return {
+            title: section.subtopicLabel,
+            explanation: section.summary,
+          };
+        }),
+      };
+      research.result = result;
+      research.status = 'done';
+      await research.save();
 
       subject.next({ type: 'complete' });
       this._logger.info('research_complete', {
         topic: item.topic,
         sectionCount: sections.length,
       });
+
       return { title: item.topic, sections };
+    } catch (error) {
+      this._logger.error('research_error', { error });
+      research.status = 'error';
+      await research.save();
+      throw error;
     } finally {
       this._streamService.delete(id);
     }
