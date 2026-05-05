@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type ResearchDocument = HydratedDocument<Research>;
 
-class ResearchSubtopic {
+export class ResearchSubtopic {
   @Prop({ required: true })
   title!: string;
 
@@ -11,7 +11,7 @@ class ResearchSubtopic {
   explanation!: string;
 }
 
-class ResearchResult {
+export class ResearchResult {
   @Prop({ required: true })
   summary!: string;
 
@@ -22,7 +22,7 @@ class ResearchResult {
 @Schema({ timestamps: true })
 export class Research {
   @Prop({ required: true })
-  _id!: string;
+  _id!: Types.ObjectId;
 
   @Prop({ required: true })
   todoId!: string;

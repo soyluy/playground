@@ -51,7 +51,7 @@ export class ResearchService {
       status: 'running',
     });
 
-    const { subject, id } = this._streamService.create();
+    const subject = this._streamService.create(research._id.toString());
     subject.next({ type: 'start', item });
 
     try {
@@ -93,7 +93,7 @@ export class ResearchService {
       await research.save();
       throw error;
     } finally {
-      this._streamService.delete(id);
+      this._streamService.delete(research._id.toString());
     }
   }
 

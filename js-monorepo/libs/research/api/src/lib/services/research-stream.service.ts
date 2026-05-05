@@ -1,7 +1,6 @@
 import { ResearchEvent } from '@hub/research-data';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Subject } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * This service is responsible for streaming the research process to the client.
@@ -10,12 +9,10 @@ import { v4 as uuidv4 } from 'uuid';
 export class ResearchStreamService {
   private readonly _activeStreams = new Map<string, Subject<ResearchEvent>>();
 
-  public create(): { id: string; subject: Subject<ResearchEvent> } {
-    const id = uuidv4();
+  public create(researchId: string): Subject<ResearchEvent> {
     const subject = new Subject<ResearchEvent>();
-    this._activeStreams.set(id, subject);
-    const ret = { id, subject };
-    return ret;
+    this._activeStreams.set(researchId, subject);
+    return subject;
   }
 
   public delete(id: string): void {
