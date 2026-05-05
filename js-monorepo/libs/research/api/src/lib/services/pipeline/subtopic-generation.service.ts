@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ResearchableItem } from '@hub/research-data';
-import { Subtopic, SubtopicGenerationResult } from '../types';
+import { Subtopic, SubtopicGenerationResult } from '../../types';
 import { LLM, LLMProvider } from '@hub/llm-api';
-import { MalformedResponseException } from '../exceptions/malformed-response.exception';
+import { MalformedResponseException } from '../../exceptions/malformed-response.exception';
 
 const SYSTEM_PROMPT = `
 You are a research planning assistant. Given a topic and optional metadata (tags, notes, instructions), generate a set of 5-8 subtopics that together provide complete coverage of the topic for research or preparation purposes.

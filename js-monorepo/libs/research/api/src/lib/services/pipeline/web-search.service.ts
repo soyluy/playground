@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Subtopic, WebSearchResult, WebSearchResultItem } from '../types';
+import { Subtopic, WebSearchResult, WebSearchResultItem } from '../../types';
 import { ConfigService } from '@nestjs/config';
 import { tavily, TavilyClient, TavilySearchOptions } from '@tavily/core';
 

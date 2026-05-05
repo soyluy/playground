@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ResearchableItem } from '@hub/research-data';
-import { SubtopicGenerationService } from './services/subtopic-generation.service';
-import { WebSearchService } from './services/web-search.service';
-import { SourceAnalysisService } from './services/source-analysis.service';
-import { VerificationService } from './services/verification.service';
-import { SynthesisService } from './services/synthesis.service';
+import { SubtopicGenerationService } from './services/pipeline/subtopic-generation.service';
+import { WebSearchService } from './services/pipeline/web-search.service';
+import { SourceAnalysisService } from './services/pipeline/source-analysis.service';
+import { VerificationService } from './services/pipeline/verification.service';
+import { SynthesisService } from './services/pipeline/synthesis.service';
 import { ResearchReport, Source, SourceAnalysisResult } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';

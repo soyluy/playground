@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Subtopic, VerificationFinding, VerificationResult } from '../types';
+import { Subtopic, VerificationFinding, VerificationResult } from '../../types';
 import { LLM, LLMProvider } from '@hub/llm-api';
-import { MalformedResponseException } from '../exceptions/malformed-response.exception';
+import { MalformedResponseException } from '../../exceptions/malformed-response.exception';
 
 type SubtopicFindings = {
   subtopic: Subtopic;

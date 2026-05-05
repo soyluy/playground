@@ -1,9 +1,9 @@
 // synthesis.service.ts
 import { Inject, Injectable } from '@nestjs/common';
-import { SynthesisInput } from '../types/synthesis.types';
+import { SynthesisInput } from '../../types/synthesis.types';
 import { ResearchableItem } from '@hub/research-data';
 import { LLM, LLMProvider } from '@hub/llm-api';
-import { MalformedResponseException } from '../exceptions/malformed-response.exception';
+import { MalformedResponseException } from '../../exceptions/malformed-response.exception';
 const SYSTEM_PROMPT = `
 You are a research writer. You will receive verified findings for a single subtopic, each with corroboration status and any contradictions noted.
 

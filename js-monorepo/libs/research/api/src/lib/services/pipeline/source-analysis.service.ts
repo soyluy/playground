@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Source, SourceAnalysisResult } from '../types';
+import { Source, SourceAnalysisResult } from '../../types';
 import { LLM, LLMProvider, LLMRequest } from '@hub/llm-api';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
-import { MalformedResponseException } from '../exceptions/malformed-response.exception';
+import { MalformedResponseException } from '../../exceptions/malformed-response.exception';
 
 const SYSTEM_PROMPT = `
 You are a research analyst evaluating a single web source for relevance and quality.
