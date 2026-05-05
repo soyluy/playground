@@ -3,13 +3,23 @@ import { ResearchableItem, ResearchEvent } from '@hub/research-data';
 import { SubtopicGenerationService } from './services/pipeline/subtopic-generation.service';
 import { WebSearchService } from './services/pipeline/web-search.service';
 import { SourceAnalysisService } from './services/pipeline/source-analysis.service';
-import { VerificationService } from './services/pipeline/verification.service';
+import {
+  SubtopicFindings,
+  VerificationService,
+} from './services/pipeline/verification.service';
 import { SynthesisService } from './services/pipeline/synthesis.service';
-import { ResearchReport, Source, SourceAnalysisResult } from './types';
+import {
+  ResearchReport,
+  Source,
+  SourceAnalysisResult,
+  SynthesisInput,
+} from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { ResearchStreamService } from './services/research-stream.service';
 import { Subject } from 'rxjs';
+import { WebSearchResult } from './types/web-search.types';
+import { Subtopic } from './types/subtopic.types';
 
 @Injectable()
 export class ResearchService {
@@ -26,8 +36,38 @@ export class ResearchService {
 
   async research(item: ResearchableItem): Promise<ResearchReport> {
     this._logger.info('research_started', { topic: item.topic });
-    const { subject: stream, id } = await this.startStream(item);
+    const { subject, id } = this._streamService.create();
+    subject.next({ type: 'start', item });
 
+    try {
+      const subtopics = await this._generateSubtopics(item, subject);
+      const searchResults = await this._runWebSearch(subtopics, subject);
+      const subtopicFindings = await this._analyzeSources(
+        item,
+        searchResults,
+        subject,
+      );
+      const sections = await this._verifyAndSynthesize(
+        item,
+        subtopicFindings,
+        subject,
+      );
+
+      subject.next({ type: 'complete' });
+      this._logger.info('research_complete', {
+        topic: item.topic,
+        sectionCount: sections.length,
+      });
+      return { title: item.topic, sections };
+    } finally {
+      this._streamService.delete(id);
+    }
+  }
+
+  private async _generateSubtopics(
+    item: ResearchableItem,
+    stream: Subject<ResearchEvent>,
+  ): Promise<Subtopic[]> {
     stream.next({ type: 'progress', step: 'subtopics', status: 'running' });
     const { subtopics } =
       await this._subtopicGeneration.generateSubtopics(item);
@@ -35,7 +75,13 @@ export class ResearchService {
     this._logger.info('subtopics_generated', {
       subtopics: subtopics.map((s) => s.label),
     });
+    return subtopics;
+  }
 
+  private async _runWebSearch(
+    subtopics: Subtopic[],
+    stream: Subject<ResearchEvent>,
+  ): Promise<WebSearchResult[]> {
     stream.next({ type: 'progress', step: 'web_search', status: 'running' });
     const searchResults = await Promise.all(
       subtopics.map(async (subtopic) => {
@@ -49,119 +95,147 @@ export class ResearchService {
         return results;
       }),
     );
-
     stream.next({ type: 'progress', step: 'web_search', status: 'done' });
+    return searchResults;
+  }
+
+  private async _analyzeSingleSource(
+    source: Source,
+    url: string,
+    subtopicLabel: string,
+  ): Promise<SourceAnalysisResult> {
+    this._logger.info('source_analysis_started', {
+      subtopic: subtopicLabel,
+      url,
+    });
+    const result = await this._sourceAnalysis.analyzeSource(source);
+    this._logger.info('source_analysis_complete', {
+      subtopic: subtopicLabel,
+      url,
+      status: result.status,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 15000));
+    return result;
+  }
+
+  private async _analyzeSubtopicSources(
+    item: ResearchableItem,
+    { subtopic, results }: WebSearchResult,
+  ): Promise<SubtopicFindings> {
+    const sources: Source[] = results.map((result) => ({
+      content: result.content,
+      topic: item.topic,
+      subtopic,
+      tags: item.tags ?? [],
+      notes: item.notes ?? '',
+      instructions: item.instructions ?? '',
+    }));
+
+    const analysisResults: SourceAnalysisResult[] = [];
+    for (const source of sources) {
+      const result = await this._analyzeSingleSource(
+        source,
+        results[analysisResults.length].url,
+        subtopic.label,
+      );
+      analysisResults.push(result);
+    }
+
+    const accepted = analysisResults.filter(
+      (r) => r.status === 'accepted',
+    ).length;
+    const rejected = analysisResults.filter(
+      (r) => r.status === 'rejected',
+    ).length;
+    this._logger.info('source_analysis_summary', {
+      subtopic: subtopic.label,
+      accepted,
+      rejected,
+    });
+
+    const findings = analysisResults.flatMap((result, i) =>
+      result.status === 'accepted'
+        ? [{ content: result.content, sourceUrl: results[i].url }]
+        : [],
+    );
+
+    return { subtopic, findings };
+  }
+
+  private async _analyzeSources(
+    item: ResearchableItem,
+    searchResults: WebSearchResult[],
+    stream: Subject<ResearchEvent>,
+  ): Promise<SubtopicFindings[]> {
     stream.next({
       type: 'progress',
       step: 'source_analysis',
       status: 'running',
     });
     const subtopicFindings = await Promise.all(
-      searchResults.map(async ({ subtopic, results }) => {
-        const sources: Source[] = results.map((result) => ({
-          content: result.content,
-          topic: item.topic,
-          subtopic,
-          tags: item.tags ?? [],
-          notes: item.notes ?? '',
-          instructions: item.instructions ?? '',
-        }));
-
-        const analysisResults: SourceAnalysisResult[] = [];
-
-        for (const source of sources) {
-          this._logger.info('source_analysis_started', {
-            subtopic: subtopic.label,
-            url: results[analysisResults.length].url,
-          });
-          const res = await this._sourceAnalysis.analyzeSource(source);
-          this._logger.info('source_analysis_complete', {
-            subtopic: subtopic.label,
-            url: results[analysisResults.length].url,
-            status: res.status,
-          });
-          await new Promise((resolve) => setTimeout(resolve, 15000));
-          analysisResults.push(res);
-        }
-
-        const accepted = analysisResults.filter(
-          (r) => r.status === 'accepted',
-        ).length;
-        const rejected = analysisResults.filter(
-          (r) => r.status === 'rejected',
-        ).length;
-        this._logger.info('source_analysis_summary', {
-          subtopic: subtopic.label,
-          accepted,
-          rejected,
-        });
-
-        const findings = analysisResults.flatMap((result, i) =>
-          result.status === 'accepted'
-            ? [{ content: result.content, sourceUrl: results[i].url }]
-            : [],
-        );
-
-        return { subtopic, findings };
-      }),
+      searchResults.map((searchResult) =>
+        this._analyzeSubtopicSources(item, searchResult),
+      ),
     );
     stream.next({ type: 'progress', step: 'source_analysis', status: 'done' });
-    stream.next({ type: 'progress', step: 'verification', status: 'running' });
+    return subtopicFindings;
+  }
+
+  private async _verifySubtopic(s: SubtopicFindings) {
+    this._logger.info('verification_started', { subtopic: s.subtopic.label });
+    const verification = await this._verification.verify(s);
+    this._logger.info('verification_complete', {
+      subtopic: s.subtopic.label,
+      corroborated: verification.findings.filter((f) => f.corroborated).length,
+      contradictions: verification.findings.filter(
+        (f) => f.contradictions.length > 0,
+      ).length,
+    });
+
+    const mergedFindings = s.findings.map((f) => {
+      const v = verification.findings.find(
+        (vf) => vf.sourceUrl === f.sourceUrl,
+      );
+      return {
+        content: f.content,
+        sourceUrl: f.sourceUrl,
+        corroborated: v?.corroborated ?? false,
+        contradictions: v?.contradictions ?? [],
+      };
+    });
+
+    return { subtopic: s.subtopic, findings: mergedFindings };
+  }
+
+  private async _synthesizeSubtopic(item: ResearchableItem, s: SynthesisInput) {
+    this._logger.info('synthesis_started', { subtopic: s.subtopic.label });
+    const section = await this._synthesis.synthesize(item, s);
+    this._logger.info('synthesis_complete', { subtopic: s.subtopic.label });
+    return section;
+  }
+
+  private async _verifyAndSynthesize(
+    item: ResearchableItem,
+    subtopicFindings: SubtopicFindings[],
+    stream: Subject<ResearchEvent>,
+  ) {
     const populated = subtopicFindings.filter((s) => s.findings.length > 0);
     this._logger.info('subtopics_with_findings', { count: populated.length });
 
-    const sections = [];
+    stream.next({ type: 'progress', step: 'verification', status: 'running' });
+    const verified = [];
     for (const s of populated) {
-      this._logger.info('verification_started', { subtopic: s.subtopic.label });
-      const verification = await this._verification.verify(s);
-      this._logger.info('verification_complete', {
-        subtopic: s.subtopic.label,
-        corroborated: verification.findings.filter((f) => f.corroborated)
-          .length,
-        contradictions: verification.findings.filter(
-          (f) => f.contradictions.length > 0,
-        ).length,
-      });
-      stream.next({ type: 'progress', step: 'verification', status: 'done' });
-      stream.next({ type: 'progress', step: 'synthesis', status: 'running' });
-      const mergedFindings = s.findings.map((f) => {
-        const v = verification.findings.find(
-          (vf) => vf.sourceUrl === f.sourceUrl,
-        );
-        return {
-          content: f.content,
-          sourceUrl: f.sourceUrl,
-          corroborated: v?.corroborated ?? false,
-          contradictions: v?.contradictions ?? [],
-        };
-      });
-
-      this._logger.info('synthesis_started', { subtopic: s.subtopic.label });
-      const section = await this._synthesis.synthesize(item, {
-        subtopic: s.subtopic,
-        findings: mergedFindings,
-      });
-      this._logger.info('synthesis_complete', { subtopic: s.subtopic.label });
-      stream.next({ type: 'progress', step: 'synthesis', status: 'done' });
-      sections.push(section);
+      verified.push(await this._verifySubtopic(s));
     }
-    stream.next({ type: 'progress', step: 'synthesis', status: 'running' });
-    this._logger.info('research_complete', {
-      topic: item.topic,
-      sectionCount: sections.length,
-    });
-    stream.next({ type: 'complete' });
-    this._streamService.delete(id);
-    return { title: item.topic, sections };
-  }
+    stream.next({ type: 'progress', step: 'verification', status: 'done' });
 
-  private async startStream(item: ResearchableItem): Promise<{
-    subject: Subject<ResearchEvent>;
-    id: string;
-  }> {
-    const id = this._streamService.create();
-    const subject = this._streamService.getOrThrow(id);
-    subject.next({ type: 'start', item });
-    return { subject, id };
+    stream.next({ type: 'progress', step: 'synthesis', status: 'running' });
+    const sections = [];
+    for (const s of verified) {
+      sections.push(await this._synthesizeSubtopic(item, s));
+    }
+    stream.next({ type: 'progress', step: 'synthesis', status: 'done' });
+
+    return sections;
   }
 }

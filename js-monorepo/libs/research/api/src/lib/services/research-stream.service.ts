@@ -10,11 +10,12 @@ import { v4 as uuidv4 } from 'uuid';
 export class ResearchStreamService {
   private readonly _activeStreams = new Map<string, Subject<ResearchEvent>>();
 
-  public create(): string {
+  public create(): { id: string; subject: Subject<ResearchEvent> } {
     const id = uuidv4();
     const subject = new Subject<ResearchEvent>();
     this._activeStreams.set(id, subject);
-    return id;
+    const ret = { id, subject };
+    return ret;
   }
 
   public delete(id: string): void {

@@ -3,7 +3,7 @@ import { Subtopic, VerificationFinding, VerificationResult } from '../../types';
 import { LLM, LLMProvider } from '@hub/llm-api';
 import { MalformedResponseException } from '../../exceptions/malformed-response.exception';
 
-type SubtopicFindings = {
+export type SubtopicFindings = {
   subtopic: Subtopic;
   findings: { content: string; sourceUrl: string }[];
 };

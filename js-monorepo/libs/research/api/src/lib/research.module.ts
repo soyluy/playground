@@ -7,9 +7,19 @@ import { VerificationService } from './services/pipeline/verification.service';
 import { SynthesisService } from './services/pipeline/synthesis.service';
 import { LLMModule } from '@hub/llm-api';
 import { ResearchStreamService } from './services/research-stream.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Research, ResearchSchema } from './schemas/research-result.schema';
 
 @Module({
-  imports: [LLMModule],
+  imports: [
+    LLMModule,
+    MongooseModule.forFeature([
+      {
+        name: Research.name,
+        schema: ResearchSchema,
+      },
+    ]),
+  ],
   providers: [
     ResearchService,
     SubtopicGenerationService,
