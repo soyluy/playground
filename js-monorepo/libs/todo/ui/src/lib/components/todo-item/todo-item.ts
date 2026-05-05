@@ -94,9 +94,13 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: NewTodoItem | undefined) => {
       if (result) {
-        this._crudService.updateTodo({
-          ...this.todo(),
-          ...result,
+        this._crudService.updateTodo(this.todo().id, {
+          title: result.title,
+          dueDate: result.dueDate,
+          description: result.description,
+          completed: result.completed,
+          tagIds: result.tags?.map((t) => t.id) ?? null,
+          research: result.research,
         });
       }
     });
@@ -107,9 +111,13 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
   }
 
   protected onToggleCompleted(): void {
-    this._crudService.updateTodo({
-      ...this.todo(),
+    this._crudService.updateTodo(this.todo().id, {
+      title: this.todo().title,
+      dueDate: this.todo().dueDate,
+      description: this.todo().description,
       completed: !this.todo().completed,
+      tagIds: this.todo().tags?.map((t) => t.id) ?? null,
+      research: this.todo().research,
     });
   }
 

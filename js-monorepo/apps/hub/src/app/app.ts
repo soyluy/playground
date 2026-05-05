@@ -1,10 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
-import { ScrollVisibilityDirective } from './directives/scroll-visibility.directive';
 
 @Component({
-  imports: [RouterModule, ScrollVisibilityDirective],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',

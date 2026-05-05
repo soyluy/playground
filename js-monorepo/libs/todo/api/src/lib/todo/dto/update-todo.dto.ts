@@ -27,6 +27,10 @@ export class UpdateTodoDto implements IUpdateTodoDto {
   @IsOptional()
   completed: boolean | null = null;
 
+  @IsBoolean()
+  @IsOptional()
+  research!: boolean;
+
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()

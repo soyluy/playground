@@ -12,7 +12,7 @@ export class SmoothRefillStrategy implements TokenRefillStrategy {
    */
   constructor(
     private readonly maxPerInterval: number,
-    private readonly intervalMs: number,
+    intervalMs: number,
   ) {
     this.refillRatePerMs = maxPerInterval / intervalMs;
     this.tokens = maxPerInterval; // start full

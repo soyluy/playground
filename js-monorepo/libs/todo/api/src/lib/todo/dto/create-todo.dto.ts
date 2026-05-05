@@ -3,6 +3,7 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
+  IsDefined,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -27,6 +28,10 @@ export class CreateTodoDto implements ICreateTodoDto {
   @IsBoolean()
   @IsNotEmpty()
   completed!: boolean;
+
+  @IsBoolean()
+  @IsDefined()
+  research!: boolean;
 
   @IsArray()
   @IsNumber({}, { each: true })

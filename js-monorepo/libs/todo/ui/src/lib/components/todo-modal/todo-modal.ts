@@ -70,6 +70,7 @@ export class TodoModal {
     completed: new FormControl<boolean>(this.editing?.completed ?? false),
     dueDate: new FormControl<Date | null>(this.editing?.dueDate ?? null),
     tags: new FormControl<number[]>(this.editing?.tags?.map((t) => t.id) ?? []),
+    research: new FormControl<boolean>(false),
   };
 
   protected readonly fg: FormGroup = new FormGroup(this.fields);
@@ -85,6 +86,7 @@ export class TodoModal {
       tags: values.tags.map((tagId) =>
         this.getTagFromId(tagId as unknown as number),
       ),
+      research: values.research,
     };
     this._dialogRef.close(output);
   }

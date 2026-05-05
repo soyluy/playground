@@ -25,6 +25,7 @@ export class TodoPersistenceService {
       dueDate: todo.dueDate,
       completed: todo.completed,
       tagIds: todo.tags !== null ? todo.tags.map((tag) => tag.id) : [],
+      research: todo.research ?? false,
     };
     const res$ = this._apiService.createTodo(dto);
     return res$.pipe(

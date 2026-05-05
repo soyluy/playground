@@ -9,4 +9,5 @@ export interface TodoItem {
   createdAt: Date;
   updatedAt: Date;
   tags: TodoTag[] | null;
+  research: boolean;
 }

@@ -37,3 +37,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Expense = Prisma.ExpenseModel
+/**
+ * Model session
+ * 
+ */
+export type session = Prisma.sessionModel

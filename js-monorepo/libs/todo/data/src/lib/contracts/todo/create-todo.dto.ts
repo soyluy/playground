@@ -6,6 +6,7 @@ export interface CreateTodoDto {
   completed: boolean;
   tagIds: number[];
   dueDate: Date | null;
+  research: boolean;
 }
 
 export type CreateTodoResponse = TodoItem;

@@ -6,6 +6,7 @@ export interface UpdateTodoDto {
   description: string | null;
   completed: boolean | null;
   tagIds: number[] | null;
+  research: boolean;
 }
 
 export type UpdateTodoResponse = TodoItem;

@@ -28,6 +28,7 @@ model Todo {
 	createdAt		DateTime 	@default(now())
 	updatedAt 	DateTime	@updatedAt
 	tags				Tag[]			
+	research		Boolean		@default(false)
 }
 
 model Tag {
