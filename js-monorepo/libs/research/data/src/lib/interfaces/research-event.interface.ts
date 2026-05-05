@@ -1,6 +1,8 @@
 import { ResearchResult } from './research-result.interface';
+import { ResearchableItem } from './researchable-item.interface';
 
 export type ResearchEvent =
+  | { type: 'start'; item: ResearchableItem }
   | {
       type: 'progress';
       step:

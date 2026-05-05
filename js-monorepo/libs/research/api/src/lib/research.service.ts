@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ResearchableItem } from '@hub/research-data';
+import { ResearchableItem, ResearchEvent } from '@hub/research-data';
 import { SubtopicGenerationService } from './services/pipeline/subtopic-generation.service';
 import { WebSearchService } from './services/pipeline/web-search.service';
 import { SourceAnalysisService } from './services/pipeline/source-analysis.service';
@@ -8,6 +8,8 @@ import { SynthesisService } from './services/pipeline/synthesis.service';
 import { ResearchReport, Source, SourceAnalysisResult } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { ResearchStreamService } from './services/research-stream.service';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class ResearchService {
@@ -19,17 +21,22 @@ export class ResearchService {
     private readonly _synthesis: SynthesisService,
     @Inject(WINSTON_MODULE_PROVIDER)
     private readonly _logger: Logger,
+    private readonly _streamService: ResearchStreamService,
   ) {}
 
   async research(item: ResearchableItem): Promise<ResearchReport> {
     this._logger.info('research_started', { topic: item.topic });
+    const { subject: stream, id } = await this.startStream(item);
 
+    stream.next({ type: 'progress', step: 'subtopics', status: 'running' });
     const { subtopics } =
       await this._subtopicGeneration.generateSubtopics(item);
+    stream.next({ type: 'progress', step: 'subtopics', status: 'done' });
     this._logger.info('subtopics_generated', {
       subtopics: subtopics.map((s) => s.label),
     });
 
+    stream.next({ type: 'progress', step: 'web_search', status: 'running' });
     const searchResults = await Promise.all(
       subtopics.map(async (subtopic) => {
         this._logger.info('web_search_started', { subtopic: subtopic.label });
@@ -43,6 +50,12 @@ export class ResearchService {
       }),
     );
 
+    stream.next({ type: 'progress', step: 'web_search', status: 'done' });
+    stream.next({
+      type: 'progress',
+      step: 'source_analysis',
+      status: 'running',
+    });
     const subtopicFindings = await Promise.all(
       searchResults.map(async ({ subtopic, results }) => {
         const sources: Source[] = results.map((result) => ({
@@ -92,7 +105,8 @@ export class ResearchService {
         return { subtopic, findings };
       }),
     );
-
+    stream.next({ type: 'progress', step: 'source_analysis', status: 'done' });
+    stream.next({ type: 'progress', step: 'verification', status: 'running' });
     const populated = subtopicFindings.filter((s) => s.findings.length > 0);
     this._logger.info('subtopics_with_findings', { count: populated.length });
 
@@ -108,7 +122,8 @@ export class ResearchService {
           (f) => f.contradictions.length > 0,
         ).length,
       });
-
+      stream.next({ type: 'progress', step: 'verification', status: 'done' });
+      stream.next({ type: 'progress', step: 'synthesis', status: 'running' });
       const mergedFindings = s.findings.map((f) => {
         const v = verification.findings.find(
           (vf) => vf.sourceUrl === f.sourceUrl,
@@ -127,14 +142,26 @@ export class ResearchService {
         findings: mergedFindings,
       });
       this._logger.info('synthesis_complete', { subtopic: s.subtopic.label });
-
+      stream.next({ type: 'progress', step: 'synthesis', status: 'done' });
       sections.push(section);
     }
-
+    stream.next({ type: 'progress', step: 'synthesis', status: 'running' });
     this._logger.info('research_complete', {
       topic: item.topic,
       sectionCount: sections.length,
     });
+    stream.next({ type: 'complete' });
+    this._streamService.delete(id);
     return { title: item.topic, sections };
+  }
+
+  private async startStream(item: ResearchableItem): Promise<{
+    subject: Subject<ResearchEvent>;
+    id: string;
+  }> {
+    const id = this._streamService.create();
+    const subject = this._streamService.getOrThrow(id);
+    subject.next({ type: 'start', item });
+    return { subject, id };
   }
 }
