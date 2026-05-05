@@ -2,7 +2,7 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PassportStrategies } from './enums/passport-strategies.enum';
 import { Response, Request } from 'express';
-import { Public } from './decorators/public-endpoint.decorator';
+import { PublicRoute } from './decorators/public-endpoint.decorator';
 import { ConfigService } from '@nestjs/config';
 import { GoogleCallbackGuard } from './guards/google-callback.guard';
 import { User } from '@hub/user-api';
@@ -23,19 +23,19 @@ export class AuthController {
   }
 
   @Get('me')
-  @Public()
+  @PublicRoute()
   async me(@CurrentUser() user: User) {
     return user;
   }
 
   @Get('google')
   @UseGuards(AuthGuard(PassportStrategies.GOOGLE_OAUTH20))
-  @Public()
+  @PublicRoute()
   async googleAuth() {}
 
   @Get('google/callback')
   @UseGuards(GoogleCallbackGuard)
-  @Public()
+  @PublicRoute()
   async googleAuthCallback(@Req() req: Request, @Res() res: Response) {
     req.logIn(req.user as User, (err) => {
       if (err) return res.redirect(this.frontendUrl + '?error=true');
