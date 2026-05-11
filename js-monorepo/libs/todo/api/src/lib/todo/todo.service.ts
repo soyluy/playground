@@ -14,18 +14,23 @@ import {
 import { Prisma } from '@hub/prisma';
 import { TodoFilter } from '@hub/todo-data';
 import { User } from '@hub/user-api';
+import { ResearchService } from '@hub/research-api';
+import { CreateResearchableItem } from '@hub/research-data';
 
 @Injectable()
 export class TodoService {
   @Inject(PrismaService)
   private readonly _prismaService!: PrismaService;
 
+  @Inject(ResearchService)
+  private readonly _researchService!: ResearchService;
+
   async createTodo(
     user: User,
     createTodoDto: CreateTodoDto,
   ): Promise<TodoItem> {
-    const { tagIds, ...data } = createTodoDto;
-    return this._prismaService.todo.create({
+    const { tagIds, research: hasResearch, ...data } = createTodoDto;
+    const todo = await this._prismaService.todo.create({
       data: {
         ownerId: user.id,
         title: data.title,
@@ -36,9 +41,20 @@ export class TodoService {
           connect: tagIds.map((id) => ({ id, ownerId: user.id })),
         },
       },
-      include: {
-        tags: true,
-      },
+      include: { tags: true },
+    });
+
+    if (!hasResearch) {
+      return todo;
+    }
+
+    const researchableItem = this.buildResearchableItem(todo);
+    const researchId = await this._researchService.research(researchableItem);
+
+    return this._prismaService.todo.update({
+      where: { id: todo.id },
+      data: { researchId },
+      include: { tags: true },
     });
   }
 
@@ -198,5 +214,16 @@ export class TodoService {
       return { [query.sortBy]: query.sortOrder ?? 'asc' };
     }
     return undefined;
+  }
+
+  private buildResearchableItem(todo: TodoItem): CreateResearchableItem {
+    return {
+      todoId: todo.id.toString(),
+      topic: todo.title,
+      notes: todo.description ?? '',
+      dueDate: todo.dueDate,
+      tags: todo.tags?.map((tag) => tag.id.toString()) ?? [],
+      instructions: '',
+    };
   }
 }

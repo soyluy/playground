@@ -6,5 +6,4 @@ export interface NewTodoItem {
   completed: boolean;
   dueDate: Date | null;
   tags: TodoTag[] | null;
-  research: boolean;
 }

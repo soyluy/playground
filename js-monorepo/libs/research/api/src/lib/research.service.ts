@@ -1,5 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ResearchableItem, ResearchEvent } from '@hub/research-data';
+import {
+  CreateResearchableItem,
+  ResearchableItem,
+  ResearchEvent,
+} from '@hub/research-data';
 import { SubtopicGenerationService } from './services/pipeline/subtopic-generation.service';
 import { WebSearchService } from './services/pipeline/web-search.service';
 import { SourceAnalysisService } from './services/pipeline/source-analysis.service';
@@ -43,15 +47,29 @@ export class ResearchService {
     private readonly _researchModel: Model<ResearchDocument>,
   ) {}
 
-  async research(item: ResearchableItem): Promise<ResearchReport> {
+  async research(item: CreateResearchableItem): Promise<string> {
     this._logger.info('research_started', { topic: item.topic });
     const research = await this._researchModel.create({
-      todoId: item.id,
+      todoId: item.todoId,
       topic: item.topic,
-      status: 'running',
+      status: 'pending',
     });
-
     const subject = this._streamService.create(research._id.toString());
+    const researchableItem: ResearchableItem = {
+      ...item,
+      id: research._id.toString(),
+      status: 'pending',
+    };
+
+    this.executePipeline(research, researchableItem, subject);
+    return research._id.toString();
+  }
+
+  private async executePipeline(
+    research: ResearchDocument,
+    item: ResearchableItem,
+    subject: Subject<ResearchEvent>,
+  ): Promise<ResearchReport> {
     subject.next({ type: 'start', item });
 
     try {
