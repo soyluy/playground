@@ -98,6 +98,7 @@ export class ResearchService {
       research.status = 'done';
       await research.save();
 
+      subject.next({ type: 'result', data: result });
       subject.next({ type: 'complete' });
       this._logger.info('research_complete', {
         topic: item.topic,

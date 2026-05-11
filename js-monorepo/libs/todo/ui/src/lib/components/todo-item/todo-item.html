@@ -53,6 +53,48 @@
   </span>
 
   <div matListItemMeta class="todo-item__actions">
+    @if (todo().researchId) {
+      @switch (researchState()?.status) {
+        @case ('connecting') {
+          <span class="todo-item__research-status">
+            <mat-spinner diameter="16" />
+            <span class="todo-item__research-label">Connecting…</span>
+          </span>
+        }
+        @case ('running') {
+          <span class="todo-item__research-status">
+            <mat-spinner diameter="16" />
+            <span class="todo-item__research-label">{{ researchStepLabel() }}</span>
+          </span>
+        }
+        @case ('done') {
+          <button
+            mat-button
+            type="button"
+            class="todo-item__research-done"
+            (click)="onViewResearch()"
+            matTooltip="View research report"
+          >
+            <mat-icon>auto_stories</mat-icon>
+            Research
+          </button>
+        }
+        @case ('error') {
+          <span
+            class="todo-item__research-error"
+            [matTooltip]="researchState()?.error ?? 'Research failed'"
+          >
+            <mat-icon>error_outline</mat-icon>
+          </span>
+        }
+        @default {
+          <span class="todo-item__research-status">
+            <mat-spinner diameter="16" />
+            <span class="todo-item__research-label">Connecting…</span>
+          </span>
+        }
+      }
+    }
     <button mat-button type="button" (click)="onEdit()">Edit</button>
     <button mat-button color="warn" type="button" (click)="onDelete()">
       Delete

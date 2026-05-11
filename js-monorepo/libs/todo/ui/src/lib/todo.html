@@ -1,37 +1,52 @@
-<section class="todo-shell">
-  <header class="todo-shell__header">
-    <h1 class="todo-shell__title">Todo List</h1>
-    <div class="todo-shell__actions">
-      <button
-        mat-flat-button
-        color="primary"
-        type="button"
-        (click)="onSetFiltersClick()"
-      >
-        Set Filters
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        type="button"
-        (click)="onAddTodoClick()"
-      >
-        Add Todo
-      </button>
-    </div>
-  </header>
+<mat-drawer-container class="todo-drawer-container" autosize>
+  <mat-drawer
+    #researchDrawer
+    mode="over"
+    position="end"
+    class="todo-research-drawer"
+    [opened]="!!researchPanelOpen()"
+    (closedStart)="researchPanelOpen() && _researchService.closePanel()"
+  >
+    <research-panel />
+  </mat-drawer>
 
-  @if (todos().length === 0) {
-  <p class="todo-empty">There are no todos yet</p>
-  } @else {
-  <mat-card class="todo-list-card" appearance="outlined">
-    <mat-list>
-      @for (todo of todos(); track todo.id; let isLast = $last) {
-      <todo-item [todo]="todo"></todo-item>
-      @if (!isLast) {
-      <mat-divider></mat-divider>
-      } }
-    </mat-list>
-  </mat-card>
-  }
-</section>
+  <mat-drawer-content>
+    <section class="todo-shell">
+      <header class="todo-shell__header">
+        <h1 class="todo-shell__title">Todo List</h1>
+        <div class="todo-shell__actions">
+          <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="onSetFiltersClick()"
+          >
+            Set Filters
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="onAddTodoClick()"
+          >
+            Add Todo
+          </button>
+        </div>
+      </header>
+
+      @if (todos().length === 0) {
+      <p class="todo-empty">There are no todos yet</p>
+      } @else {
+      <mat-card class="todo-list-card" appearance="outlined">
+        <mat-list>
+          @for (todo of todos(); track todo.id; let isLast = $last) {
+          <todo-item [todo]="todo"></todo-item>
+          @if (!isLast) {
+          <mat-divider></mat-divider>
+          } }
+        </mat-list>
+      </mat-card>
+      }
+    </section>
+  </mat-drawer-content>
+</mat-drawer-container>

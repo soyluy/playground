@@ -35,7 +35,9 @@
         }
       </mat-select>
     </mat-form-field>
+    @if (mode === 'create') {
     <mat-checkbox formControlName="research">Research</mat-checkbox>
+    }
   </form>
 </mat-dialog-content>
 

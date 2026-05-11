@@ -20,6 +20,7 @@ import {
 } from '@hub/todo-data';
 import { TodoPersistenceService } from './todo-persistence.service';
 import { TodoFilterService } from './todo-filter.service';
+import { ResearchStreamService } from './research-stream.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, map, switchMap, tap } from 'rxjs';
 
@@ -27,6 +28,7 @@ import { debounceTime, map, switchMap, tap } from 'rxjs';
 export class TodoService {
   private readonly _persistenceService = inject(TodoPersistenceService);
   private readonly _filterService = inject(TodoFilterService);
+  private readonly _researchService = inject(ResearchStreamService);
   private readonly _activeFilter: Signal<TodoFilter | null> =
     this._filterService.getFilter();
 
@@ -57,6 +59,11 @@ export class TodoService {
         this._pageSize.set(res.pageSize);
       }),
       map((res: GetTodosResponse) => res.data),
+      tap((todos: TodoItem[]) => {
+        todos
+          .filter((t): t is TodoItem & { researchId: string } => !!t.researchId)
+          .forEach((t) => this._researchService.connect(t.researchId));
+      }),
     );
 
     this._todos = toSignal(todosResponse$, { initialValue: [] });
@@ -70,6 +77,9 @@ export class TodoService {
     const res$ = this._persistenceService.saveTodo(todo);
     res$.subscribe({
       next: (res: CreateTodoResponse) => {
+        if (res.researchId) {
+          this._researchService.connect(res.researchId);
+        }
         this._refreshTodos();
         console.log('todo added', res);
       },

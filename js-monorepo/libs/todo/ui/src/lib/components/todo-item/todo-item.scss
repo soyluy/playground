@@ -104,4 +104,48 @@
     justify-content: flex-end;
     gap: 4px;
   }
+
+  .todo-item__research-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-inline: 8px;
+    color: var(--mat-sys-on-surface-variant, inherit);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .todo-item__research-label {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .todo-item__research-done {
+    color: var(--mat-sys-primary, #6200ee);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .todo-item__research-error {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 8px;
+    color: var(--mat-sys-error, #b00020);
+    cursor: default;
+
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
 }

@@ -9,6 +9,7 @@ import { LLMModule } from '@hub/llm-api';
 import { ResearchStreamService } from './services/research-stream.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Research, ResearchSchema } from './schemas/research-result.schema';
+import { ResearchController } from './research.controller';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Research, ResearchSchema } from './schemas/research-result.schema';
       },
     ]),
   ],
+  controllers: [ResearchController],
   providers: [
     ResearchService,
     SubtopicGenerationService,

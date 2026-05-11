@@ -14,10 +14,18 @@ import {
 } from '@angular/core';
 import { NewTodoItem, TodoItem, TodoTag } from '@hub/todo-data';
 import { TodoService } from '../../services/todo.service';
+import {
+  RESEARCH_STEP_LABELS,
+  ResearchState,
+  ResearchStreamService,
+} from '../../services/research-stream.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoModal, TodoModalOptions } from '../todo-modal/todo-modal';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   MatListItem,
   MatListItemIcon,
@@ -38,6 +46,9 @@ import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indica
     MatListItemMeta,
     MatButtonModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule,
     TagPillComponent,
     DueDateIndicatorComponent,
   ],
@@ -48,7 +59,22 @@ import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indica
 export class TodoItemComponent implements AfterViewInit, OnDestroy {
   readonly todo = input.required<TodoItem>();
   private readonly _crudService = inject(TodoService);
+  private readonly _researchService = inject(ResearchStreamService);
   private readonly dialog = inject(MatDialog);
+
+  protected readonly researchState: Signal<ResearchState | undefined> =
+    computed(() => {
+      const id = this.todo().researchId;
+      if (!id) return undefined;
+      return this._researchService.states().get(id);
+    });
+
+  protected readonly researchStepLabel: Signal<string> = computed(() => {
+    const step = this.researchState()?.currentStep;
+    return step ? RESEARCH_STEP_LABELS[step] : 'Researching…';
+  });
+
+  protected readonly stepLabels = RESEARCH_STEP_LABELS;
   private resizeObserver: ResizeObserver | null = null;
   protected readonly isDescriptionExpanded = signal(false);
   protected readonly isDescriptionTruncated = signal(false);
@@ -100,7 +126,6 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
           description: result.description,
           completed: result.completed,
           tagIds: result.tags?.map((t) => t.id) ?? null,
-          research: result.research,
         });
       }
     });
@@ -117,8 +142,14 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
       description: this.todo().description,
       completed: !this.todo().completed,
       tagIds: this.todo().tags?.map((t) => t.id) ?? null,
-      research: this.todo().researchId ? true : false,
     });
+  }
+
+  protected onViewResearch(): void {
+    const id = this.todo().researchId;
+    if (id) {
+      this._researchService.openPanel(id);
+    }
   }
 
   protected onDescriptionToggle(): void {

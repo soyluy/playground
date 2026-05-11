@@ -1,0 +1,66 @@
+<div class="research-panel">
+  <header class="research-panel__header">
+    <h2 class="research-panel__title">Research</h2>
+    <button mat-icon-button type="button" (click)="onClose()" aria-label="Close panel">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  @if (!state()) {
+    <p class="research-panel__empty">No research selected.</p>
+  } @else {
+    @switch (state()!.status) {
+      @case ('connecting') {
+        <div class="research-panel__loading">
+          <mat-progress-bar mode="indeterminate" />
+          <p>Connecting to research stream…</p>
+        </div>
+      }
+      @case ('running') {
+        <div class="research-panel__loading">
+          <mat-progress-bar mode="determinate" [value]="progressValue()" />
+          <ol class="research-panel__steps">
+            @for (step of stepOrder; track step) {
+              <li
+                class="research-panel__step"
+                [class.research-panel__step--active]="state()!.currentStep === step"
+                [class.research-panel__step--done]="isStepDone(step)"
+              >
+                @if (isStepDone(step)) {
+                  <mat-icon class="research-panel__step-icon">check_circle</mat-icon>
+                } @else if (state()!.currentStep === step) {
+                  <mat-icon class="research-panel__step-icon research-panel__step-icon--spin">sync</mat-icon>
+                } @else {
+                  <mat-icon class="research-panel__step-icon research-panel__step-icon--pending">radio_button_unchecked</mat-icon>
+                }
+                {{ stepLabels[step] }}
+              </li>
+            }
+          </ol>
+        </div>
+      }
+      @case ('done') {
+        @if (state()!.result) {
+          <div class="research-panel__result">
+            <p class="research-panel__summary">{{ state()!.result!.summary }}</p>
+            <mat-divider />
+            @for (subtopic of state()!.result!.subtopics; track subtopic.title) {
+              <section class="research-panel__subtopic">
+                <h3 class="research-panel__subtopic-title">{{ subtopic.title }}</h3>
+                <p class="research-panel__subtopic-body">{{ subtopic.explanation }}</p>
+              </section>
+            }
+          </div>
+        } @else {
+          <p class="research-panel__empty">Result unavailable.</p>
+        }
+      }
+      @case ('error') {
+        <div class="research-panel__error">
+          <mat-icon>error_outline</mat-icon>
+          <p>{{ state()!.error ?? 'Research failed.' }}</p>
+        </div>
+      }
+    }
+  }
+</div>

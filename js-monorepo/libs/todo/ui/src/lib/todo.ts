@@ -11,9 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatList } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { TodoFilter } from '@hub/todo-data';
 import { FilteringModal } from './components/filtering-modal/filtering-modal';
 import { TodoFilterService } from './services/todo-filter.service';
+import { ResearchStreamService } from './services/research-stream.service';
+import { ResearchPanelComponent } from './components/research-panel/research-panel';
 
 @Component({
   selector: 'todo-list',
@@ -23,17 +26,21 @@ import { TodoFilterService } from './services/todo-filter.service';
     MatCardModule,
     MatDividerModule,
     MatList,
+    MatSidenavModule,
+    ResearchPanelComponent,
   ],
   templateUrl: './todo.html',
   styleUrls: ['./todo.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoList {
   private readonly _dialog = inject(MatDialog);
   private readonly _crudService = inject(TodoService);
   private readonly _filterService = inject(TodoFilterService);
+  protected readonly _researchService = inject(ResearchStreamService);
 
   protected todos = this._crudService.getTodos();
+  protected readonly researchPanelOpen = this._researchService.selectedId;
 
   onAddTodoClick(): void {
     this.openTodoModal();
