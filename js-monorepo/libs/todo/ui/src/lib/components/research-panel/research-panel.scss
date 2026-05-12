@@ -72,8 +72,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .research-panel__result {
@@ -109,7 +113,7 @@
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--mat-sys-on-surface-variant, #444);
+  color: var(--text-secondary, #444);
 }
 
 .research-panel__empty {
