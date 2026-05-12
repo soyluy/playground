@@ -1,1 +1,1 @@
-export * from './lib/event-ui';
+export * from './lib/event';

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventCalendar } from './event-ui';
+import { EventCalendar } from './event';
 
 describe('EventCalendar', () => {
   let component: EventCalendar;

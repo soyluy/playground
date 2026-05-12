@@ -16,8 +16,8 @@ import { DatePipe } from '@angular/common';
     MatListItem,
     DatePipe,
   ],
-  templateUrl: './event-ui.html',
-  styleUrl: './event-ui.scss',
+  templateUrl: './event.html',
+  styleUrl: './event.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventCalendar {
