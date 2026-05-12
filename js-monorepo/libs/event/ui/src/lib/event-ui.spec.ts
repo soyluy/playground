@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventUi } from './event-ui';
+import { EventCalendar } from './event-ui';
 
-describe('EventUi', () => {
-  let component: EventUi;
-  let fixture: ComponentFixture<EventUi>;
+describe('EventCalendar', () => {
+  let component: EventCalendar;
+  let fixture: ComponentFixture<EventCalendar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EventUi],
+      imports: [EventCalendar],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EventUi);
+    fixture = TestBed.createComponent(EventCalendar);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

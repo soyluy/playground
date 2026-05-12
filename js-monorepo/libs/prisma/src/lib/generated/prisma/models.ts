@@ -11,6 +11,7 @@
 export type * from './models/Todo'
 export type * from './models/Tag'
 export type * from './models/User'
+export type * from './models/Event'
 export type * from './models/Expense'
 export type * from './models/session'
 export type * from './commonInputTypes'

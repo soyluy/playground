@@ -219,6 +219,7 @@ export type UserWhereInput = {
   todos?: Prisma.TodoListRelationFilter
   tags?: Prisma.TagListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
+  events?: Prisma.EventListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -230,6 +231,7 @@ export type UserOrderByWithRelationInput = {
   todos?: Prisma.TodoOrderByRelationAggregateInput
   tags?: Prisma.TagOrderByRelationAggregateInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
+  events?: Prisma.EventOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -244,6 +246,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   todos?: Prisma.TodoListRelationFilter
   tags?: Prisma.TagListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
+  events?: Prisma.EventListRelationFilter
 }, "id" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -278,6 +281,7 @@ export type UserCreateInput = {
   todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
   tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -289,6 +293,7 @@ export type UserUncheckedCreateInput = {
   todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -299,6 +304,7 @@ export type UserUpdateInput = {
   todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
   tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -310,6 +316,7 @@ export type UserUncheckedUpdateInput = {
   todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -400,6 +407,20 @@ export type UserUpdateOneRequiredWithoutTagsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTagsInput, Prisma.UserUpdateWithoutTagsInput>, Prisma.UserUncheckedUpdateWithoutTagsInput>
 }
 
+export type UserCreateNestedOneWithoutEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventsInput
+  upsert?: Prisma.UserUpsertWithoutEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEventsInput, Prisma.UserUpdateWithoutEventsInput>, Prisma.UserUncheckedUpdateWithoutEventsInput>
+}
+
 export type UserCreateNestedOneWithoutExpensesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutExpensesInput, Prisma.UserUncheckedCreateWithoutExpensesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutExpensesInput
@@ -421,6 +442,7 @@ export type UserCreateWithoutTodosInput = {
   photoUrl: string
   tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutTodosInput = {
@@ -431,6 +453,7 @@ export type UserUncheckedCreateWithoutTodosInput = {
   photoUrl: string
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutTodosInput = {
@@ -456,6 +479,7 @@ export type UserUpdateWithoutTodosInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTodosInput = {
@@ -466,6 +490,7 @@ export type UserUncheckedUpdateWithoutTodosInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutTagsInput = {
@@ -475,6 +500,7 @@ export type UserCreateWithoutTagsInput = {
   photoUrl: string
   todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutTagsInput = {
@@ -485,6 +511,7 @@ export type UserUncheckedCreateWithoutTagsInput = {
   photoUrl: string
   todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutTagsInput = {
@@ -510,6 +537,7 @@ export type UserUpdateWithoutTagsInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTagsInput = {
@@ -520,6 +548,65 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutEventsInput = {
+  googleId: string
+  displayName: string
+  email: string
+  photoUrl: string
+  todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
+  tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutEventsInput = {
+  id?: number
+  googleId: string
+  displayName: string
+  email: string
+  photoUrl: string
+  todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+}
+
+export type UserUpsertWithoutEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEventsInput, Prisma.UserUncheckedUpdateWithoutEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEventsInput, Prisma.UserUncheckedUpdateWithoutEventsInput>
+}
+
+export type UserUpdateWithoutEventsInput = {
+  googleId?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
+  tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  googleId?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutExpensesInput = {
@@ -529,6 +616,7 @@ export type UserCreateWithoutExpensesInput = {
   photoUrl: string
   todos?: Prisma.TodoCreateNestedManyWithoutOwnerInput
   tags?: Prisma.TagCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutExpensesInput = {
@@ -539,6 +627,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   photoUrl: string
   todos?: Prisma.TodoUncheckedCreateNestedManyWithoutOwnerInput
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutOwnerInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutExpensesInput = {
@@ -564,6 +653,7 @@ export type UserUpdateWithoutExpensesInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUpdateManyWithoutOwnerNestedInput
   tags?: Prisma.TagUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExpensesInput = {
@@ -574,6 +664,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   photoUrl?: Prisma.StringFieldUpdateOperationsInput | string
   todos?: Prisma.TodoUncheckedUpdateManyWithoutOwnerNestedInput
   tags?: Prisma.TagUncheckedUpdateManyWithoutOwnerNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 
@@ -585,12 +676,14 @@ export type UserCountOutputType = {
   todos: number
   tags: number
   expenses: number
+  events: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   todos?: boolean | UserCountOutputTypeCountTodosArgs
   tags?: boolean | UserCountOutputTypeCountTagsArgs
   expenses?: boolean | UserCountOutputTypeCountExpensesArgs
+  events?: boolean | UserCountOutputTypeCountEventsArgs
 }
 
 /**
@@ -624,6 +717,13 @@ export type UserCountOutputTypeCountExpensesArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ExpenseWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EventWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -634,6 +734,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   todos?: boolean | Prisma.User$todosArgs<ExtArgs>
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
   expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
+  events?: boolean | Prisma.User$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -666,6 +767,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   todos?: boolean | Prisma.User$todosArgs<ExtArgs>
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
   expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
+  events?: boolean | Prisma.User$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -677,6 +779,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     todos: Prisma.$TodoPayload<ExtArgs>[]
     tags: Prisma.$TagPayload<ExtArgs>[]
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
+    events: Prisma.$EventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1081,6 +1184,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   todos<T extends Prisma.User$todosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$todosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TodoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tags<T extends Prisma.User$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expenses<T extends Prisma.User$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  events<T extends Prisma.User$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1577,6 +1681,30 @@ export type User$expensesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[]
+}
+
+/**
+ * User.events
+ */
+export type User$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Event
+   */
+  select?: Prisma.EventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Event
+   */
+  omit?: Prisma.EventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EventInclude<ExtArgs> | null
+  where?: Prisma.EventWhereInput
+  orderBy?: Prisma.EventOrderByWithRelationInput | Prisma.EventOrderByWithRelationInput[]
+  cursor?: Prisma.EventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
 }
 
 /**

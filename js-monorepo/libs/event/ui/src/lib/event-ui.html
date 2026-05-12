@@ -1,1 +1,30 @@
-<p>EventUi works!</p>
+<section class="event-shell">
+  <header class="event-shell__header">
+    <h1 class="event-shell__title">Events</h1>
+  </header>
+
+  @if (events().length === 0) {
+  <p class="event-empty">There are no events yet</p>
+  } @else {
+  <mat-card class="event-list-card" appearance="outlined">
+    <mat-list>
+      @for (event of events(); track event.id; let isLast = $last) {
+      <mat-list-item>
+        <span matListItemTitle>{{ event.title }}</span>
+        <span matListItemLine>
+          {{ event.startTime | date: 'medium' }}
+          @if (event.endTime) {
+            &ndash; {{ event.endTime | date: 'medium' }}
+          }
+        </span>
+        @if (event.description) {
+        <span matListItemLine>{{ event.description }}</span>
+        }
+      </mat-list-item>
+      @if (!isLast) {
+      <mat-divider></mat-divider>
+      } }
+    </mat-list>
+  </mat-card>
+  }
+</section>

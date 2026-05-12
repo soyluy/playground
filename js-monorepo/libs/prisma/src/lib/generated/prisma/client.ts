@@ -55,6 +55,11 @@ export type Tag = Prisma.TagModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model Event
+ * 
+ */
+export type Event = Prisma.EventModel
+/**
  * Model Expense
  * 
  */

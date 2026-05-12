@@ -49,6 +49,20 @@ model User {
 	todos				Todo[]
 	tags				Tag[]
 	expenses		Expense[]
+	events			Event[]
+}
+
+model Event {
+	id					String		@id @default(uuid())
+	userId			Int
+	title				String
+	description	String?
+	startTime		DateTime
+	endTime			DateTime?
+	researchId	String?
+	createdAt		DateTime	@default(now())
+	updatedAt		DateTime	@updatedAt
+	owner				User			@relation(fields: [userId], references: [id])
 }
 
 model Expense {

@@ -54,6 +54,7 @@ export const ModelName = {
   Todo: 'Todo',
   Tag: 'Tag',
   User: 'User',
+  Event: 'Event',
   Expense: 'Expense',
   session: 'session'
 } as const
@@ -108,6 +109,21 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const EventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  researchId: 'researchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
 
 
 export const ExpenseScalarFieldEnum = {

@@ -1,1 +1,1 @@
-export * from './lib/event-api.module';
+export * from './lib/event.module';

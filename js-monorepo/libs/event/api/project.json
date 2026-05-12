@@ -15,6 +15,13 @@
         "main": "libs/event/api/src/index.ts",
         "assets": ["libs/event/api/*.md"]
       }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/event/api/jest.config.cts"
+      }
     }
   }
 }
