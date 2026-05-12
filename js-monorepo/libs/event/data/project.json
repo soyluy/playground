@@ -1,0 +1,26 @@
+{
+  "name": "event-data",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/event/data/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/event/data",
+        "main": "libs/event/data/src/index.ts",
+        "tsConfig": "libs/event/data/tsconfig.lib.json",
+        "assets": ["libs/event/data/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/event/data/jest.config.cts"
+      }
+    }
+  }
+}
