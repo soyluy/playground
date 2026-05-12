@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type ResearchDocument = HydratedDocument<Research>;
 
@@ -22,9 +22,6 @@ export class ResearchResult {
 @Schema({ timestamps: true })
 export class Research {
   @Prop({ required: true })
-  _id!: Types.ObjectId;
-
-  @Prop({ required: true })
   todoId!: string;
 
   @Prop({ required: true, trim: true })
@@ -32,11 +29,11 @@ export class Research {
 
   @Prop({
     type: String,
-    enum: ['running', 'done', 'error'],
+    enum: ['pending', 'running', 'done', 'error'],
     required: true,
     default: 'running',
   })
-  status!: 'running' | 'done' | 'error';
+  status!: 'pending' | 'running' | 'done' | 'error';
 
   @Prop({ type: ResearchResult, default: null })
   result!: ResearchResult | null;

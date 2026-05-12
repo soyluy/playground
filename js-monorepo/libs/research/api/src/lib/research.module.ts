@@ -31,6 +31,6 @@ import { ResearchController } from './research.controller';
     SynthesisService,
     ResearchStreamService,
   ],
-  exports: [ResearchService],
+  exports: [ResearchService, ResearchStreamService],
 })
 export class ResearchModule {}

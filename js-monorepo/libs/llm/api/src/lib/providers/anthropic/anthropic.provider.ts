@@ -27,8 +27,9 @@ export class AnthropicProvider implements LLMProvider {
 
   constructor(private readonly _configService: ConfigService) {
     const apiKey = this._configService.getOrThrow<string>('ANTHROPIC_API_KEY');
-    const timeout =
-      this._configService.get<number>('ANTHROPIC_REQUEST_TIMEOUT') ?? 30000; // Default to 30 seconds
+    const timeout = parseInt(
+      this._configService.get('ANTHROPIC_REQUEST_TIMEOUT') ?? '30000', // Default to 30 seconds
+    );
     this._model =
       this._configService.get<string>('ANTHROPIC_DEFAULT_MODEL') ??
       'claude-sonnet-4-6';
