@@ -19,4 +19,8 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('@hub/resource-ui').then((m) => m.ResourceComponent),
   },
+  {
+    path: 'calendar',
+    loadComponent: () => import('@hub/event-ui').then((m) => m.EventCalendar),
+  },
 ];
