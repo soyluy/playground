@@ -1,0 +1,70 @@
+<section class="wallet">
+  <mat-card class="balance-card">
+    <p class="label">Balance</p>
+    <h2>{{ toCurrency(balance()) }}</h2>
+    <p class="holds">Pending holds: {{ toCurrency(pendingHolds()) }}</p>
+  </mat-card>
+
+  <div class="forms">
+    <mat-card>
+      <h3>Deposit</h3>
+      <form [formGroup]="depositForm" (ngSubmit)="deposit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" formControlName="amount" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Reference</mat-label>
+          <input matInput formControlName="reference" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" />
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">Deposit</button>
+      </form>
+    </mat-card>
+
+    <mat-card>
+      <h3>Withdraw</h3>
+      <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()">
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" formControlName="amount" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Reference</mat-label>
+          <input matInput formControlName="reference" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" />
+        </mat-form-field>
+        <button mat-stroked-button color="primary" type="submit">Withdraw</button>
+      </form>
+    </mat-card>
+  </div>
+
+  <mat-card class="history">
+    <h3>Transaction history</h3>
+    <p *ngIf="transactions().length === 0">No transactions.</p>
+    <table *ngIf="transactions().length > 0">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of transactions()">
+          <td>{{ tx.type }}</td>
+          <td>{{ toCurrency(tx.amount) }}</td>
+          <td>{{ tx.status }}</td>
+          <td>{{ tx.createdAt | date: 'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card>
+</section>

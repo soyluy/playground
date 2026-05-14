@@ -1,0 +1,73 @@
+<section class="auction-management-page">
+  <header class="toolbar">
+    <h1>Auction Management</h1>
+    <div class="bulk-actions">
+      <button mat-stroked-button type="button" (click)="bulkForceEnd()" [disabled]="selectedIds().length === 0">
+        Force End Selected
+      </button>
+      <button mat-stroked-button color="warn" type="button" (click)="bulkCancel()" [disabled]="selectedIds().length === 0">
+        Cancel Selected
+      </button>
+    </div>
+  </header>
+
+  <form [formGroup]="filtersForm" class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">All</mat-option>
+        <mat-option value="DRAFT">Draft</mat-option>
+        <mat-option value="SCHEDULED">Scheduled</mat-option>
+        <mat-option value="ACTIVE">Active</mat-option>
+        <mat-option value="ENDED">Ended</mat-option>
+        <mat-option value="CANCELLED">Cancelled</mat-option>
+        <mat-option value="FAILED">Failed</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>From date</mat-label>
+      <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" />
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To date</mat-label>
+      <input matInput [matDatepicker]="toPicker" formControlName="toDate" />
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
+  </form>
+
+  <p *ngIf="loading()">Loading auctions...</p>
+
+  <table class="table" *ngIf="!loading()">
+    <thead>
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Status</th>
+        <th>Price</th>
+        <th>Seller</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let auction of filteredAuctions()">
+        <td>
+          <input type="checkbox" [checked]="isSelected(auction.id)" (change)="toggleSelection(auction.id)" />
+        </td>
+        <td>{{ auction.id }}</td>
+        <td>{{ auction.status }}</td>
+        <td>{{ auction.currentPrice }}</td>
+        <td>{{ auction.sellerId }}</td>
+        <td>
+          <button mat-button type="button" (click)="viewDetail(auction.id)">View</button>
+          <button mat-button color="primary" type="button" (click)="forceEnd(auction.id)">Force End</button>
+          <button mat-button color="warn" type="button" (click)="cancel(auction.id)">Cancel</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

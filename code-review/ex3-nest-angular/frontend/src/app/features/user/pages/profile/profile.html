@@ -1,0 +1,71 @@
+<section class="profile-page">
+  <header class="header">
+    <h1>{{ fullName() || 'My Profile' }}</h1>
+    <p *ngIf="profile() as p">{{ p.email }}</p>
+  </header>
+
+  <mat-tab-group>
+    <mat-tab label="Profile">
+      <ng-template matTabContent>
+        <div class="panel" *ngIf="profile() as p">
+          <p><strong>First name:</strong> {{ p.firstName }}</p>
+          <p><strong>Last name:</strong> {{ p.lastName }}</p>
+          <p><strong>Phone:</strong> {{ p.phone || '-' }}</p>
+          <p><strong>Role:</strong> {{ p.role }}</p>
+          <p><strong>Verified:</strong> {{ p.isVerified ? 'Yes' : 'No' }}</p>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="My Auctions">
+      <ng-template matTabContent>
+        <div class="panel">
+          <p *ngIf="myAuctions().length === 0">No auctions yet.</p>
+          <ul *ngIf="myAuctions().length > 0">
+            <li *ngFor="let auction of myAuctions()">
+              {{ auction.id }} — {{ auction.status }} — {{ auction.currentPrice }}
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="My Bids">
+      <ng-template matTabContent>
+        <div class="panel">
+          <p *ngIf="myBids().length === 0">No bids yet.</p>
+          <ul *ngIf="myBids().length > 0">
+            <li *ngFor="let bid of myBids()">
+              {{ bid.auctionId }} — {{ bid.amount }} — {{ bid.createdAt | date: 'short' }}
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Watchlist">
+      <ng-template matTabContent>
+        <app-watchlist />
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Transactions">
+      <ng-template matTabContent>
+        <div class="panel">
+          <p *ngIf="transactions().length === 0">No transactions available.</p>
+          <ul *ngIf="transactions().length > 0">
+            <li *ngFor="let tx of transactions()">
+              {{ tx.type }} — {{ tx.amount }} — {{ tx.status }}
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Wallet">
+      <ng-template matTabContent>
+        <app-wallet />
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</section>

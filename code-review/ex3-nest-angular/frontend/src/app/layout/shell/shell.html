@@ -1,0 +1,9 @@
+<app-header></app-header>
+
+<div class="connection-indicator" [class.connected]="connectionState() === 'connected'" [class.disconnected]="connectionState() === 'disconnected'">
+  {{ connectionLabel() }}
+</div>
+
+<main class="shell-content">
+  <router-outlet></router-outlet>
+</main>

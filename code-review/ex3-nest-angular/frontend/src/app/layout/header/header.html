@@ -1,0 +1,44 @@
+<mat-toolbar class="app-header">
+  <a class="logo" routerLink="/auctions">
+    <mat-icon>gavel</mat-icon>
+    <span>AuctionHub</span>
+  </a>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/auctions" routerLinkActive="active">Auctions</a>
+    <a mat-button routerLink="/items" routerLinkActive="active" *ngIf="isAuthenticated()">Sell</a>
+    <a mat-button routerLink="/admin" routerLinkActive="active" *ngIf="isAuthenticated()">Admin</a>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <app-notification-bell *ngIf="isAuthenticated()"></app-notification-bell>
+
+  <button
+    mat-button
+    [matMenuTriggerFor]="userMenu"
+    class="user-btn"
+    *ngIf="isAuthenticated(); else authLinks"
+  >
+    <mat-icon>account_circle</mat-icon>
+    <span>{{ userName() }}</span>
+  </button>
+
+  <ng-template #authLinks>
+    <a mat-button routerLink="/auth/login">Login</a>
+    <a mat-flat-button color="primary" routerLink="/auth/register">Register</a>
+  </ng-template>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="goToProfile()">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<app-notification-panel></app-notification-panel>

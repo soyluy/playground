@@ -1,0 +1,81 @@
+<section class="create-auction-page">
+  <h1>Create Auction</h1>
+
+  <form [formGroup]="form" class="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Select item</mat-label>
+      <mat-select formControlName="itemId">
+        <mat-option *ngFor="let item of items()" [value]="item.id">{{ item.title }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Auction type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let t of types" [value]="t">{{ t }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="date-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Start time</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startTime" />
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End time</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endTime" />
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Starting price</mat-label>
+      <input matInput type="number" formControlName="startingPrice" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="showReserve()">
+      <mat-label>Reserve price</mat-label>
+      <input matInput type="number" formControlName="reservePrice" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="showBuyNow()">
+      <mat-label>Buy-now price</mat-label>
+      <input matInput type="number" formControlName="buyNowPrice" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="!isDutch()">
+      <mat-label>Bid increment</mat-label>
+      <input matInput type="number" formControlName="bidIncrement" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Extension minutes</mat-label>
+      <input matInput type="number" formControlName="extensionMinutes" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Extension threshold (seconds)</mat-label>
+      <input matInput type="number" formControlName="extensionThresholdSeconds" />
+    </mat-form-field>
+
+    <section class="preview">
+      <h3>Preview</h3>
+      <p>Type: {{ selectedType() }}</p>
+      <p>Start: {{ form.controls.startTime.value | date: 'short' }}</p>
+      <p>End: {{ form.controls.endTime.value | date: 'short' }}</p>
+      <p>Starting price: {{ form.controls.startingPrice.value || 0 }}</p>
+    </section>
+
+    <p class="error" *ngIf="error()">{{ error() }}</p>
+
+    <div class="actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Creating...' : 'Create Auction' }}
+      </button>
+    </div>
+  </form>
+</section>

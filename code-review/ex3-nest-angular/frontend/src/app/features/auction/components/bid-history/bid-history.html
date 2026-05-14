@@ -1,0 +1,34 @@
+<section class="bid-history">
+  <header class="header">
+    <h3>Bid history</h3>
+    <span>{{ bids().length }} entries</span>
+  </header>
+
+  <div class="empty" *ngIf="bids().length === 0">
+    No bids yet.
+  </div>
+
+  <ul class="list" *ngIf="bids().length > 0">
+    <li
+      *ngFor="let bid of bids(); trackBy: trackByBid"
+      [class.own]="isOwnBid(bid)"
+      [class.winning]="bid.isWinning"
+    >
+      <div class="left">
+        <span class="amount">{{ toCurrency(bid.amount) }}</span>
+        <span class="meta">{{ bid.createdAt | date: 'short' }}</span>
+      </div>
+      <div class="tags">
+        <span class="tag own" *ngIf="isOwnBid(bid)">You</span>
+        <span class="tag win" *ngIf="bid.isWinning">Winning</span>
+        <span class="tag auto" *ngIf="bid.isAutoBid">Auto</span>
+      </div>
+    </li>
+  </ul>
+
+  <footer class="pager">
+    <button mat-stroked-button type="button" (click)="prevPage()">Previous</button>
+    <span>Page {{ page() }}</span>
+    <button mat-stroked-button type="button" (click)="nextPage()">Next</button>
+  </footer>
+</section>

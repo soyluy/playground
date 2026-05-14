@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Filter Auctions</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="filter-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="">Any</mat-option>
+        <mat-option *ngFor="let type of typeOptions" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">Any</mat-option>
+        <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <input matInput formControlName="categorySlug" placeholder="electronics" />
+    </mat-form-field>
+
+    <div class="price-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Min price</mat-label>
+        <input matInput type="number" formControlName="priceMin" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Max price</mat-label>
+        <input matInput type="number" formControlName="priceMax" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ending in (minutes)</mat-label>
+      <input matInput type="number" formControlName="endingIn" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Close</button>
+  <button mat-stroked-button type="button" (click)="reset()">Reset</button>
+  <button mat-flat-button color="primary" type="button" (click)="apply()">Apply</button>
+</mat-dialog-actions>

@@ -1,0 +1,41 @@
+.auction-management-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toolbar h1 {
+  margin: 0;
+}
+
+.bulk-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  padding: 8px 6px;
+  font-size: 13px;
+}

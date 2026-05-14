@@ -1,0 +1,12 @@
+<button
+  mat-icon-button
+  type="button"
+  aria-label="Notifications"
+  (click)="togglePanel()"
+  [class.pulse]="pulse()"
+  [matBadge]="unreadCount()"
+  [matBadgeHidden]="!hasUnread()"
+  matBadgeColor="warn"
+>
+  <mat-icon>notifications</mat-icon>
+</button>

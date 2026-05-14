@@ -1,0 +1,22 @@
+<section class="watchlist">
+  <p *ngIf="loading()">Loading watchlist...</p>
+  <p *ngIf="!loading() && auctions().length === 0">Your watchlist is empty.</p>
+
+  <div class="cards" *ngIf="!loading() && auctions().length > 0">
+    <article class="card" *ngFor="let auction of auctions()">
+      <div class="content" (click)="openAuction(auction.id)">
+        <h4>{{ auction.item?.title || 'Auction' }}</h4>
+        <p>Current: {{ toCurrency(auction.currentPrice || 0) }}</p>
+        <p>Ends: {{ toTime(auction.endTime) }}</p>
+      </div>
+      <div class="actions">
+        <button mat-stroked-button type="button" (click)="openAuction(auction.id)">
+          Join Live
+        </button>
+        <button mat-button color="warn" type="button" (click)="remove(auction.id)">
+          Remove
+        </button>
+      </div>
+    </article>
+  </div>
+</section>

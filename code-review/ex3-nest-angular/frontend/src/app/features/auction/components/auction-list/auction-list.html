@@ -1,0 +1,51 @@
+<section class="auction-list-page">
+  <header class="toolbar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search auctions</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Title, description..." />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        aria-label="Clear search"
+        *ngIf="searchControl.value"
+        (click)="resetSearch()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-stroked-button type="button" (click)="openFilters()">
+      <mat-icon>filter_list</mat-icon>
+      Filters
+    </button>
+
+    <button mat-icon-button type="button" aria-label="Refresh auctions" (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </header>
+
+  <div class="state-wrap" *ngIf="loading()">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading auctions...</p>
+  </div>
+
+  <div class="state-wrap error" *ngIf="!loading() && error()">
+    <p>{{ error() }}</p>
+    <button mat-flat-button color="primary" type="button" (click)="refresh()">Retry</button>
+  </div>
+
+  <div class="state-wrap empty" *ngIf="!loading() && !error() && !hasResults()">
+    <p>No auctions match your search.</p>
+  </div>
+
+  <section class="cards-grid" *ngIf="!loading() && !error() && hasResults()">
+    <app-auction-card *ngFor="let auction of auctions(); trackBy: auction?.id" [auction]="auction" />
+  </section>
+
+  <footer class="pager" *ngIf="!loading() && hasResults()">
+    <button mat-stroked-button type="button" (click)="prevPage()">Previous</button>
+    <span>Total {{ total() }}</span>
+    <button mat-stroked-button type="button" (click)="nextPage()">Next</button>
+  </footer>
+</section>

@@ -1,0 +1,56 @@
+<section class="auction-detail-page" *ngIf="!loading(); else loadingTpl">
+  <ng-container *ngIf="auction() as a; else missingTpl">
+    <header class="hero">
+      <div class="image">
+        <img [src]="$any(a).item?.images?.[0] || 'assets/placeholder-auction.png'" [alt]="$any(a).item?.title || 'Auction item'" />
+      </div>
+      <div class="summary">
+        <h1>{{ $any(a).item?.title || 'Auction detail' }}</h1>
+        <p class="price">{{ toCurrency(currentPrice()) }}</p>
+        <app-auction-countdown
+          [endTime]="a.endTime"
+          [extensionSeconds]="a.extensionThresholdSeconds"
+          (ended)="onAuctionEnded()"
+        />
+        <p class="meta">Bids: {{ bidCount() }}</p>
+        <p class="meta">Status: {{ status() }}</p>
+
+        <div class="actions">
+          <button mat-flat-button color="primary" type="button" (click)="placeQuickBid()" *ngIf="canShowBidPanel()">
+            Place Bid
+          </button>
+          <button mat-stroked-button color="primary" type="button" (click)="buyNow()" *ngIf="canShowBuyNow()">
+            Buy Now
+          </button>
+          <button mat-button type="button" (click)="toggleWatch()">
+            {{ isWatching() ? 'Unwatch' : 'Watch' }}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="content">
+      <article class="description">
+        <h2>Item details</h2>
+        <p>{{ $any(a).item?.description || 'No description provided.' }}</p>
+      </article>
+      <article class="history">
+        <h2>Bid history</h2>
+        <app-bid-history [auctionId]="a.id" />
+      </article>
+    </section>
+  </ng-container>
+</section>
+
+<ng-template #loadingTpl>
+  <section class="loading-wrap">
+    <mat-spinner diameter="42"></mat-spinner>
+    <p>Loading auction...</p>
+  </section>
+</ng-template>
+
+<ng-template #missingTpl>
+  <section class="loading-wrap">
+    <p>Auction could not be loaded.</p>
+  </section>
+</ng-template>

@@ -1,0 +1,17 @@
+<mat-card class="auction-card" (click)="openAuction()">
+  <div class="image-wrap">
+    <img
+      [src]="auction?.item?.images?.[0] || 'assets/placeholder-auction.png'"
+      [alt]="auction?.item?.title || 'Auction image'"
+    />
+    <mat-chip class="type-chip">{{ auction?.type }}</mat-chip>
+  </div>
+
+  <mat-card-content>
+    <h3>{{ auction?.item?.title || 'Untitled auction' }}</h3>
+    <p class="price">{{ toCurrency(displayPrice()) }}</p>
+    <p class="meta">Time left: {{ remainingLabel() }}</p>
+    <p class="meta">Bids: {{ bidLabel() }}</p>
+    <p class="meta">Status: {{ statusLabel() }}</p>
+  </mat-card-content>
+</mat-card>

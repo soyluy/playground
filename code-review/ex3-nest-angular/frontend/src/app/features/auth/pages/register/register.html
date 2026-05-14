@@ -1,0 +1,58 @@
+<section class="auth-page">
+  <mat-card class="auth-card">
+    <h1>Create account</h1>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="name-row">
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-error *ngIf="form.controls.email.errors?.['emailTaken']">Email already in use</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+      <p class="strength">Password strength: {{ passwordStrength() }}</p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" />
+      </mat-form-field>
+      <p class="error" *ngIf="form.errors?.['passwordMismatch']">Passwords do not match.</p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="acceptTerms">
+        I agree to the terms and conditions
+      </mat-checkbox>
+
+      <p class="error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+      <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Register' }}
+      </button>
+    </form>
+
+    <div class="links">
+      <a routerLink="/auth/login">Already have an account?</a>
+    </div>
+  </mat-card>
+</section>

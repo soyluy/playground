@@ -1,0 +1,98 @@
+.bid-history {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.empty {
+  padding: 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list li {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list li.own {
+  background: #eff6ff;
+}
+
+.list li.winning {
+  border-color: #34d399;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.amount {
+  font-weight: 700;
+}
+
+.meta {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+}
+
+.tag {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  background: #f3f4f6;
+}
+
+.tag.own {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.tag.win {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.tag.auto {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}

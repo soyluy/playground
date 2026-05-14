@@ -1,0 +1,30 @@
+<section class="auth-page">
+  <mat-card class="auth-card">
+    <h1>Login</h1>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+
+      <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+
+      <p class="error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading()">
+        {{ loading() ? 'Signing in...' : 'Login' }}
+      </button>
+    </form>
+
+    <div class="links">
+      <a routerLink="/auth/register">Create account</a>
+      <a routerLink="/auth/forgot-password">Forgot password?</a>
+    </div>
+  </mat-card>
+</section>

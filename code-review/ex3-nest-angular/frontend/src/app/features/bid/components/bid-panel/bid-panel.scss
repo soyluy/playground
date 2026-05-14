@@ -1,0 +1,58 @@
+.bid-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+h3 {
+  margin: 0;
+}
+
+.price-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.status {
+  margin: 0;
+  font-weight: 500;
+}
+
+.bid-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.auto-bid {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error {
+  color: #dc2626;
+  margin: 0;
+}
+
+.success {
+  color: #059669;
+  margin: 0;
+}

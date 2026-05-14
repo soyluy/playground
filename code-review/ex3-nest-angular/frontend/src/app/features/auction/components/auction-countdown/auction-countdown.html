@@ -1,0 +1,6 @@
+<div class="countdown" [class]="urgencyClass()">
+  <span class="part" *ngIf="days() > 0">{{ days() }}d</span>
+  <span class="part">{{ hours() | number: '2.0' }}h</span>
+  <span class="part">{{ minutes() | number: '2.0' }}m</span>
+  <span class="part">{{ seconds() | number: '2.0' }}s</span>
+</div>

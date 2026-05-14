@@ -1,0 +1,8 @@
+export enum ItemStatus {
+  DRAFT = 'DRAFT',
+  PENDING_REVIEW = 'PENDING_REVIEW',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+  SOLD = 'SOLD',
+  ARCHIVED = 'ARCHIVED',
+}

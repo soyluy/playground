@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Confirm bid</h2>
+
+<mat-dialog-content>
+  <p>Bid amount: <strong>{{ toCurrency(bidAmount()) }}</strong></p>
+  <p>Buyer premium: <strong>{{ toCurrency(buyerPremium()) }}</strong></p>
+  <p>Total cost: <strong>{{ toCurrency(totalCost()) }}</strong></p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="confirm()">Confirm</button>
+</mat-dialog-actions>

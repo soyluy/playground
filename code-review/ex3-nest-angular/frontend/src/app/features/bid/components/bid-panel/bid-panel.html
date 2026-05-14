@@ -1,0 +1,45 @@
+<mat-card class="bid-panel">
+  <h3>Place a bid</h3>
+
+  <div class="price-row">
+    <div>
+      <span class="label">Current price</span>
+      <strong>{{ toCurrency(currentPrice()) }}</strong>
+    </div>
+    <div>
+      <span class="label">Minimum bid</span>
+      <strong>{{ toCurrency(minimumBid()) }}</strong>
+    </div>
+  </div>
+
+  <p class="status">{{ bidStatus() }}</p>
+
+  <form [formGroup]="bidForm" class="bid-form" (ngSubmit)="submitBid()">
+    <mat-form-field appearance="outline">
+      <mat-label>Your bid</mat-label>
+      <input matInput type="number" formControlName="amount" />
+      <span matTextPrefix>$&nbsp;</span>
+      <mat-error *ngIf="bidForm.controls.amount.invalid">Enter a valid amount</mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit">
+      Submit Bid
+    </button>
+  </form>
+
+  <section class="auto-bid">
+    <h4>Auto-bid</h4>
+    <label class="toggle">
+      <input type="checkbox" [formControl]="autoBidForm.controls.enabled" />
+      Enable auto-bid
+    </label>
+    <mat-form-field appearance="outline">
+      <mat-label>Max auto-bid amount</mat-label>
+      <input matInput type="number" [formControl]="autoBidForm.controls.maxAmount" />
+    </mat-form-field>
+    <button mat-stroked-button type="button" (click)="saveAutoBid()">Save Auto-Bid</button>
+  </section>
+
+  <p class="error" *ngIf="error()">{{ error() }}</p>
+  <p class="success" *ngIf="success()">{{ success() }}</p>
+</mat-card>

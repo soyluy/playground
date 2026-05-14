@@ -1,0 +1,73 @@
+<section class="user-management-page">
+  <header class="toolbar">
+    <h1>User Management</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>Search users</mat-label>
+      <input matInput (input)="onSearch($any($event.target).value)" placeholder="Email, name..." />
+    </mat-form-field>
+  </header>
+
+  <form [formGroup]="filtersForm" class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="">All</mat-option>
+        <mat-option value="BUYER">Buyer</mat-option>
+        <mat-option value="SELLER">Seller</mat-option>
+        <mat-option value="MODERATOR">Moderator</mat-option>
+        <mat-option value="ADMIN">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">All</mat-option>
+        <mat-option value="ACTIVE">Active</mat-option>
+        <mat-option value="BANNED">Banned</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Verification</mat-label>
+      <mat-select formControlName="verified">
+        <mat-option value="">All</mat-option>
+        <mat-option value="VERIFIED">Verified</mat-option>
+        <mat-option value="UNVERIFIED">Unverified</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <p *ngIf="loading()">Loading users...</p>
+
+  <table class="table" *ngIf="!loading()">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Verified</th>
+        <th>Banned</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers()">
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+        <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+        <td>
+          <button mat-button type="button" (click)="viewUser(user)">View</button>
+          <button mat-button color="warn" type="button" *ngIf="!user.isBanned" (click)="banUser(user.id)">
+            Ban
+          </button>
+          <button mat-button color="primary" type="button" *ngIf="user.isBanned" (click)="unbanUser(user.id)">
+            Unban
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

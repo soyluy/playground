@@ -1,0 +1,19 @@
+<section class="auth-page">
+  <mat-card class="auth-card">
+    <h1>Email verification</h1>
+
+    <p *ngIf="loading()">Verifying your email...</p>
+
+    <ng-container *ngIf="!loading()">
+      <p class="success" *ngIf="success()">Your email is verified. You can now login.</p>
+      <p class="error" *ngIf="!success()">{{ error() || 'Verification failed.' }}</p>
+
+      <div class="actions">
+        <a mat-flat-button color="primary" routerLink="/auth/login" *ngIf="success()">Go to login</a>
+        <button mat-stroked-button type="button" (click)="resend()" *ngIf="!success()">
+          Resend verification
+        </button>
+      </div>
+    </ng-container>
+  </mat-card>
+</section>

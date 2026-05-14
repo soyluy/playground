@@ -1,0 +1,9 @@
+export enum TransactionType {
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWAL = 'WITHDRAWAL',
+  BID_HOLD = 'BID_HOLD',
+  BID_RELEASE = 'BID_RELEASE',
+  PURCHASE = 'PURCHASE',
+  REFUND = 'REFUND',
+  FEE = 'FEE',
+}

@@ -1,0 +1,116 @@
+<section class="create-item-page">
+  <h1>Create Item</h1>
+
+  <mat-stepper [linear]="false">
+    <mat-step [stepControl]="detailsForm">
+      <form [formGroup]="detailsForm" class="step-form">
+        <ng-template matStepLabel>Item details</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea matInput rows="5" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Condition</mat-label>
+          <mat-select formControlName="condition">
+            <mat-option *ngFor="let c of conditions" [value]="c">{{ c }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <input matInput formControlName="categoryId" />
+        </mat-form-field>
+
+        <div class="actions">
+          <button mat-flat-button color="primary" matStepperNext [disabled]="!canProceedDetails()">
+            Continue
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="imagesForm">
+      <form [formGroup]="imagesForm" class="step-form">
+        <ng-template matStepLabel>Images</ng-template>
+
+        <div class="add-image">
+          <input #imgInput type="text" placeholder="https://..." />
+          <button mat-stroked-button type="button" (click)="addImage(imgInput)">Add</button>
+        </div>
+
+        <div class="preview-grid">
+          <div class="preview" *ngFor="let image of imagePreviews(); let i = index">
+            <img [src]="image" alt="Preview image" />
+            <button mat-button type="button" color="warn" (click)="removeImage(i)">Remove</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-flat-button color="primary" matStepperNext [disabled]="!canProceedImages()">
+            Continue
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="pricingForm">
+      <form [formGroup]="pricingForm" class="step-form">
+        <ng-template matStepLabel>Pricing</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Starting price</mat-label>
+          <input matInput type="number" formControlName="startingPrice" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Reserve price</mat-label>
+          <input matInput type="number" formControlName="reservePrice" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Buy-now price</mat-label>
+          <input matInput type="number" formControlName="buyNowPrice" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Weight (kg)</mat-label>
+          <input matInput type="number" formControlName="weight" />
+        </mat-form-field>
+
+        <div class="actions">
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-flat-button color="primary" matStepperNext [disabled]="!canProceedPricing()">
+            Continue
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Review</ng-template>
+      <div class="review">
+        <p><strong>Title:</strong> {{ detailsForm.controls.title.value }}</p>
+        <p><strong>Condition:</strong> {{ detailsForm.controls.condition.value }}</p>
+        <p><strong>Images:</strong> {{ imagePreviews().length }}</p>
+        <p><strong>Starting price:</strong> {{ pricingForm.controls.startingPrice.value }}</p>
+      </div>
+
+      <p class="error" *ngIf="saveError()">{{ saveError() }}</p>
+
+      <div class="actions">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-flat-button color="primary" type="button" (click)="submit()" [disabled]="saving()">
+          {{ saving() ? 'Submitting...' : 'Create Item' }}
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</section>
