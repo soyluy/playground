@@ -1,0 +1,10 @@
+connection:
+	ssh bandit8@bandit.labs.overthewire.org -p 2220
+	dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+
+commands ran:
+	cat data.txt | sort | uniq -u
+
+password (May 20, 2026):
+	4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+	

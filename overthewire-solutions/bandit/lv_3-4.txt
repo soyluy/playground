@@ -1,0 +1,11 @@
+connection:
+	ssh bandit3@bandit.labs.overthewire.org -p 2220
+	MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+
+commands ran:
+	cd inhere
+	ls -a
+	cat ...Hiding-From-You
+
+password (May 20, 2026):
+	2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ

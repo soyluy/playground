@@ -1,0 +1,9 @@
+connection:
+	ssh bandit11@bandit.labs.overthewire.org -p 2220
+	dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+
+commands ran:
+	cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+password (May 20, 2026):
+	7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4

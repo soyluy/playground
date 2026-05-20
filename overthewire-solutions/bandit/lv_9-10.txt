@@ -1,0 +1,9 @@
+connection:
+	ssh bandit9@bandit.labs.overthewire.org -p 2220
+	4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+
+commands ran:
+	strings data.txt | grep "==="
+
+password (May 20, 2026):
+	FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey

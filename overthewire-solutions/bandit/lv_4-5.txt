@@ -1,0 +1,10 @@
+connection:
+	ssh bandit4@bandit.labs.overthewire.org -p 2220
+	2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+
+commands ran:
+	cd inhere
+	cat ./-file0{0-9}
+
+password (May 20, 2026):
+	4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw

@@ -1,0 +1,6 @@
+connection:
+	ssh bandit2@bandit.labs.overthewire.org -p 2220
+
+commands ran:
+
+password (May 20, 2026):

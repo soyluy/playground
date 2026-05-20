@@ -1,0 +1,11 @@
+connection:
+	ssh bandit6@bandit.labs.overthewire.org -p 2220
+	HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
+
+commands ran:
+	cd /
+	find -type d | xargs ls -lah | grep bandit7 | grep bandit6 | grep 33
+	find | grep bandit7.password
+
+password (May 20, 2026):
+	morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj

@@ -1,0 +1,9 @@
+connection:
+	ssh bandit10@bandit.labs.overthewire.org -p 2220
+	FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+
+commands ran:
+	base64 -d data.txt
+
+password (May 20, 2026):
+	dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr

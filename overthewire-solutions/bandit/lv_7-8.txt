@@ -1,0 +1,9 @@
+connection:
+	ssh bandit7@bandit.labs.overthewire.org -p 2220
+	morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
+
+commands ran:
+	cat data.txt | grep millionth
+
+password (May 20, 2026):
+	cat data.txt | grep millionth

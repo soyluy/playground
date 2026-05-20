@@ -1,0 +1,9 @@
+connection:
+	ssh bandit12@bandit.labs.overthewire.org -p 2220
+	7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+commands ran:
+	mktemp -d (/tmp/tmp.wal2tkxycB)
+	cp ~/data.txt .
+
+password (May 20, 2026):
