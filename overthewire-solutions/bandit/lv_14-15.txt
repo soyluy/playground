@@ -1,0 +1,10 @@
+connection:
+	ssh bandit14@bandit.labs.overthewire.org -p 2220
+	MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+
+commands ran:
+	telnet localhost 30000
+	MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+
+password (June 2, 2026):
+	8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo

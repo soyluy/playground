@@ -1,0 +1,9 @@
+connection:
+	ssh bandit19@bandit.labs.overthewire.org -p 2220
+	cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
+
+commands ran:
+	./bandit20-do cat /etc/bandit_pass/bandit20
+
+password (June 2, 2026):
+	0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO

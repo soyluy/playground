@@ -1,0 +1,8 @@
+connection:
+	ssh bandit18@bandit.labs.overthewire.org -p 2220 "ls && cat readme"
+
+commands ran:
+	-
+
+password (June 2, 2026):
+	cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8

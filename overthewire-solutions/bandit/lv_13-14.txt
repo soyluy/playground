@@ -1,0 +1,15 @@
+connection:
+	ssh bandit13@bandit.labs.overthewire.org -p 2220
+	FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
+
+commands ran:
+	sftp -P 2220 bandit13@bandit.labs.overthewire.org
+	get sshkey.private
+	exit
+	chmod 600 sshkey.private
+	ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
+	cat /etc/bandit_pass/bandit14
+
+
+password (June 2, 2026):
+	MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS

@@ -1,0 +1,8 @@
+connection:
+	ssh -i sshkey.private bandit17@bandit.labs.overthewire.org -p 2220 (private key from previous level)
+
+commands ran:
+	diff passwords.new passwords.old 
+
+password (June 2, 2026):
+	x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
