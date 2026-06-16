@@ -1,0 +1,13 @@
+connection:
+	ssh bandit24@bandit.labs.overthewire.org -p 2220
+	gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+
+commands ran:
+	mktemp -d
+	sftp -P 2220 bandit24@bandit.labs.overthewire.org
+		put lv_24-25.py
+	cd (to temp dir)
+	python3 lv_24-25.py
+
+password (June 16, 2026):
+	iCi86ttT4KSNe1armKiwbQNmB3YJP3q4

@@ -1,0 +1,13 @@
+connection:
+	ssh bandit21@bandit.labs.overthewire.org -p 2220
+	EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+
+commands ran:
+	cd /etc/cron.d
+	ls
+	cat cronjob_bandit22
+	cat /usr/bin/cronjob_bandit23.sh
+	cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+
+password (June 16, 2026):
+	tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q

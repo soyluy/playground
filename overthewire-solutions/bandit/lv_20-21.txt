@@ -3,5 +3,15 @@ connection:
 	0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
 
 commands ran:
+	nc -l 8181
+	`CTRL+Z`
+	./suconnect 8181
+	`CTRL+Z`
+	fg 1
+	"paste password and send"
+	`CTRL+Z`
+	fg 2
+	fg 1
 
-password (June 2, 2026):
+password (June 16, 2026):
+	EeoULMCra2q0dSkYj561DX7s1CpBuOBt

