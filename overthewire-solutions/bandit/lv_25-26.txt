@@ -1,0 +1,14 @@
+connection:
+	ssh bandit25@bandit.labs.overthewire.org -p 2220
+	iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+
+commands ran:
+	cat bandit26.sshkey
+	(copy the ssh key into a file)
+	ssh -i lv_25-26.sshkey bandit26@bandit.labs.overthewire.org -p 2220
+	(after shrinking the terminal) v
+	:set shell=/bin/bash
+	:shell
+
+password (June 16, 2026):
+	-

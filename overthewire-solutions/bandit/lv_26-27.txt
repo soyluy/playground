@@ -1,0 +1,9 @@
+connection:
+	see previous level
+	also password: s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+
+commands ran:
+	./bandit27-do cat /etc/bandit_bass/bandit27
+
+password (June 17, 2026):
+	upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB

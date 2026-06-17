@@ -1,0 +1,9 @@
+connection:
+	ssh bandit30@bandit.labs.overthewire.org -p 2220
+	qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+
+commands ran:
+	(from local machine)
+	git clone ssh://bandit30-git@bandit.labs.overthewire.org:2220/home/bandit30-git/repo
+
+password (June 17, 2026):

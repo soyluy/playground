@@ -1,0 +1,12 @@
+connection:
+	ssh bandit29@bandit.labs.overthewire.org -p 2220
+	4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+
+commands ran:
+	(from local machine)
+	git clone ssh://bandit29-git@bandit.labs.overthewire.org:2220/home/bandit29-git/repo
+	git branch -a
+	git switch dev
+
+password (June 17, 2026):
+	qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL

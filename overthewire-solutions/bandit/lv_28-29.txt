@@ -1,0 +1,12 @@
+connection:
+	ssh bandit28@bandit.labs.overthewire.org -p 2220
+	Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+
+commands ran:
+	(from local machine)
+	git clone ssh://bandit28-git@bandit.labs.overthewire.org:2220/home/bandit28-git/repo
+	git log
+	git checkout 0147528a5371a119f7e0f8b6b2be25b727b70cde
+
+password (June 17, 2026):
+	4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
