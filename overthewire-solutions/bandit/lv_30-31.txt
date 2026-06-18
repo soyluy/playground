@@ -5,5 +5,8 @@ connection:
 commands ran:
 	(from local machine)
 	git clone ssh://bandit30-git@bandit.labs.overthewire.org:2220/home/bandit30-git/repo
+	git tag
+	git show secret
 
 password (June 17, 2026):
+	fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy

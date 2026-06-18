@@ -1,0 +1,16 @@
+connection:
+	ssh bandit31@bandit.labs.overthewire.org -p 2220
+	fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy
+
+commands ran:
+	(from local machine)
+	git clone ssh://bandit31-git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+	modify .gitinogre (add !key.txt)
+	touch key.txt
+	git add .
+	git commit 
+	git push
+
+password (June 17, 2026):
+	3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K
+
