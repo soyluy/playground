@@ -1,0 +1,2 @@
+it was under static files, which was hinted by the pixel.png. 
+password: 3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH

@@ -1,0 +1,2 @@
+went to /includes/secret.inc and got the secret
+password: bmg8SvU1LizuWjx3y7xkNERkHxGre0GS

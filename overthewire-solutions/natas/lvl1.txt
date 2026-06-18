@@ -1,0 +1,2 @@
+the password is in the html, but the console needs to be opened with f12
+password: TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI

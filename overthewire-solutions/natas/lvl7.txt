@@ -1,0 +1,2 @@
+query params were unsanitized. executed local file inclusion to /etc/natas_webpass/natas8
+password: xcoXLmzMkoIP9D7hlgPlh9XD7OgLAe5Q

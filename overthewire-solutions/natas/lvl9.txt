@@ -1,0 +1,2 @@
+the input was unsanitized. catted /etc/natas_webpass/natas10
+password: t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu

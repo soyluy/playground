@@ -1,0 +1,2 @@
+went to natas5 site, created an anchor element that pointed to natas4 site. It set the referer header in the request. 
+password: 0n35PkggAPm2zbEpOU802c0x0Msn1ToK
