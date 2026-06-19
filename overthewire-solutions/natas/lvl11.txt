@@ -1,0 +1,3 @@
+found the key by xoring the plain text (expected, because showpassword is no and the value is whatever we provide to it, 
+thus making the json calculable) and the cookie. then, applied the reverse pipeline to the desired cookie.
+password: yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB
