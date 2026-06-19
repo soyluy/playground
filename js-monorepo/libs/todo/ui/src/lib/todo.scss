@@ -1,35 +1,23 @@
-.todo-drawer-container {
-  width: 100%;
-  height: 100%;
-}
-
-.todo-research-drawer {
-  width: 400px;
-  max-width: 90vw;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.12);
-  background: var(--bg-elevated, #fff);
-}
-
 .todo-shell {
-  max-width: 640px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-8) var(--space-4) var(--space-10);
-  width: 100%;
 }
 
 .todo-shell__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-4);
   margin-bottom: var(--space-6);
 }
 
 .todo-shell__title {
   margin: 0;
+  color: var(--text-primary);
   font-size: var(--text-2xl);
   font-weight: var(--weight-semibold);
-  font-family: var(--font-body);
-  color: var(--text-primary);
 }
 
 .todo-shell__actions {
@@ -38,22 +26,57 @@
   gap: var(--space-2);
 }
 
+.todo-shell__action-btn {
+  background-color: var(--accent);
+  color: var(--bg-base);
+}
+
 .todo-empty {
   margin: 0;
   padding: var(--space-8);
-  text-align: center;
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-  font-family: var(--font-body);
-}
-
-.todo-list-card {
-  background-color: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  overflow: hidden;
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  text-align: center;
+  font-size: var(--text-sm);
+}
 
-  .mat-mdc-list {
-    padding: 0;
+.todo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.todo-research-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--accent-dim);
+  z-index: var(--z-overlay);
+}
+
+.todo-research-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--border);
+  z-index: var(--z-modal);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .todo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .todo-shell__header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

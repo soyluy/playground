@@ -1,31 +1,32 @@
-<mat-list-item class="todo-item">
-  <mat-checkbox
-    matListItemIcon
-    [checked]="todo().completed"
-    [attr.aria-label]="
-      todo().completed ? 'Task completed' : 'Task not completed'
-			"
-    (click)="onToggleCompleted()"
-  />
+<article
+  class="todo-item"
+  [class.todo-item--has-research]="!!todo().researchId"
+  [class.todo-item--completed]="todo().completed"
+>
+  <div class="todo-item__top-row">
+    <button
+      type="button"
+      class="todo-item__check"
+      [class.todo-item__check--checked]="todo().completed"
+      [attr.aria-label]="
+        todo().completed ? 'Mark as not completed' : 'Mark as completed'
+      "
+      (click)="onToggleCompleted()"
+    >
+      <span aria-hidden="true">✓</span>
+    </button>
 
-  <span matListItemTitle class="todo-item__title-row">
-    <span class="todo-item__title-text">{{ todo().title }}</span>
-    @if (tags().length) {
-    <span class="todo-item__tags todo-item__tags--inline">
-      @for (tag of tags(); track tag.id) {
-      <todo-tag-pill [tag]="tag" />
-      }
-    </span>
-    } @if (todo().dueDate) {
-    <todo-due-date-indicator
-      class="todo-item__due-date"
-      [dueDate]="todo().dueDate"
-    />
-    }
-  </span>
+    <div class="todo-item__title-wrap">
+      <h3 class="todo-item__title">{{ todo().title }}</h3>
+    </div>
 
-  <span
-    matListItemLine
+    <div class="todo-item__actions">
+      <button type="button" class="todo-item__action-btn" (click)="onEdit()">Edit</button>
+      <button type="button" class="todo-item__action-btn" (click)="onDelete()">Delete</button>
+    </div>
+  </div>
+
+  <div
     class="todo-item__description-line"
     [class.todo-item__description-line--placeholder]="!hasDescription()"
   >
@@ -36,68 +37,75 @@
     >
       {{ descriptionText() }}
     </span>
-    @if (hasDescription() && (isDescriptionExpanded() ||
-    isDescriptionTruncated())) {
-    <button
-      mat-button
-      type="button"
-      class="todo-item__description-toggle"
-      [attr.aria-label]="
-        isDescriptionExpanded() ? 'Collapse description' : 'Expand description'
-      "
-      (click)="onDescriptionToggle()"
-    >
-      {{ isDescriptionExpanded() ? 'Less' : '...' }}
-    </button>
+    @if (hasDescription() && (isDescriptionExpanded() || isDescriptionTruncated())) {
+      <button
+        type="button"
+        class="todo-item__description-toggle"
+        [attr.aria-label]="
+          isDescriptionExpanded() ? 'Collapse description' : 'Expand description'
+        "
+        (click)="onDescriptionToggle()"
+      >
+        {{ isDescriptionExpanded() ? 'Less' : 'More' }}
+      </button>
     }
-  </span>
+  </div>
 
-  <div matListItemMeta class="todo-item__actions">
-    @if (todo().researchId) {
+  <div class="todo-item__meta">
+    @if (tags().length) {
+      <div class="todo-item__tags">
+        @for (tag of tags(); track tag.id) {
+          <todo-tag-pill [tag]="tag" />
+        }
+      </div>
+    }
+    @if (todo().dueDate) {
+      <todo-due-date-indicator [dueDate]="todo().dueDate" />
+    }
+  </div>
+
+  @if (todo().researchId) {
+    <div class="todo-item__research">
       @switch (researchState()?.status) {
         @case ('connecting') {
           <span class="todo-item__research-status">
-            <mat-spinner diameter="16" />
-            <span class="todo-item__research-label">Connecting…</span>
+            <span class="todo-item__spinner" aria-hidden="true"></span>
+            <span class="todo-item__research-label">Connecting...</span>
           </span>
         }
         @case ('running') {
           <span class="todo-item__research-status">
-            <mat-spinner diameter="16" />
+            <span class="todo-item__spinner" aria-hidden="true"></span>
             <span class="todo-item__research-label">{{ researchStepLabel() }}</span>
           </span>
         }
         @case ('done') {
           <button
-            mat-button
             type="button"
             class="todo-item__research-done"
             (click)="onViewResearch()"
-            matTooltip="View research report"
+            aria-label="View research report"
           >
-            <mat-icon>auto_stories</mat-icon>
-            Research
+            <span aria-hidden="true">📘</span>
+            Research ready
           </button>
         }
         @case ('error') {
           <span
             class="todo-item__research-error"
-            [matTooltip]="researchState()?.error ?? 'Research failed'"
+            [attr.title]="researchState()?.error ?? 'Research failed'"
           >
-            <mat-icon>error_outline</mat-icon>
+            <span aria-hidden="true">⚠</span>
+            <span>Research failed</span>
           </span>
         }
         @default {
           <span class="todo-item__research-status">
-            <mat-spinner diameter="16" />
-            <span class="todo-item__research-label">Connecting…</span>
+            <span class="todo-item__spinner" aria-hidden="true"></span>
+            <span class="todo-item__research-label">Connecting...</span>
           </span>
         }
       }
-    }
-    <button mat-button type="button" (click)="onEdit()">Edit</button>
-    <button mat-button color="warn" type="button" (click)="onDelete()">
-      Delete
-    </button>
-  </div>
-</mat-list-item>
+    </div>
+  }
+</article>

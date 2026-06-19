@@ -21,37 +21,12 @@ import {
 } from '../../services/research-stream.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoModal, TodoModalOptions } from '../todo-modal/todo-modal';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import {
-  MatListItem,
-  MatListItemIcon,
-  MatListItemLine,
-  MatListItemMeta,
-  MatListItemTitle,
-} from '@angular/material/list';
 import { TagPillComponent } from '../tag-pill/tag-pill';
 import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indicator';
 
 @Component({
   selector: 'todo-item',
-  imports: [
-    MatListItem,
-    MatListItemIcon,
-    MatListItemTitle,
-    MatListItemLine,
-    MatListItemMeta,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatTooltipModule,
-    TagPillComponent,
-    DueDateIndicatorComponent,
-  ],
+  imports: [TagPillComponent, DueDateIndicatorComponent],
   templateUrl: './todo-item.html',
   styleUrls: ['./todo-item.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

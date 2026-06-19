@@ -7,11 +7,6 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { NewTodoItem } from '@hub/todo-data';
 import { TodoItemComponent } from './components/todo-item/todo-item';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatList } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { TodoFilter } from '@hub/todo-data';
 import { FilteringModal } from './components/filtering-modal/filtering-modal';
 import { TodoFilterService } from './services/todo-filter.service';
@@ -20,15 +15,7 @@ import { ResearchPanelComponent } from './components/research-panel/research-pan
 
 @Component({
   selector: 'todo-list',
-  imports: [
-    TodoItemComponent,
-    MatButtonModule,
-    MatCardModule,
-    MatDividerModule,
-    MatList,
-    MatSidenavModule,
-    ResearchPanelComponent,
-  ],
+  imports: [TodoItemComponent, ResearchPanelComponent],
   templateUrl: './todo.html',
   styleUrls: ['./todo.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
