@@ -1,19 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import {
   NewResourceItem,
   RESOURCE_STATUSES,
@@ -22,6 +13,7 @@ import {
   ResourceStatus,
   ResourceType,
 } from '@hub/resource-data';
+import { DIALOG_DATA, DialogRef } from '@hub/ui-infra';
 
 export type ResourceModalData = {
   options: ResourceModalOptions;
@@ -46,18 +38,11 @@ type FormOutputType = {
   templateUrl: './resource-modal.html',
   styleUrls: ['./resource-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-  ],
+  imports: [ReactiveFormsModule],
 })
 export class ResourceModal {
-  private readonly _data = inject<ResourceModalData>(MAT_DIALOG_DATA);
-  private readonly _dialogRef = inject(MatDialogRef<ResourceModal>);
+  private readonly _data = inject(DIALOG_DATA) as ResourceModalData;
+  private readonly _dialogRef = inject(DialogRef<ResourceModal>);
   private readonly _options = this._data.options;
 
   protected readonly mode = this._options.mode;

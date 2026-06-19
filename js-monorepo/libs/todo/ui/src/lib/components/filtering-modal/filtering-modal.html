@@ -1,89 +1,113 @@
-<div class="filtering-modal">
-  <h2 mat-dialog-title>Filter Todos</h2>
+<h2 class="hub-modal__title">Filter Todos</h2>
 
-  <mat-dialog-content>
-    <form [formGroup]="form" class="filter-form">
+<div class="hub-modal__body">
+  <form [formGroup]="form" class="hub-modal__body">
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-search">Search</label>
+      <input id="todo-filter-search" class="hub-input" formControlName="search" />
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <input matInput formControlName="search" />
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-tags">Tags (any of)</label>
+      <select id="todo-filter-tags" class="hub-select" formControlName="tags" multiple>
+        @for (tag of tags(); track tag.id) {
+          <option [ngValue]="tag.id">{{ tag.name }}</option>
+        }
+      </select>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Tags (any of)</mat-label>
-        <mat-select formControlName="tags" multiple>
-          @for (tag of tags(); track tag.id) {
-            <mat-option [value]="tag.id">{{ tag.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-include-tags"
+        >Must include all tags</label
+      >
+      <select
+        id="todo-filter-include-tags"
+        class="hub-select"
+        formControlName="allIncludeTags"
+        multiple
+      >
+        @for (tag of tags(); track tag.id) {
+          <option [ngValue]="tag.id">{{ tag.name }}</option>
+        }
+      </select>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Must include all tags</mat-label>
-        <mat-select formControlName="allIncludeTags" multiple>
-          @for (tag of tags(); track tag.id) {
-            <mat-option [value]="tag.id">{{ tag.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-exclude-tags"
+        >Exclude all tags</label
+      >
+      <select
+        id="todo-filter-exclude-tags"
+        class="hub-select"
+        formControlName="allExcludeTags"
+        multiple
+      >
+        @for (tag of tags(); track tag.id) {
+          <option [ngValue]="tag.id">{{ tag.name }}</option>
+        }
+      </select>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Exclude all tags</mat-label>
-        <mat-select formControlName="allExcludeTags" multiple>
-          @for (tag of tags(); track tag.id) {
-            <mat-option [value]="tag.id">{{ tag.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-completed">Completed</label>
+      <select id="todo-filter-completed" class="hub-select" formControlName="completed">
+        <option [ngValue]="null">Any</option>
+        <option [ngValue]="true">Completed</option>
+        <option [ngValue]="false">Not completed</option>
+      </select>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Completed</mat-label>
-        <mat-select formControlName="completed">
-          <mat-option [value]="null">Any</mat-option>
-          <mat-option [value]="true">Completed</mat-option>
-          <mat-option [value]="false">Not completed</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-sort-by">Sort by</label>
+      <select id="todo-filter-sort-by" class="hub-select" formControlName="sortBy">
+        <option [ngValue]="null">None</option>
+        <option value="title">Title</option>
+        <option value="dueDate">Due Date</option>
+        <option value="createdAt">Created At</option>
+        <option value="updatedAt">Updated At</option>
+      </select>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Sort by</mat-label>
-        <mat-select formControlName="sortBy">
-          <mat-option [value]="null">None</mat-option>
-          <mat-option value="title">Title</mat-option>
-          <mat-option value="dueDate">Due Date</mat-option>
-          <mat-option value="createdAt">Created At</mat-option>
-          <mat-option value="updatedAt">Updated At</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-sort-order">Sort order</label>
+      <select
+        id="todo-filter-sort-order"
+        class="hub-select"
+        formControlName="sortOrder"
+      >
+        <option [ngValue]="null">None</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Sort order</mat-label>
-        <mat-select formControlName="sortOrder">
-          <mat-option [value]="null">None</mat-option>
-          <mat-option value="asc">Ascending</mat-option>
-          <mat-option value="desc">Descending</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-before-date">Due date before</label>
+      <input
+        id="todo-filter-before-date"
+        type="date"
+        class="hub-input"
+        [value]="dueDateBeforeInputValue"
+        (change)="onDueDateBeforeChange($event)"
+      />
+    </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Due date before</mat-label>
-        <input matInput [matDatepicker]="beforePicker" formControlName="dueDateBefore" />
-        <mat-datepicker-toggle matIconSuffix [for]="beforePicker" />
-        <mat-datepicker #beforePicker />
-      </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-filter-after-date">Due date after</label>
+      <input
+        id="todo-filter-after-date"
+        type="date"
+        class="hub-input"
+        [value]="dueDateAfterInputValue"
+        (change)="onDueDateAfterChange($event)"
+      />
+    </div>
+  </form>
+</div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Due date after</mat-label>
-        <input matInput [matDatepicker]="afterPicker" formControlName="dueDateAfter" />
-        <mat-datepicker-toggle matIconSuffix [for]="afterPicker" />
-        <mat-datepicker #afterPicker />
-      </mat-form-field>
-
-    </form>
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-flat-button (click)="onSubmitClick()">Apply</button>
-  </mat-dialog-actions>
+<div class="hub-modal__actions">
+  <button class="hub-btn" type="button" (click)="onCancelClick()">Cancel</button>
+  <button class="hub-btn hub-btn--primary" type="button" (click)="onSubmitClick()">
+    Apply
+  </button>
 </div>

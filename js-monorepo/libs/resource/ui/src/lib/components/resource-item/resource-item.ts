@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatListItem,
@@ -17,6 +22,7 @@ import {
   ResourceModal,
   ResourceModalOptions,
 } from '../resource-modal/resource-modal';
+import { DialogService } from '@hub/ui-infra';
 
 @Component({
   selector: 'resource-item',
@@ -35,7 +41,7 @@ export class ResourceItemComponent {
   readonly resource = input.required<ResourceItem>();
 
   private readonly _resourceService = inject(ResourceService);
-  private readonly _dialog = inject(MatDialog);
+  private readonly _dialogService = inject(DialogService);
 
   protected readonly typeLabel = computed(
     () => RESOURCE_TYPE_LABELS[this.resource().type],
@@ -46,23 +52,23 @@ export class ResourceItemComponent {
   protected readonly hasDescription = computed(() =>
     Boolean(this.resource().description?.trim()),
   );
-  protected readonly hasUrl = computed(() => Boolean(this.resource().url?.trim()));
+  protected readonly hasUrl = computed(() =>
+    Boolean(this.resource().url?.trim()),
+  );
 
   protected onEdit(): void {
     const options: ResourceModalOptions = {
       mode: 'edit',
       editing: this.resource(),
     };
-    const dialogRef = this._dialog.open(ResourceModal, {
-      data: { options },
-      panelClass: 'resource-modal',
-    });
+    const dialogRef = this._dialogService.open(ResourceModal, { options });
 
-    dialogRef.afterClosed().subscribe((result: NewResourceItem | undefined) => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      const newResource = result as NewResourceItem | undefined;
+      if (newResource) {
         this._resourceService.updateResource({
           ...this.resource(),
-          ...result,
+          ...newResource,
         });
       }
     });

@@ -5,35 +5,20 @@ import {
   Signal,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { TodoFilter } from '@hub/todo-data';
 import { TodoTagService } from '../../services/todo-tag.service';
 import { TodoTag } from '@hub/todo-data';
+import { DialogRef } from '@hub/ui-infra';
 
 @Component({
   selector: 'todo-filtering-modal',
   templateUrl: './filtering-modal.html',
   styleUrls: ['./filtering-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-  ],
+  imports: [ReactiveFormsModule],
 })
 export class FilteringModal {
-  private readonly _dialogRef = inject(MatDialogRef<FilteringModal>);
+  private readonly _dialogRef = inject(DialogRef<FilteringModal>);
   private readonly _tagService = inject(TodoTagService);
   protected readonly tags: Signal<TodoTag[]> = this._tagService.getTags();
 
@@ -55,6 +40,26 @@ export class FilteringModal {
     this.submit();
   }
 
+  protected onCancelClick(): void {
+    this._dialogRef.close();
+  }
+
+  protected get dueDateBeforeInputValue(): string {
+    return this.toInputDate(this.form.controls.dueDateBefore.value);
+  }
+
+  protected get dueDateAfterInputValue(): string {
+    return this.toInputDate(this.form.controls.dueDateAfter.value);
+  }
+
+  protected onDueDateBeforeChange(event: Event): void {
+    this.form.controls.dueDateBefore.setValue(this.fromInputDate(event));
+  }
+
+  protected onDueDateAfterChange(event: Event): void {
+    this.form.controls.dueDateAfter.setValue(this.fromInputDate(event));
+  }
+
   private submit() {
     const v = this.form.value;
 
@@ -71,5 +76,20 @@ export class FilteringModal {
     };
 
     this._dialogRef.close(filter);
+  }
+
+  private toInputDate(value: Date | null): string {
+    if (!value) {
+      return '';
+    }
+    const year = value.getFullYear();
+    const month = String(value.getMonth() + 1).padStart(2, '0');
+    const day = String(value.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private fromInputDate(event: Event): Date | null {
+    const target = event.target as HTMLInputElement;
+    return target.value ? new Date(target.value) : null;
   }
 }

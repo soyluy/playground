@@ -19,7 +19,7 @@ import {
   ResearchState,
   ResearchStreamService,
 } from '../../services/research-stream.service';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogService } from '@hub/ui-infra';
 import { TodoModal, TodoModalOptions } from '../todo-modal/todo-modal';
 import { TagPillComponent } from '../tag-pill/tag-pill';
 import { DueDateIndicatorComponent } from '../due-date-indicator/due-date-indicator';
@@ -35,7 +35,7 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
   readonly todo = input.required<TodoItem>();
   private readonly _crudService = inject(TodoService);
   private readonly _researchService = inject(ResearchStreamService);
-  private readonly dialog = inject(MatDialog);
+  private readonly _dialogService = inject(DialogService);
 
   protected readonly researchState: Signal<ResearchState | undefined> =
     computed(() => {
@@ -88,19 +88,17 @@ export class TodoItemComponent implements AfterViewInit, OnDestroy {
       mode: 'edit',
       editing: this.todo(),
     };
-    const dialogRef = this.dialog.open(TodoModal, {
-      data: { options },
-      panelClass: 'todo-modal',
-    });
+    const dialogRef = this._dialogService.open(TodoModal, { options });
 
-    dialogRef.afterClosed().subscribe((result: NewTodoItem | undefined) => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      const newTodo = result as NewTodoItem | undefined;
+      if (newTodo) {
         this._crudService.updateTodo(this.todo().id, {
-          title: result.title,
-          dueDate: result.dueDate,
-          description: result.description,
-          completed: result.completed,
-          tagIds: result.tags?.map((t) => t.id) ?? null,
+          title: newTodo.title,
+          dueDate: newTodo.dueDate,
+          description: newTodo.description,
+          completed: newTodo.completed,
+          tagIds: newTodo.tags?.map((t) => t.id) ?? null,
         });
       }
     });

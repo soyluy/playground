@@ -1,49 +1,64 @@
-<h2 mat-dialog-title>{{ title }}</h2>
+<h2 class="hub-modal__title">{{ title }}</h2>
 
-<mat-dialog-content>
-  <form [formGroup]="fg" class="todo-form">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title" />
-    </mat-form-field>
+<div class="hub-modal__body">
+  <form [formGroup]="fg" class="hub-modal__body">
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-title">Title</label>
+      <input id="todo-title" class="hub-input" formControlName="title" />
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" rows="4"></textarea>
-    </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-description">Description</label>
+      <textarea
+        id="todo-description"
+        class="hub-textarea"
+        formControlName="description"
+        rows="4"
+      ></textarea>
+    </div>
 
-    <mat-checkbox formControlName="completed">Completed</mat-checkbox>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Due Date</mat-label>
+    <label class="hub-checkbox">
+      <input type="checkbox" formControlName="completed" />
+      <span>Completed</span>
+    </label>
+
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-due-date">Due Date</label>
       <input
-        matInput
-        formControlName="dueDate"
-        [matDatepicker]="dueDatePicker"
+        id="todo-due-date"
+        type="date"
+        class="hub-input"
+        [value]="dueDateInputValue"
+        (change)="onDueDateChange($event)"
       />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="dueDatePicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #dueDatePicker></mat-datepicker>
-    </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Tags</mat-label>
-      <mat-select formControlName="tags" multiple>
-        @for(tag of tags(); track tag.id) {
-        <mat-option [value]="tag.id"> {{ tag.name }} </mat-option>
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-tags">Tags</label>
+      <select id="todo-tags" class="hub-select" formControlName="tags" multiple>
+        @for (tag of tags(); track tag.id) {
+          <option [ngValue]="tag.id">{{ tag.name }}</option>
         }
-      </mat-select>
-    </mat-form-field>
+      </select>
+    </div>
+
     @if (mode === 'create') {
-    <mat-checkbox formControlName="research">Research</mat-checkbox>
+      <label class="hub-checkbox">
+        <input type="checkbox" formControlName="research" />
+        <span>Research</span>
+      </label>
     }
   </form>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-flat-button [disabled]="fg.invalid" (click)="submitForm()">
+<div class="hub-modal__actions">
+  <button class="hub-btn" type="button" (click)="onCancel()">Cancel</button>
+  <button
+    class="hub-btn hub-btn--primary"
+    type="button"
+    [disabled]="fg.invalid"
+    (click)="submitForm()"
+  >
     {{ mode === 'create' ? 'Add task' : 'Save task' }}
   </button>
-</mat-dialog-actions>
+</div>

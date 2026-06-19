@@ -1,23 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NewTodoItem, TodoItem, TodoTag } from '@hub/todo-data';
 import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { TodoTagService } from '../../services/todo-tag.service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DIALOG_DATA, DialogRef } from '@hub/ui-infra';
 
 export type TodoModalData = {
   options: TodoModalOptions;
@@ -37,20 +27,11 @@ type FormOutputType = Omit<NewTodoItem, 'tags'> & {
   templateUrl: './todo-modal.html',
   styleUrls: ['./todo-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatDatepickerModule,
-  ],
+  imports: [ReactiveFormsModule],
 })
 export class TodoModal {
-  private readonly _data = inject<TodoModalData>(MAT_DIALOG_DATA);
-  private readonly _dialogRef = inject(MatDialogRef<TodoModal>);
+  private readonly _data = inject(DIALOG_DATA) as TodoModalData;
+  private readonly _dialogRef = inject(DialogRef<TodoModal>);
   private readonly _options = this._data.options;
   private readonly _tagService = inject(TodoTagService);
 
@@ -95,11 +76,32 @@ export class TodoModal {
     this._dialogRef.close();
   }
 
+  protected get dueDateInputValue(): string {
+    const dueDate = this.fields.dueDate.value;
+    if (!dueDate) {
+      return '';
+    }
+    return this.formatDateForInput(dueDate);
+  }
+
+  protected onDueDateChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.fields.dueDate.setValue(value ? new Date(value) : null);
+  }
+
   private getTagFromId(id: number): TodoTag {
     const tag = this.tags().find((t) => t.id === id) as TodoTag;
     if (!tag) {
       throw new Error(`Tag with id ${id} not found`);
     }
     return tag;
+  }
+
+  private formatDateForInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

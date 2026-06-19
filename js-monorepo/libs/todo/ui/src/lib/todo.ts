@@ -4,7 +4,6 @@ import {
   TodoModal,
   TodoModalOptions,
 } from './components/todo-modal/todo-modal';
-import { MatDialog } from '@angular/material/dialog';
 import { NewTodoItem } from '@hub/todo-data';
 import { TodoItemComponent } from './components/todo-item/todo-item';
 import { TodoFilter } from '@hub/todo-data';
@@ -12,6 +11,7 @@ import { FilteringModal } from './components/filtering-modal/filtering-modal';
 import { TodoFilterService } from './services/todo-filter.service';
 import { ResearchStreamService } from './services/research-stream.service';
 import { ResearchPanelComponent } from './components/research-panel/research-panel';
+import { DialogService } from '@hub/ui-infra';
 
 @Component({
   selector: 'todo-list',
@@ -21,7 +21,7 @@ import { ResearchPanelComponent } from './components/research-panel/research-pan
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoList {
-  private readonly _dialog = inject(MatDialog);
+  private readonly _dialogService = inject(DialogService);
   private readonly _crudService = inject(TodoService);
   private readonly _filterService = inject(TodoFilterService);
   protected readonly _researchService = inject(ResearchStreamService);
@@ -38,13 +38,12 @@ export class TodoList {
   }
 
   private openFiltersModal(): void {
-    const dialogRef = this._dialog.open(FilteringModal, {
-      panelClass: 'todo-modal',
-    });
+    const dialogRef = this._dialogService.open(FilteringModal);
 
-    dialogRef.afterClosed().subscribe((result: TodoFilter | undefined) => {
-      if (result) {
-        this._filterService.setFilter(result);
+    dialogRef.afterClosed().subscribe((result) => {
+      const filter = result as TodoFilter | undefined;
+      if (filter) {
+        this._filterService.setFilter(filter);
       }
     });
   }
@@ -53,14 +52,12 @@ export class TodoList {
       mode: 'create',
       editing: null,
     };
-    const dialogRef = this._dialog.open(TodoModal, {
-      data: { options },
-      panelClass: 'todo-modal',
-    });
+    const dialogRef = this._dialogService.open(TodoModal, { options });
 
-    dialogRef.afterClosed().subscribe((result: NewTodoItem | undefined) => {
-      if (result) {
-        this._crudService.addTodo(result);
+    dialogRef.afterClosed().subscribe((result) => {
+      const newTodo = result as NewTodoItem | undefined;
+      if (newTodo) {
+        this._crudService.addTodo(newTodo);
       }
     });
   }

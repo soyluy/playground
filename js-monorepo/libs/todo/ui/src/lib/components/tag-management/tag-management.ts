@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { NewTodoTag } from '@hub/todo-data';
+import { DialogService } from '@hub/ui-infra';
 import { TodoTagService } from '../../services/todo-tag.service';
 import { TagDisplay } from './tag-display/tag-display';
 import { TodoTagModal } from './tag-modal/tag-modal';
@@ -14,19 +14,18 @@ import { TodoTagModal } from './tag-modal/tag-modal';
 })
 export class TagManagement {
   private readonly _todoTagService = inject(TodoTagService);
-  private readonly _dialog = inject(MatDialog);
+  private readonly _dialogService = inject(DialogService);
 
   protected readonly tags = this._todoTagService.getTags();
 
   protected onAddTag(): void {
-    const dialogRef = this._dialog.open(TodoTagModal, {
-      data: {
-        mode: 'create',
-      },
+    const dialogRef = this._dialogService.open(TodoTagModal, {
+      mode: 'create',
     });
-    dialogRef.afterClosed().subscribe((result: NewTodoTag | undefined) => {
-      if (result) {
-        this._todoTagService.addTag(result);
+    dialogRef.afterClosed().subscribe((result) => {
+      const newTag = result as NewTodoTag | undefined;
+      if (newTag) {
+        this._todoTagService.addTag(newTag);
       }
     });
   }

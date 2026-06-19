@@ -1,10 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import {
   RESOURCE_STATUSES,
   RESOURCE_TYPES,
@@ -12,23 +7,17 @@ import {
   ResourceStatus,
   ResourceType,
 } from '@hub/resource-data';
+import { DialogRef } from '@hub/ui-infra';
 
 @Component({
   selector: 'resource-filtering-modal',
   templateUrl: './filtering-modal.html',
   styleUrls: ['./filtering-modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatSelectModule,
-  ],
+  imports: [ReactiveFormsModule],
 })
 export class FilteringModal {
-  private readonly _dialogRef = inject(MatDialogRef<FilteringModal>);
+  private readonly _dialogRef = inject(DialogRef<FilteringModal>);
   protected readonly resourceTypes = RESOURCE_TYPES;
   protected readonly resourceStatuses = RESOURCE_STATUSES;
 
@@ -40,6 +29,10 @@ export class FilteringModal {
 
   protected onSubmitClick(): void {
     this.submit();
+  }
+
+  protected onCancelClick(): void {
+    this._dialogRef.close();
   }
 
   private submit(): void {

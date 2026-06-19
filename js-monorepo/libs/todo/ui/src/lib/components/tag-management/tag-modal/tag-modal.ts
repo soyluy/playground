@@ -1,14 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { form, FormField, required } from '@angular/forms/signals';
 import { NewTodoTag, TodoTag } from '@hub/todo-data';
+import { DIALOG_DATA, DialogRef } from '@hub/ui-infra';
 
 export type TodoTagModalOptions = {
   mode: 'create' | 'update';
@@ -19,17 +12,11 @@ export type TodoTagModalOptions = {
   selector: 'todo-tag-modal',
   templateUrl: './tag-modal.html',
   styleUrls: ['./tag-modal.scss'],
-  imports: [
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    FormField,
-  ],
+  imports: [FormField],
 })
 export class TodoTagModal {
-  private readonly _dialogRef = inject(MatDialogRef<TodoTagModal>);
-  private readonly _data = inject<TodoTagModalOptions>(MAT_DIALOG_DATA);
+  private readonly _dialogRef = inject(DialogRef<TodoTagModal>);
+  private readonly _data = inject(DIALOG_DATA) as TodoTagModalOptions;
 
   protected readonly title = computed(() =>
     this._data.mode === 'create'
