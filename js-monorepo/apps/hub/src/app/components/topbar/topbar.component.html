@@ -1,0 +1,21 @@
+<header class="topbar">
+  <div class="topbar__left">
+    <h1 class="topbar__title">Hub</h1>
+  </div>
+  <div class="topbar__right">
+    <div class="theme-switcher" role="group" aria-label="Theme switcher">
+      @for (theme of themes; track theme) {
+        <button
+          type="button"
+          class="theme-pill"
+          [class.theme-pill--active]="currentTheme() === theme"
+          (click)="setTheme(theme)"
+        >
+          {{ theme }}
+        </button>
+      }
+    </div>
+    <button class="btn-auth" (click)="login()">Login</button>
+    <button class="btn-auth" (click)="logout()">Logout</button>
+  </div>
+</header>

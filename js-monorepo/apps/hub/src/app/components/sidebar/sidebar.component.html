@@ -1,0 +1,40 @@
+<nav class="sidebar" [class.sidebar--expanded]="sidebarExpanded()">
+  <button class="sidebar-toggle" (click)="toggleSidebar()">
+    <span class="sidebar-toggle__icon">&#9776;</span>
+  </button>
+  <a
+    class="sidebar__item"
+    routerLink="/tag-management"
+    routerLinkActive="sidebar__item--active"
+  >
+    <span class="sidebar__icon">⊞</span>
+    <span class="sidebar__label">Tag Management</span>
+  </a>
+  <a class="sidebar__item" routerLink="/todo" routerLinkActive="sidebar__item--active">
+    <span class="sidebar__icon">☑</span>
+    <span class="sidebar__label">Todo List</span>
+  </a>
+  <a
+    class="sidebar__item"
+    routerLink="/expense-tracker"
+    routerLinkActive="sidebar__item--active"
+  >
+    <span class="sidebar__icon">◎</span>
+    <span class="sidebar__label">Expense Tracker</span>
+  </a>
+  <a class="sidebar__item" routerLink="/resource" routerLinkActive="sidebar__item--active">
+    <span class="sidebar__icon">◈</span>
+    <span class="sidebar__label">Resources</span>
+  </a>
+  <a class="sidebar__item" routerLink="/calendar" routerLinkActive="sidebar__item--active">
+    <span class="sidebar__icon">📅</span>
+    <span class="sidebar__label">Calendar</span>
+  </a>
+</nav>
+
+<div
+  class="backdrop"
+  [class.backdrop--visible]="sidebarExpanded()"
+  (click)="toggleSidebar()"
+  aria-hidden="true"
+></div>
