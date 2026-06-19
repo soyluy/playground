@@ -36,8 +36,16 @@
   font-weight: 500;
   color: var(--text-primary);
 
-  &.positive { color: var(--income); }
-  &.negative { color: var(--expense); }
-  &.income   { color: var(--income); }
-  &.expense  { color: var(--expense); }
+  &.positive {
+    color: var(--positive);
+  }
+  &.negative {
+    color: var(--negative);
+  }
+  &.income {
+    color: var(--positive);
+  }
+  &.expense {
+    color: var(--negative);
+  }
 }
