@@ -1,25 +1,32 @@
-<div class="tag-modal">
-  <h2 mat-dialog-title>{{ title() }}</h2>
-  <mat-dialog-content>
-    <form class="tag-form">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Name</mat-label>
-        <input matInput [formField]="tagForm.name" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Color</mat-label>
-        <input matInput type="color" [formField]="tagForm.colorHex" />
-      </mat-form-field>
-    </form>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button
-      mat-flat-button
-      (click)="submitForm()"
-      [disabled]="tagForm().invalid()"
-    >
-      {{ buttonText() }}
-    </button>
-  </mat-dialog-actions>
+<h2 class="hub-modal__title">{{ title() }}</h2>
+
+<div class="hub-modal__body">
+  <form class="hub-modal__body">
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-tag-name">Name</label>
+      <input id="todo-tag-name" class="hub-input" [formField]="tagForm.name" />
+    </div>
+
+    <div class="hub-field">
+      <label class="hub-field__label" for="todo-tag-color">Color</label>
+      <input
+        id="todo-tag-color"
+        class="hub-input"
+        type="color"
+        [formField]="tagForm.colorHex"
+      />
+    </div>
+  </form>
+</div>
+
+<div class="hub-modal__actions">
+  <button class="hub-btn" type="button" (click)="onCancel()">Cancel</button>
+  <button
+    class="hub-btn hub-btn--primary"
+    type="button"
+    (click)="submitForm()"
+    [disabled]="tagForm().invalid()"
+  >
+    {{ buttonText() }}
+  </button>
 </div>

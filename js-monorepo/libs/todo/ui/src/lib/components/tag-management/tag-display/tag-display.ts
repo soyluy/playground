@@ -1,9 +1,9 @@
 import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TodoTag, UpdateTodoTagDto } from '@hub/todo-data';
+import { DialogService } from '@hub/ui-infra';
 import { TodoTagService } from '../../../services/todo-tag.service';
 import { TodoTagModal } from '../tag-modal/tag-modal';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'todo-tag-display',
@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TagDisplay {
   private readonly _todoTagService = inject(TodoTagService);
-  private readonly _dialog = inject(MatDialog);
+  private readonly _dialogService = inject(DialogService);
   readonly tag = input.required<TodoTag>();
 
   protected swatchColor(): string {
@@ -26,17 +26,16 @@ export class TagDisplay {
   }
 
   protected onUpdateTag(): void {
-    const dialogRef = this._dialog.open(TodoTagModal, {
-      data: {
-        mode: 'update',
-        tag: this.tag(),
-      },
+    const dialogRef = this._dialogService.open(TodoTagModal, {
+      mode: 'update',
+      tag: this.tag(),
     });
     dialogRef
       .afterClosed()
-      .subscribe((result: UpdateTodoTagDto | undefined) => {
-        if (result) {
-          this._todoTagService.updateTag(this.tag().id, result);
+      .subscribe((result) => {
+        const updatedTag = result as UpdateTodoTagDto | undefined;
+        if (updatedTag) {
+          this._todoTagService.updateTag(this.tag().id, updatedTag);
         }
       });
   }

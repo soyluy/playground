@@ -1,50 +1,60 @@
-<h2 mat-dialog-title>{{ title }}</h2>
+<h2 class="hub-modal__title">{{ title }}</h2>
 
-<mat-dialog-content>
-  <form [formGroup]="fg" class="resource-form">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title" />
-    </mat-form-field>
+<div class="hub-modal__body">
+  <form [formGroup]="fg" class="hub-modal__body">
+    <div class="hub-field">
+      <label class="hub-field__label" for="resource-title">Title</label>
+      <input id="resource-title" class="hub-input" formControlName="title" />
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>URL</mat-label>
-      <input matInput formControlName="url" />
-    </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="resource-url">URL</label>
+      <input id="resource-url" class="hub-input" formControlName="url" />
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" rows="4"></textarea>
-    </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="resource-description">Description</label>
+      <textarea
+        id="resource-description"
+        class="hub-textarea"
+        formControlName="description"
+        rows="4"
+      ></textarea>
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Category</mat-label>
-      <input matInput formControlName="category" />
-    </mat-form-field>
+    <div class="hub-field">
+      <label class="hub-field__label" for="resource-category">Category</label>
+      <input id="resource-category" class="hub-input" formControlName="category" />
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Type</mat-label>
-      <mat-select formControlName="type">
+    <div class="hub-field">
+      <label class="hub-field__label" for="resource-type">Type</label>
+      <select id="resource-type" class="hub-select" formControlName="type">
         @for (resourceType of resourceTypes; track resourceType) {
-          <mat-option [value]="resourceType">{{ resourceType }}</mat-option>
+          <option [ngValue]="resourceType">{{ resourceType }}</option>
         }
-      </mat-select>
-    </mat-form-field>
+      </select>
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="status">
+    <div class="hub-field">
+      <label class="hub-field__label" for="resource-status">Status</label>
+      <select id="resource-status" class="hub-select" formControlName="status">
         @for (resourceStatus of resourceStatuses; track resourceStatus) {
-          <mat-option [value]="resourceStatus">{{ resourceStatus }}</mat-option>
+          <option [ngValue]="resourceStatus">{{ resourceStatus }}</option>
         }
-      </mat-select>
-    </mat-form-field>
+      </select>
+    </div>
   </form>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions align="end">
-  <button mat-button type="button" (click)="onCancel()">Cancel</button>
-  <button mat-flat-button [disabled]="fg.invalid" type="button" (click)="submitForm()">
+<div class="hub-modal__actions">
+  <button class="hub-btn" type="button" (click)="onCancel()">Cancel</button>
+  <button
+    class="hub-btn hub-btn--primary"
+    [disabled]="fg.invalid"
+    type="button"
+    (click)="submitForm()"
+  >
     {{ mode === 'create' ? 'Add resource' : 'Save resource' }}
   </button>
-</mat-dialog-actions>
+</div>

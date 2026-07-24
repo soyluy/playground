@@ -1,0 +1,54 @@
+Get the crime report for the murder
+	SELECT * FROM crime_scene_report AS c
+	WHERE c.date > 20180101 AND c.date < 20180201 AND c.type = "murder" AND c.city = "SQL City"
+	ORDER BY c.date ASC;
+		Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". 
+		The second witness, named Annabel, lives somewhere on "Franklin Ave".
+
+Get the matching people criteria, assuming highest address number is the last house
+	SELECT *, MAX(p.address_number) FROM person AS p
+	WHERE p.address_street_name LIKE 'Northwestern Dr' OR 
+	(p.name LIKE 'Annabel%' AND p.address_street_name LIKE "Franklin Ave")
+	GROUP BY address_street_name
+	ORDER BY address_number DESC;
+		id		name						license_id	address_number	address_street_name	ssn
+		14887	Morty Schapiro	118009			4919						Northwestern Dr			111564949
+		16371	Annabel Miller	490173			103							Franklin Ave				318771143
+Get their interviews
+	SELECT * FROM interview
+	WHERE person_id = 14887 OR person_id = 16371;
+	person_id		transcript
+	14887				I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on 
+							the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W".
+	16371				I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th.
+
+Get the matching gym members
+	SELECT * FROM get_fit_now_member AS g
+	LEFT JOIN person AS p ON g.person_id = p.id
+	LEFT JOIN drivers_license AS dl ON p.license_id = dl.id
+	LEFT JOIN get_fit_now_check_in AS gci ON g.id = gci.membership_id
+	WHERE g.id LIKE "48Z%" AND dl.plate_number LIKE "%H42W%"
+	;
+		Jeremy Bowers!
+
+Find the killers interview
+	SELECT * FROM interview
+	WHERE person_id = 67318;
+
+Get the matching concert attendees
+	SELECT p.name, COUNT(*) AS cnt from drivers_license AS dl
+LEFT JOIN person AS p ON p.license_id = dl.id
+LEFT JOIN facebook_event_checkin AS fec on p.id = fec.person_id
+WHERE 
+	dl.height >= 65 
+	AND dl.height <= 67
+	AND dl.hair_color = "red"
+	AND dl.car_make = "Tesla"
+	AND dl.gender = "female"
+	AND dl.car_model = "Model S"
+	AND fec.event_name = "SQL Symphony Concert"
+	GROUP BY p.id
+	HAVING cnt >= 3
+	;
+	Miranda Priestly!
+								

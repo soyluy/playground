@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -13,6 +12,7 @@ import {
 import { FilteringModal } from './components/filtering-modal/filtering-modal';
 import { ResourceFilterService } from './services/resource-filter.service';
 import { ResourceService } from './services/resource.service';
+import { DialogService } from '@hub/ui-infra';
 
 @Component({
   selector: 'resource-list',
@@ -28,7 +28,7 @@ import { ResourceService } from './services/resource.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResourceComponent {
-  private readonly _dialog = inject(MatDialog);
+  private readonly _dialogService = inject(DialogService);
   private readonly _resourceService = inject(ResourceService);
   private readonly _filterService = inject(ResourceFilterService);
 
@@ -73,13 +73,12 @@ export class ResourceComponent {
   }
 
   private openFiltersModal(): void {
-    const dialogRef = this._dialog.open(FilteringModal, {
-      panelClass: 'resource-modal',
-    });
+    const dialogRef = this._dialogService.open(FilteringModal);
 
-    dialogRef.afterClosed().subscribe((result: ResourceFilter | undefined) => {
-      if (result) {
-        this._filterService.setFilter(result);
+    dialogRef.afterClosed().subscribe((result) => {
+      const filter = result as ResourceFilter | undefined;
+      if (filter) {
+        this._filterService.setFilter(filter);
         this._resourceService.resetPagination();
       }
     });
@@ -90,14 +89,12 @@ export class ResourceComponent {
       mode: 'create',
       editing: null,
     };
-    const dialogRef = this._dialog.open(ResourceModal, {
-      data: { options },
-      panelClass: 'resource-modal',
-    });
+    const dialogRef = this._dialogService.open(ResourceModal, { options });
 
-    dialogRef.afterClosed().subscribe((result: NewResourceItem | undefined) => {
-      if (result) {
-        this._resourceService.addResource(result);
+    dialogRef.afterClosed().subscribe((result) => {
+      const newResource = result as NewResourceItem | undefined;
+      if (newResource) {
+        this._resourceService.addResource(newResource);
       }
     });
   }

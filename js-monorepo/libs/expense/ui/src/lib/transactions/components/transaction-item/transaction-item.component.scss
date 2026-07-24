@@ -24,7 +24,7 @@
   flex-shrink: 0;
 
   .income & {
-    background: var(--income);
+    background: var(--positive);
   }
   .expense & {
     background: var(--expense);
@@ -60,7 +60,7 @@
   flex-shrink: 0;
 
   .income & {
-    color: var(--income);
+    color: var(--positive);
   }
   .expense & {
     color: var(--expense);

@@ -116,6 +116,8 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
-    "@nx/jest": "22.5.1"
+    "@nx/jest": "22.5.1",
+    "jsdom": "^27.1.0",
+    "vitest": "^4.0.8"
   }
 }

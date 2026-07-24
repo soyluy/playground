@@ -38,7 +38,10 @@
       "@hub/shared-infra": ["libs/infra/shared/src/index.ts"],
       "@hub/event-api": ["libs/event/api/src/index.ts"],
       "@hub/event-ui": ["libs/event/ui/src/index.ts"],
-      "@hub/event-data": ["libs/event/data/src/index.ts"]
+      "@hub/event-data": ["libs/event/data/src/index.ts"],
+      "@hub/tag-api": ["libs/tag/api/src/index.ts"],
+      "@hub/tag-ui": ["libs/tag/ui/src/index.ts"],
+      "@hub/tag-data": ["libs/tag/data/src/index.ts"]
     },
     "sourceMap": true
   }

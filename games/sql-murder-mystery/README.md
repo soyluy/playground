@@ -1,0 +1,1 @@
+This is my solution to the SQL Murder Mystery. The game is hosted [here](https://mystery.knightlab.com/)

@@ -35,8 +35,14 @@
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .type-toggle {
@@ -54,18 +60,22 @@
   padding: 6px 16px;
   border-radius: 7px;
   color: var(--text-secondary);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 
-  &:hover { color: var(--text-primary); }
+  &:hover {
+    color: var(--text-primary);
+  }
 
   &.active-expense {
-    background: var(--expense-dim);
-    color: var(--expense);
+    background: var(--negative-dim);
+    color: var(--negative);
   }
 
   &.active-income {
-    background: var(--income-dim);
-    color: var(--income);
+    background: var(--positive-dim);
+    color: var(--positive);
   }
 }
 
@@ -134,7 +144,9 @@
   font-weight: 500;
   padding: 8px 18px;
   border-radius: var(--radius-md);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 
   &--ghost {
     color: var(--text-secondary);
