@@ -1,6 +1,6 @@
 # Live Auction Frontend
 
-Angular 21 frontend for the live auction platform. The app covers buyer bidding flows, seller listing flows, admin monitoring, and realtime updates through Socket.io.
+Angular 21 frontend for the live auction platform. Part of a **code review** exercise — see [`../README.md`](../README.md). Covers buyer bidding, seller listings, admin monitoring, and realtime updates through Socket.io.
 
 ## Stack
 
