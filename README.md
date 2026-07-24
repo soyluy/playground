@@ -2,13 +2,13 @@
 
 Personal engineering playground — product experiments, stack practice, and puzzle write-ups in one place.
 
-**Hub** (`js-monorepo/`) is the main piece — and a work in progress. I build on it at my own speed whenever I have extra time. The idea: a personal agent for people who can't afford an assistant. It captures todos, expenses, calendar events, and resources, then works asynchronously on your behalf (research, context prep, surfacing what matters).
+**Hub** (in `js-monorepo/`) is the main piece — and a work in progress. I build on it at my own speed whenever I have extra time. It's also practice: I'll take the longer path (e.g. GraphQL infra for resources and other domains) to learn the stack, not because the product required it. The idea: a personal agent for people who can't afford an assistant. It captures todos, expenses, calendar events, and resources, then works asynchronously on your behalf (research, context prep, surfacing what matters).
 
 ## Sections
 
 | Folder | What it is |
 | --- | --- |
-| [`js-monorepo/`](./js-monorepo/) | Hub — Nx monorepo (Nest API, Angular UI, Prisma, domain libs) |
+| [`js-monorepo/`](./js-monorepo/) | Nx workspace — shared libs across apps; **Hub** is the primary product here |
 | [`nerisa/`](./nerisa/) | JavaFX week planner |
 | [`code-review/`](./code-review/) | Apps with intentional bugs for code-review practice (FastAPI, Spring Boot, Nest + Angular) |
 | [`games/`](./games/) | Puzzle / CTF solutions (SQL Murder Mystery, OverTheWire) |
