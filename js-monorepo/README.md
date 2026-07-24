@@ -25,7 +25,7 @@ Product notes: [`docs/hub/vision.txt`](./docs/hub/vision.txt). Scratch decisions
 | `apps/hub`                         | Hub Angular UI (dev server on port `8181`; starts `hub-api`) |
 | `apps/hub-api`                     | Hub Nest GraphQL API                                         |
 | `apps/hub-e2e`, `apps/hub-api-e2e` | Hub E2E suites                                               |
-| `apps/livestream-api`              | Separate livestream experiment (not part of Hub)             |
+| `apps/livestream-api`              | Separate HLS livestream practice app (not part of Hub) — see its README |
 
 ## Libs
 
